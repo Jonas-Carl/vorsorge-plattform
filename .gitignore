@@ -1,0 +1,10 @@
+node_modules
+.next
+out
+.env
+.env.local
+# Lokaler Lead-Speicher (personenbezogene Daten) – niemals einchecken
+/data
+next-env.d.ts
+tsconfig.tsbuildinfo
+.claude
