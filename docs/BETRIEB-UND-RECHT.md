@@ -96,3 +96,28 @@ später ggf. Werbekonten (Meta, Google Ads) und ein einwilligungsbasiertes Analy
 - Internes Werkzeug: Leads einsehen, qualifizieren, löschen, Übergaben wiederholen.
 - Monitoring für fehlgeschlagene Übergaben; Wiederholungslogik.
 - Lasttest, Lighthouse-/Core-Web-Vitals-Messung auf der Zielinfrastruktur.
+
+## 7. Startseite: Aussagen für die fachliche Prüfung
+
+Diese Zahlen und rechtlichen Aussagen stehen auf der Startseite. Sie stammen aus
+`src/config/foerderung.ts` und wurden am Gesetzestext (BGBl. 2026 I Nr. 156) abgeglichen.
+Eine Abnahme durch eine steuerlich oder rechtlich fachkundige Person steht noch aus.
+Beim Redesign der Startseite wurde keine dieser Aussagen inhaltlich verändert.
+
+| Wo auf der Startseite | Aussage | Grundlage | Status |
+| --- | --- | --- | --- |
+| „Das steht schon fest“ | 50 Cent Zuschuss je Euro für die ersten 360 € im Jahr | § 84 EStG n. F. | fachlich zu prüfen |
+| „Das steht schon fest“ | 25 Cent je weiterem Euro bis 1.800 €, höchstens 540 € | § 84 EStG n. F. | fachlich zu prüfen |
+| „Das steht schon fest“ | bis 300 € extra je Kind, ab 25 € im Monat, solange Kindergeld | § 85 EStG n. F. | fachlich zu prüfen |
+| „Das steht schon fest“ | 200 € Start-Bonus unter 25, einmalig | § 84 Satz 2 EStG n. F. | fachlich zu prüfen |
+| „Das steht schon fest“ | mindestens 120 € im Jahr sparen | § 86 EStG n. F. | fachlich zu prüfen |
+| „Das steht schon fest“ | höchstens 1 % Kosten beim Standard-Depot | § 2a Abs. 2 AltZertG n. F. | fachlich zu prüfen |
+| „Das steht schon fest“ | Regeln gelten ab 1. Januar 2027 | Art. 14 des Gesetzes | fachlich zu prüfen |
+| „So funktioniert es“ | Auszahlung ab 65 Jahren | § 1 Abs. 1 Nr. 2 AltZertG n. F. (Ausnahme: früherer Bezug einer gesetzlichen Altersrente) | fachlich zu prüfen |
+| „Passt das zu mir?“ | Selbstständige ab 2027 förderberechtigt | § 10a Abs. 1 Satz 5 EStG n. F. (mit weiteren Voraussetzungen) | fachlich zu prüfen |
+| „Passt das zu mir?“ | Riester-Verträge laufen weiter, Wechsel freiwillig | Auskunft ZfA / DRV | fachlich zu prüfen |
+| „Passt das zu mir?“ | Schüler ohne Job und Rentner meist nicht berechtigt | abgeleitet aus § 10a EStG | fachlich zu prüfen |
+| Rechner, „Das steht fest“ | Zuschuss wird standardmäßig eingerechnet | Annahme: Person ist förderberechtigt | fachlich zu prüfen |
+| Rechner | Extra-Geld für Kinder für 10 Jahre gerechnet | eigene Annahme, kein Gesetzeswert | Annahme bestätigen |
+| Rechner | Wachstum 2 % / 5 % / 7 % | eigene Beispielwerte, kein Gesetzeswert | Annahme bestätigen |
+| Häufige Fragen | unter 18 möglich, Eltern müssen zustimmen | kein Mindestalter im Reformgesetz; Zustimmung nach allgemeinem Vertragsrecht | fachlich zu prüfen |
