@@ -51,14 +51,14 @@
 .rechner { display: grid; gap: var(--s-5); }
 @media (min-width: 900px) {
   .rechner { grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr); align-items: start; gap: var(--s-6); }
-  .rechner__fragen { position: sticky; top: 5.5rem; }
 }
 .rechner__fragen {
   display: grid; gap: var(--s-6); background: var(--white); border: 1px solid var(--sand-200);
   border-radius: var(--r-lg); padding: clamp(1.25rem, 1rem + 1.5vw, 2rem); box-shadow: var(--shadow-md);
 }
 .rechner__ergebnis { display: grid; gap: var(--s-5); min-width: 0; }
-.rechner__mehr { justify-self: start; }
+.rechner__links { display: grid; gap: var(--s-4); align-content: start; min-width: 0; }
+.rechner__mehr { justify-self: stretch; }
 
 .field--gross > .field__top > label, .field--gross .field__label {
   font-family: var(--font-display); font-size: var(--text-xl); font-weight: 500; letter-spacing: -0.01em; line-height: 1.2;
@@ -160,7 +160,7 @@
 .disclosure--karte > summary b { font-size: var(--text-lg); }
 .disclosure--karte > summary small { font-weight: 400; color: var(--ink-500); font-size: var(--text-sm); }
 .mehr-grid { display: grid; gap: var(--s-5); }
-@media (min-width: 700px) { .mehr-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s-5) var(--s-6); } }
+@media (min-width: 700px) and (max-width: 899px) { .mehr-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s-5) var(--s-6); } }
 
 /* So funktioniert es ----------------------------------------------------- */
 .weg { list-style: none; display: grid; gap: var(--s-5); counter-reset: weg; }

@@ -73,6 +73,7 @@ export function Calculator({ lang, kompakt = false }: { lang: Lang; kompakt?: bo
   return (
     <div className={`rechner ${kompakt ? "rechner--kompakt" : ""}`}>
       {/* ------------------------------ Drei Fragen ------------------------------ */}
+      <div className="rechner__links">
       <form className="rechner__fragen" onSubmit={(ev) => ev.preventDefault()} noValidate>
         <NumberField
           id="alter" gross lang={lang} label={t.alter} unit={t.alterEinheit} sliderLabel={t.regler}
@@ -127,6 +128,76 @@ export function Calculator({ lang, kompakt = false }: { lang: Lang; kompakt?: bo
           <p className="field__hint">{t.kinderHinweis}</p>
         </div>
       </form>
+
+        {kompakt ? (
+        <Link
+          href={pfad(lang, "/rechner")}
+          className="btn btn--ghost rechner__mehr"
+          onClick={() => merkeEingabe({ alter: e.alter, sparrate: e.sparrate, rendite: e.rendite, foerderung: e.foerderung })}
+        >
+          {t.vollerRechner} <Icon name="arrow" size={18} />
+        </Link>
+        ) : (
+        <details className="card card--pad disclosure disclosure--karte">
+          <summary>
+            <span>
+              <b>{t.mehrTitel}</b>
+              <small>{t.mehrText}</small>
+            </span>
+          </summary>
+          <div className="disclosure__body mehr-grid">
+            <NumberField
+              id="rentenalter" lang={lang} label={t.rentenalter} unit={t.alterEinheit} sliderLabel={t.regler}
+              value={e.rentenalter} min={grenzen.rentenalter.min} max={grenzen.rentenalter.max} step={1}
+              onChange={(rentenalter) => setze({ rentenalter })}
+            />
+            <NumberField
+              id="startkapital" lang={lang} label={t.startkapital} unit="€" sliderLabel={t.regler}
+              value={roh.startkapital} min={grenzen.startkapital.min} max={grenzen.startkapital.max} step={grenzen.startkapital.schritt}
+              onChange={(startkapital) => setze({ startkapital })}
+            />
+            <NumberField
+              id="rendite" lang={lang} label={t.rendite} unit="%" scale={100} decimals={2} sliderLabel={t.regler}
+              value={roh.rendite} min={grenzen.rendite.min} max={grenzen.rendite.max} step={grenzen.rendite.schritt}
+              hint={t.renditeHinweis}
+              onChange={(rendite) => setze({ rendite })}
+            />
+            <NumberField
+              id="kosten" lang={lang} label={t.kostenFeld} unit="%" scale={100} decimals={2} sliderLabel={t.regler}
+              value={roh.kosten} min={grenzen.kosten.min} max={grenzen.kosten.max} step={grenzen.kosten.schritt}
+              onChange={(kosten) => setze({ kosten })}
+            />
+            <NumberField
+              id="dynamik" lang={lang} label={t.dynamik} unit="%" scale={100} decimals={1} sliderLabel={t.regler}
+              value={roh.dynamik} min={grenzen.dynamik.min} max={grenzen.dynamik.max} step={grenzen.dynamik.schritt}
+              onChange={(dynamik) => setze({ dynamik })}
+            />
+            <NumberField
+              id="inflation" lang={lang} label={t.inflation} unit="%" scale={100} decimals={2} sliderLabel={t.regler}
+              value={roh.inflation} min={grenzen.inflation.min} max={grenzen.inflation.max} step={grenzen.inflation.schritt}
+              onChange={(inflation) => setze({ inflation })}
+            />
+            {e.foerderung.kinder > 0 && (
+              <NumberField
+                id="kindergeldjahre" lang={lang} label={t.kindergeldJahre} unit={t.alterEinheit} sliderLabel={t.regler}
+                value={roh.foerderung.kindergeldJahre} min={grenzen.kindergeldJahre.min} max={grenzen.kindergeldJahre.max} step={1}
+                onChange={(kindergeldJahre) => setzeFoerderung({ kindergeldJahre })}
+              />
+            )}
+            <label className="switch">
+              <input type="checkbox" role="switch" checked={roh.foerderung.aktiv} onChange={(ev) => setzeFoerderung({ aktiv: ev.target.checked })} />
+              <span><strong>{t.zuschussAn}</strong><br />{t.zuschussText}</span>
+            </label>
+          </div>
+          <div className="btn-row" style={{ marginTop: "var(--s-5)" }}>
+            <button type="button" className="btn btn--ghost" onClick={() => setRoh(START)}>{t.zuruecksetzen}</button>
+          </div>
+          <p className="small muted" style={{ marginTop: "var(--s-4)" }}>
+            {t.nichtDrin} <Link href={pfad(lang, "/quellen-methodik")}>{t.methodik}</Link>
+          </p>
+        </details>
+        )}
+      </div>
 
       {/* ------------------------------ Ergebnis ------------------------------ */}
       <div className="rechner__ergebnis" aria-live="polite">
@@ -220,15 +291,7 @@ export function Calculator({ lang, kompakt = false }: { lang: Lang; kompakt?: bo
           </p>
         </section>
 
-        {kompakt ? (
-          <Link
-            href={pfad(lang, "/rechner")}
-            className="btn btn--ghost rechner__mehr"
-            onClick={() => merkeEingabe({ alter: e.alter, sparrate: e.sparrate, rendite: e.rendite, foerderung: e.foerderung })}
-          >
-            {t.vollerRechner} <Icon name="arrow" size={18} />
-          </Link>
-        ) : (
+        {!kompakt && (
           <>
             <section className="card card--pad chart-card" aria-labelledby="verlauf-titel">
               <h3 id="verlauf-titel">{t.verlaufTitel}</h3>
@@ -276,64 +339,6 @@ export function Calculator({ lang, kompakt = false }: { lang: Lang; kompakt?: bo
               </details>
             </section>
 
-            <details className="card card--pad disclosure disclosure--karte">
-              <summary>
-                <span>
-                  <b>{t.mehrTitel}</b>
-                  <small>{t.mehrText}</small>
-                </span>
-              </summary>
-              <div className="disclosure__body mehr-grid">
-                <NumberField
-                  id="rentenalter" lang={lang} label={t.rentenalter} unit={t.alterEinheit} sliderLabel={t.regler}
-                  value={e.rentenalter} min={grenzen.rentenalter.min} max={grenzen.rentenalter.max} step={1}
-                  onChange={(rentenalter) => setze({ rentenalter })}
-                />
-                <NumberField
-                  id="startkapital" lang={lang} label={t.startkapital} unit="€" sliderLabel={t.regler}
-                  value={roh.startkapital} min={grenzen.startkapital.min} max={grenzen.startkapital.max} step={grenzen.startkapital.schritt}
-                  onChange={(startkapital) => setze({ startkapital })}
-                />
-                <NumberField
-                  id="rendite" lang={lang} label={t.rendite} unit="%" scale={100} decimals={2} sliderLabel={t.regler}
-                  value={roh.rendite} min={grenzen.rendite.min} max={grenzen.rendite.max} step={grenzen.rendite.schritt}
-                  hint={t.renditeHinweis}
-                  onChange={(rendite) => setze({ rendite })}
-                />
-                <NumberField
-                  id="kosten" lang={lang} label={t.kostenFeld} unit="%" scale={100} decimals={2} sliderLabel={t.regler}
-                  value={roh.kosten} min={grenzen.kosten.min} max={grenzen.kosten.max} step={grenzen.kosten.schritt}
-                  onChange={(kosten) => setze({ kosten })}
-                />
-                <NumberField
-                  id="dynamik" lang={lang} label={t.dynamik} unit="%" scale={100} decimals={1} sliderLabel={t.regler}
-                  value={roh.dynamik} min={grenzen.dynamik.min} max={grenzen.dynamik.max} step={grenzen.dynamik.schritt}
-                  onChange={(dynamik) => setze({ dynamik })}
-                />
-                <NumberField
-                  id="inflation" lang={lang} label={t.inflation} unit="%" scale={100} decimals={2} sliderLabel={t.regler}
-                  value={roh.inflation} min={grenzen.inflation.min} max={grenzen.inflation.max} step={grenzen.inflation.schritt}
-                  onChange={(inflation) => setze({ inflation })}
-                />
-                {e.foerderung.kinder > 0 && (
-                  <NumberField
-                    id="kindergeldjahre" lang={lang} label={t.kindergeldJahre} unit={t.alterEinheit} sliderLabel={t.regler}
-                    value={roh.foerderung.kindergeldJahre} min={grenzen.kindergeldJahre.min} max={grenzen.kindergeldJahre.max} step={1}
-                    onChange={(kindergeldJahre) => setzeFoerderung({ kindergeldJahre })}
-                  />
-                )}
-                <label className="switch">
-                  <input type="checkbox" role="switch" checked={roh.foerderung.aktiv} onChange={(ev) => setzeFoerderung({ aktiv: ev.target.checked })} />
-                  <span><strong>{t.zuschussAn}</strong><br />{t.zuschussText}</span>
-                </label>
-              </div>
-              <div className="btn-row" style={{ marginTop: "var(--s-5)" }}>
-                <button type="button" className="btn btn--ghost" onClick={() => setRoh(START)}>{t.zuruecksetzen}</button>
-              </div>
-              <p className="small muted" style={{ marginTop: "var(--s-4)" }}>
-                {t.nichtDrin} <Link href={pfad(lang, "/quellen-methodik")}>{t.methodik}</Link>
-              </p>
-            </details>
 
             <aside className="cta-quiet" aria-labelledby="cta-rechner">
               <div className="stack">
