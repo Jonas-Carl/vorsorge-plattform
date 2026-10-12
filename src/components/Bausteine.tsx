@@ -1,5 +1,5 @@
 import Link from "next/link";
-import type { Partner } from "@/config/partner";
+import { istAuswaehlbar, type Partner } from "@/config/partner";
 import { quelle } from "@/config/quellen";
 import { site } from "@/config/site";
 import type { Artikel } from "@/content/typen";
@@ -84,8 +84,9 @@ export function QuellenListe({ ids, lang }: { ids: string[]; lang: Lang }) {
 }
 
 /** Neutraler Partnerplatz. Zeigt Platzhalter-Kennungen, solange keine Kooperation besteht. */
-export function PartnerKarte({ p, nr, lang }: { p: Partner; nr: number; lang: Lang }) {
+export function PartnerKarte({ p, nr, lang, auswahl = false }: { p: Partner; nr: number; lang: Lang; auswahl?: boolean }) {
   const t = texte(lang).partner;
+  const n = texte(lang).neu;
   const platzhalter = p.status === "platzhalter";
   const kennung = `PARTNER_${String(nr).padStart(2, "0")}`;
   return (
@@ -103,10 +104,17 @@ export function PartnerKarte({ p, nr, lang }: { p: Partner; nr: number; lang: La
         <div><dt>{t.felder.name}</dt><dd><code>{p.name}</code></dd></div>
         <div><dt>{t.felder.beschreibung}</dt><dd><code>{p.beschreibung}</code></dd></div>
         <div><dt>{t.felder.leistungen}</dt><dd>{p.leistungen.map((l) => <code key={l}>{l}</code>)}</dd></div>
+        <div><dt>{n.wo}</dt><dd><code>{p.region}</code></dd></div>
         <div><dt>{t.felder.zielgruppe}</dt><dd><code>{p.zielgruppe}</code></dd></div>
         <div><dt>{t.felder.kontakt}</dt><dd><code>{p.kontakt.url ?? `[${kennung}_KONTAKTLINK]`}</code></dd></div>
         <div><dt>{t.felder.transparenz}</dt><dd><code>{p.transparenzhinweis}</code></dd></div>
       </dl>
+      {auswahl &&
+        (istAuswaehlbar(p) ? (
+          <Link href={`${pfad(lang, "/anfrage")}?partner=${p.id}`} className="btn btn--primary">{n.waehlen}</Link>
+        ) : (
+          <button type="button" className="btn btn--ghost" disabled>{n.nichtDa}</button>
+        ))}
     </article>
   );
 }
@@ -135,6 +143,25 @@ export function CtaRechner({ lang }: { lang: Lang }) {
         </div>
       </div>
     </section>
+  );
+}
+
+/** Deutlicher Einstieg zur persönlichen Beratung – führt zur Partner-Auswahl. */
+export function BeratungCta({ lang }: { lang: Lang }) {
+  const n = texte(lang).neu;
+  return (
+    <aside className="beratung" aria-labelledby="beratung-titel">
+      <span className="beratung__bild"><Icon name="users" size={40} /></span>
+      <div className="stack">
+        <p className="eyebrow">{n.beratungEyebrow}</p>
+        <h2 id="beratung-titel">{n.beratungTitel}</h2>
+        <p>{n.beratungText}</p>
+      </div>
+      <div className="beratung__aktion">
+        <Link href={pfad(lang, "/partner")} className="btn btn--gold">{n.beratungKnopf} <Icon name="arrow" size={18} /></Link>
+        <p className="small">{n.beratungKlein}</p>
+      </div>
+    </aside>
   );
 }
 

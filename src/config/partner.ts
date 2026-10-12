@@ -34,6 +34,8 @@ export type Partner = {
   beschreibung: string;
   leistungen: string[];
   zielgruppe: string;
+  /** Ort bzw. Gebiet, in dem der Partner persönlich berät (z. B. "Osnabrück und Umgebung"). */
+  region: string;
   kontakt: { url: string | null; email: string | null; telefon: string | null };
   status: "platzhalter" | "aktiv" | "inaktiv";
   vereinbarung: "keine" | "in-verhandlung" | "abgeschlossen" | "beendet";
@@ -53,6 +55,7 @@ function platzhalter(nr: string): Partner {
     beschreibung: `[PARTNER_${nr}_BESCHREIBUNG]`,
     leistungen: [`[PARTNER_${nr}_LEISTUNGEN]`],
     zielgruppe: `[PARTNER_${nr}_ZIELGRUPPE]`,
+    region: `[PARTNER_${nr}_REGION]`,
     kontakt: { url: null, email: null, telefon: null },
     status: "platzhalter",
     vereinbarung: "keine",

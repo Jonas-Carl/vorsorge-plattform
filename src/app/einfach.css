@@ -245,3 +245,70 @@
 }
 
 @media (prefers-reduced-motion: reduce) { .muenzen__a, .muenzen__b { animation: none; } }
+
+/* Hero: Zahlenleiste ----------------------------------------------------- */
+.hero { padding-bottom: 0; }
+.hero__zahlen {
+  position: relative; list-style: none; display: grid; gap: 1px; margin-top: var(--s-2);
+  background: rgba(255, 255, 255, 0.14); border-radius: var(--r-lg) var(--r-lg) 0 0; overflow: hidden;
+}
+.hero__zahlen li { background: rgba(11, 31, 58, 0.72); padding: var(--s-4) var(--s-5); display: grid; gap: 0.1rem; }
+.hero__zahlen b { font-family: var(--font-display); font-weight: 500; font-size: clamp(1.6rem, 1.2rem + 1.6vw, 2.3rem); color: var(--gold-300); line-height: 1.1; font-variant-numeric: tabular-nums lining-nums; }
+.hero__zahlen span { font-size: var(--text-sm); color: #c9d5e3; }
+@media (min-width: 700px) { .hero__zahlen { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+
+/* Beispiele im Rechner --------------------------------------------------- */
+.beispiele { display: grid; gap: var(--s-2); padding-bottom: var(--s-5); border-bottom: 1px solid var(--sand-200); }
+.beispiele__label { font-weight: 650; color: var(--ink-900); font-size: var(--text-sm); }
+.beispiele .chips { margin-top: 0; }
+.chip--beispiel { font-size: var(--text-sm); background: var(--sand-50); }
+
+/* Persönliche Beratung --------------------------------------------------- */
+.beratung {
+  margin-top: var(--s-7); display: grid; gap: var(--s-5); align-items: center;
+  background: linear-gradient(120deg, var(--petrol-800), var(--petrol-700) 55%, #146a72);
+  color: #d6e9ed; border-radius: var(--r-lg); padding: clamp(1.5rem, 1rem + 3vw, 3rem); box-shadow: var(--shadow-lg);
+}
+.beratung h2 { color: #fff; font-size: var(--text-2xl); }
+.beratung .eyebrow { color: var(--gold-300); }
+.beratung__bild { width: 5rem; height: 5rem; border-radius: 50%; background: rgba(255, 255, 255, 0.12); color: var(--gold-300); display: grid; place-items: center; }
+.beratung__aktion { display: grid; gap: var(--s-3); justify-items: start; }
+.beratung__aktion .small { color: #b9d6dc; max-width: 22rem; }
+.btn--gold { background: var(--gold-500); color: var(--navy-900); min-height: 3.5rem; padding-inline: 1.6rem; font-size: var(--text-lg); box-shadow: 0 8px 24px -8px rgba(0, 0, 0, 0.45); }
+.btn--gold:hover { background: #ecc463; color: var(--navy-900); }
+.beratung :focus-visible { box-shadow: 0 0 0 3px var(--petrol-800), 0 0 0 6px var(--gold-300); }
+@media (min-width: 960px) { .beratung { grid-template-columns: auto minmax(0, 1fr) auto; gap: var(--s-6); } }
+.stack-lg > .beratung { margin-top: var(--s-6); }
+
+/* Für wen ist das? ------------------------------------------------------- */
+.wer { list-style: none; display: grid; gap: var(--s-4); }
+@media (min-width: 640px) { .wer { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 1000px) { .wer { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--s-5); } }
+.wer__karte {
+  height: 100%; display: grid; gap: var(--s-2); align-content: start; padding: var(--s-5); border-radius: var(--r-lg);
+  text-decoration: none; color: var(--ink-700); border: 2px solid transparent;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+}
+.wer__karte:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); border-color: var(--petrol-700); color: var(--ink-700); }
+.wer__karte h3 { font-size: var(--text-xl); }
+.wer__bild { width: 3.75rem; height: 3.75rem; border-radius: 50%; background: rgba(255, 255, 255, 0.75); color: var(--petrol-800); display: grid; place-items: center; margin-bottom: var(--s-2); }
+.wer__mehr { display: inline-flex; align-items: center; gap: 0.35em; font-weight: 650; color: var(--petrol-800); margin-top: var(--s-2); }
+.wer__karte--gold { background: var(--sun-100); }
+.wer__karte--mint { background: var(--mint-100); }
+.wer__karte--rose { background: var(--rose-100); }
+.wer__karte--sky { background: var(--sky-100); }
+.wer__karte--sand { background: var(--sand-100); }
+.wer__karte--petrol { background: var(--petrol-100); }
+
+/* Sanftes Einblenden beim Scrollen (nur wo der Browser es kann) ---------- */
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .kachel, .weg li, .wer > li, .lexikon > div, .beratung {
+      animation: einblenden linear both; animation-timeline: view(); animation-range: entry 0% entry 55%;
+    }
+  }
+}
+@keyframes einblenden { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }
+
+.partner .btn { width: 100%; margin-top: var(--s-2); }
+

@@ -9,18 +9,19 @@ import { texte } from "@/i18n/texte";
 export async function generateMetadata({ params }: LangParams): Promise<Metadata> {
   const { lang } = await params;
   if (!istSprache(lang)) return {};
-  const t = texte(lang).partner;
-  return { title: t.titel, description: t.text, alternates: alternativen(lang, "/partner") };
+  const n = texte(lang).neu;
+  return { title: n.partnerTitel, description: n.partnerText, alternates: alternativen(lang, "/partner") };
 }
 
 export default async function PartnerSeite({ params }: LangParams) {
   const { lang } = await params;
   if (!istSprache(lang)) notFound();
   const t = texte(lang).partner;
+  const n = texte(lang).neu;
 
   return (
     <>
-      <PageHero lang={lang} eyebrow={t.eyebrow} titel={t.titel} text={t.text} krumen={[{ label: t.eyebrow }]} />
+      <PageHero lang={lang} eyebrow={t.eyebrow} titel={n.partnerTitel} text={n.partnerText} krumen={[{ label: t.eyebrow }]} />
 
       <section className="section" aria-labelledby="status-titel">
         <div className="wrap stack-lg">
@@ -29,8 +30,15 @@ export default async function PartnerSeite({ params }: LangParams) {
             <p>{t.standText}</p>
           </div>
           <div className="grid grid--4">
-            {partner.map((p, i) => <PartnerKarte key={p.id} p={p} nr={i + 1} lang={lang} />)}
+            {partner.map((p, i) => <PartnerKarte key={p.id} p={p} nr={i + 1} lang={lang} auswahl />)}
           </div>
+          <aside className="cta-quiet" aria-labelledby="fallback-titel">
+            <div className="stack">
+              <h2 id="fallback-titel" style={{ fontSize: "var(--text-xl)" }}>{n.fallbackTitel}</h2>
+              <p>{n.fallbackText}</p>
+            </div>
+            <Link href={pfad(lang, "/anfrage")} className="btn btn--primary">{n.fallbackKnopf}</Link>
+          </aside>
         </div>
       </section>
 

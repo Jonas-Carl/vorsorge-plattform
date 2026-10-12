@@ -71,6 +71,12 @@ export function LeadForm({ lang }: { lang: Lang }) {
     schluessel.current = crypto.randomUUID();
     geladenAm.current = jetzt();
     merkeAttribution();
+    // Von der Partner-Auswahl kommend: gewählten Partner vorbelegen (nur wenn er wirklich wählbar ist).
+    const gewuenscht = new URLSearchParams(window.location.search).get("partner");
+    if (gewuenscht && aktivePartner().some((p) => p.id === gewuenscht)) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setF((alt) => ({ ...alt, empfaengerId: gewuenscht, einwilligung: false }));
+    }
   }, []);
 
   useEffect(() => {

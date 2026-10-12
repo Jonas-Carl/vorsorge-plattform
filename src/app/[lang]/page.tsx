@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArtikelKarte, CtaRechner, Faq, JsonLd, organisation, PartnerKarte } from "@/components/Bausteine";
+import { ArtikelKarte, BeratungCta, CtaRechner, Faq, JsonLd, organisation, PartnerKarte } from "@/components/Bausteine";
 import { Calculator } from "@/components/Calculator";
 import { Icon, Muenzen, type IconName } from "@/components/Icon";
 import { partner } from "@/config/partner";
@@ -16,6 +16,7 @@ export default async function Startseite({ params }: LangParams) {
   const { lang } = await params;
   if (!istSprache(lang)) notFound();
   const t = texte(lang).start;
+  const n = texte(lang).neu;
   const faq = startseitenFaq(lang);
   const vorschau = ["private-altersvorsorge-einfach-erklaert", "staatliche-foerderung-verstehen", "altersvorsorgedepot"]
     .map((s) => findeArtikel(s, lang))
@@ -65,6 +66,11 @@ export default async function Startseite({ params }: LangParams) {
             <p className="hero__fussnote">{t.fussnote}</p>
           </div>
         </div>
+        <ul className="wrap hero__zahlen">
+          {n.zahlen.map((z) => (
+            <li key={z.text}><b>{z.zahl}</b><span>{z.text}</span></li>
+          ))}
+        </ul>
       </section>
 
       {/* Rechner */}
@@ -76,6 +82,31 @@ export default async function Startseite({ params }: LangParams) {
             <p className="lead">{t.rechnerSub}</p>
           </div>
           <Calculator lang={lang} kompakt />
+          <BeratungCta lang={lang} />
+        </div>
+      </section>
+
+      {/* Für wen ist das? */}
+      <section className="section" aria-labelledby="wer-titel">
+        <div className="wrap">
+          <div className="section-head section-head--mitte">
+            <p className="eyebrow">{n.werEyebrow}</p>
+            <h2 id="wer-titel">{n.werTitel}</h2>
+            <p className="lead">{n.werSub}</p>
+          </div>
+          <ul className="wer">
+            {n.wer.map((w, i) => (
+              <li key={w.titel}>
+                <Link href={pfad(lang, w.link)} className={`wer__karte wer__karte--${festFarben[i % festFarben.length]}`}>
+                  <span className="wer__bild"><Icon name={w.bild as IconName} size={30} /></span>
+                  <h3>{w.titel}</h3>
+                  <p>{w.text}</p>
+                  <span className="wer__mehr">{texte(lang).allgemein.mehr} <Icon name="arrow" size={16} /></span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+          <p className="small muted" style={{ marginTop: "var(--s-5)", textAlign: "center" }}>{n.werHinweis}</p>
         </div>
       </section>
 

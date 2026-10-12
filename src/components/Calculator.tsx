@@ -29,10 +29,18 @@ const START: RechnerEingabe = {
 };
 
 const SCHNELLWAHL = [25, 50, 100, 150];
+const BEISPIELE = [
+  { id: "azubi", alter: 17, sparrate: 25, kinder: 0 },
+  { id: "start", alter: 24, sparrate: 50, kinder: 0 },
+  { id: "familie", alter: 35, sparrate: 50, kinder: 2 },
+  { id: "selbst", alter: 40, sparrate: 150, kinder: 0 },
+  { id: "spaet", alter: 52, sparrate: 150, kinder: 0 },
+] as const;
 const MAX_KINDER_EINFACH = 5;
 
 export function Calculator({ lang, kompakt = false }: { lang: Lang; kompakt?: boolean }) {
   const t = texte(lang).rechner;
+  const n = texte(lang).neu;
   const [roh, setRoh] = useState<RechnerEingabe>(() => ({ ...START, ...(kompakt ? null : holeEingabe()) }));
   const gestartet = useRef(false);
 
@@ -75,6 +83,24 @@ export function Calculator({ lang, kompakt = false }: { lang: Lang; kompakt?: bo
       {/* ------------------------------ Drei Fragen ------------------------------ */}
       <div className="rechner__links">
       <form className="rechner__fragen" onSubmit={(ev) => ev.preventDefault()} noValidate>
+        {kompakt && (
+          <div className="beispiele">
+            <p className="beispiele__label" id="beispiele-label">{n.beispiele}</p>
+            <div className="chips" role="group" aria-labelledby="beispiele-label">
+              {BEISPIELE.map((b) => (
+                <button
+                  key={b.id}
+                  type="button"
+                  className="chip chip--beispiel"
+                  aria-pressed={e.alter === b.alter && e.sparrate === b.sparrate && e.foerderung.kinder === b.kinder}
+                  onClick={() => setze({ alter: b.alter, sparrate: b.sparrate, foerderung: { ...roh.foerderung, kinder: b.kinder } })}
+                >
+                  {n.presets[b.id]}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
         <NumberField
           id="alter" gross lang={lang} label={t.alter} unit={t.alterEinheit} sliderLabel={t.regler}
           value={roh.alter} min={grenzen.alter.min} max={grenzen.alter.max} step={1}
@@ -341,15 +367,6 @@ export function Calculator({ lang, kompakt = false }: { lang: Lang; kompakt?: bo
             </section>
 
 
-            <aside className="cta-quiet" aria-labelledby="cta-rechner">
-              <div className="stack">
-                <h3 id="cta-rechner">{t.ctaTitel}</h3>
-                <p className="small">{t.ctaText}</p>
-              </div>
-              <Link href={pfad(lang, "/anfrage")} className="btn btn--primary" onClick={() => track("anfrage_begonnen", { herkunft: "rechner" })}>
-                {t.ctaKnopf}
-              </Link>
-            </aside>
           </>
         )}
       </div>
