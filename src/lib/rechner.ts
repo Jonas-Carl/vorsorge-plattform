@@ -194,6 +194,18 @@ export function berechne(roh: RechnerEingabe, regelwerk: ReformRegelwerk = refor
   };
 }
 
+/**
+ * Grobe monatliche Auszahlung: Das Kapital wird ab `abAlter` gleichmäßig bis
+ * `bisAlter` verteilt. Bewusst einfach und vorsichtig gerechnet – ohne weiteres
+ * Wachstum in der Auszahlphase, ohne Kosten und ohne Steuern. Kein Ersatz für
+ * den Auszahlungsplan oder die Rentenberechnung eines Anbieters.
+ */
+export function monatlicheAuszahlung(kapital: number, abAlter: number, bisAlter: number): number {
+  const monate = Math.round((bisAlter - abAlter) * 12);
+  if (!Number.isFinite(kapital) || kapital <= 0 || monate <= 0) return 0;
+  return kapital / monate;
+}
+
 export type SzenarioErgebnis = { szenario: Szenario; ergebnis: RechnerErgebnis };
 
 /** Rechnet dieselben Eingaben mit den drei konfigurierten Renditeannahmen. */

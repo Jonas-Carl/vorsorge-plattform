@@ -123,4 +123,6 @@ Beim Redesign der Startseite wurde keine dieser Aussagen inhaltlich verändert.
 | Rechner, „Das steht fest“ | Zuschuss wird standardmäßig eingerechnet | Annahme: Person ist förderberechtigt | fachlich zu prüfen |
 | Rechner | Extra-Geld für Kinder für 10 Jahre gerechnet | eigene Annahme, kein Gesetzeswert | Annahme bestätigen |
 | Rechner | Wachstum 2 % / 5 % / 7 % | eigene Beispielwerte, kein Gesetzeswert | Annahme bestätigen |
+| Rechner, „Das weiß niemand vorher“ | grobe monatliche Auszahlung: Endkapital gleichmäßig bis 85 verteilt, ohne Wachstum, vor Steuern | eigene Vereinfachung; 85 = frühestes Ende eines Auszahlungsplans (AltZertG n. F.) | fachlich zu prüfen |
+| Rechner, Schnellwahl | 10 € Minimum, 150 € voller Zuschuss, 570 € Maximum im Monat | § 86, § 84 EStG n. F., Einzahlungsgrenze 6.840 € im Jahr – jeweils durch 12 | fachlich zu prüfen |
 | Häufige Fragen | unter 18 möglich, Eltern müssen zustimmen | kein Mindestalter im Reformgesetz; Zustimmung nach allgemeinem Vertragsrecht | fachlich zu prüfen |

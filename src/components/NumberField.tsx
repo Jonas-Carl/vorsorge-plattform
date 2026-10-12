@@ -7,6 +7,10 @@ type Props = {
   id: string;
   label: string;
   hint?: string;
+  /** Längere Erklärung, die sich über einen „i“-Knopf aufklappen lässt. */
+  info?: string;
+  /** Beschriftung des „i“-Knopfs für Screenreader, z. B. „Erklärung“. */
+  infoLabel?: string;
   /** Wert in Rechen-Einheiten (z. B. 0.05 für 5 %). */
   value: number;
   min: number;
@@ -29,9 +33,10 @@ type Props = {
  * (begrenzte) Wert angezeigt.
  */
 export function NumberField({
-  id, label, hint, value, min, max, step, unit, scale = 1, decimals = 0, lang = "de", gross = false, sliderLabel, onChange,
+  id, label, hint, info, infoLabel = "Erklärung", value, min, max, step, unit, scale = 1, decimals = 0, lang = "de", gross = false, sliderLabel, onChange,
 }: Props) {
   const [entwurf, setEntwurf] = useState<string | null>(null);
+  const [infoOffen, setInfoOffen] = useState(false);
 
   const anzeige = (v: number) =>
     new Intl.NumberFormat(loc(lang), {
@@ -51,6 +56,18 @@ export function NumberField({
     <div className={`field ${gross ? "field--gross" : ""}`}>
       <div className="field__top">
         <label htmlFor={id}>{label}</label>
+        {info && (
+          <button
+            type="button"
+            className="info-btn"
+            aria-expanded={infoOffen}
+            aria-controls={`${id}-info`}
+            aria-label={`${infoLabel}: ${label}`}
+            onClick={() => setInfoOffen((o) => !o)}
+          >
+            i
+          </button>
+        )}
         <span className="numbox">
           <input
             id={id}
@@ -80,6 +97,7 @@ export function NumberField({
           onChange(Number(e.target.value));
         }}
       />
+      {info && <p id={`${id}-info`} className="field__info" hidden={!infoOffen}>{info}</p>}
       {hint && <p id={`${id}-hint`} className="field__hint">{hint}</p>}
     </div>
   );

@@ -274,3 +274,7 @@
   .klapp__knopf { width: 2.6rem; height: 2.6rem; }
   .hb__text { font-size: 24px; }
 }
+
+.start .block--offen .auszahlung { border-top-color: var(--linie); }
+.start .block--offen .auszahlung__zahl { color: var(--text); }
+.start .block--offen .auszahlung__label { color: var(--text-2); }

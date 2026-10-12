@@ -60,6 +60,7 @@ export function makeF(lang: Lang) {
     stufe1Bis: euro(r.grundzulage.stufe1.bis),
     stufe2Satz: prozent(r.grundzulage.stufe2.satz),
     stufe2Bis: euro(r.grundzulage.stufe2.bis),
+    stufe2BisMonat: euro(r.grundzulage.stufe2.bis / 12),
     maxGrund: euro(maxGrundzulage()),
     grundStufe1Max: euro(r.grundzulage.stufe1.bis * r.grundzulage.stufe1.satz),
     kindMax: euro(r.kinderzulage.hoechstbetragJeKind),

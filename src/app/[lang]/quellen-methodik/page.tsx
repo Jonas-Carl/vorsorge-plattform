@@ -47,7 +47,9 @@ const T = {
       kaufkraft: ["Kaufkraft (was das Geld später wert ist)", "nominales Kapital ÷ (1 + Inflation)"],
       jahre: "Jahre",
       zulagen: ["Zuschüsse vom Staat (Zulagen)", "Nach §§ 84–86 EStG in der Fassung, die ab 2027 gilt. Zur Vereinfachung schreiben wir den Zuschuss am Ende jedes Beitragsjahres gut. Wir nehmen an, dass die Regeln gleich bleiben."],
-      nicht: ["Das rechnet der Rechner nicht mit", "Steuern, Sozialabgaben, Sonderausgabenabzug (Steuervorteil für Beiträge), Abschluss- und Wechselkosten, die Auszahlungsphase und Kursschwankungen."],
+      auszahlungTitel: "Grobe monatliche Auszahlung",
+      auszahlung: (bis: number) => `Endkapital ÷ Zahl der Monate vom Rentenbeginn bis ${bis}. Ohne weiteres Wachstum, ohne Kosten und ohne Steuern. Das ist eine vorsichtige Schätzung, kein Auszahlungsplan eines Anbieters.`,
+      nicht: ["Das rechnet der Rechner nicht mit", "Steuern, Sozialabgaben, Sonderausgabenabzug (Steuervorteil für Beiträge), Abschluss- und Wechselkosten, eine lebenslange Rente und Kursschwankungen."],
     },
     startTitel: "Die Startwerte im einfachen Rechner",
     start: (kosten: string) =>
@@ -107,7 +109,9 @@ const T = {
       kaufkraft: ["Purchasing power (what the money is worth later)", "nominal capital ÷ (1 + inflation)"],
       jahre: "years",
       zulagen: ["State allowances (Zulagen)", "Under §§ 84–86 EStG (German Income Tax Act) in the version that applies from 2027. To keep it simple, we credit the allowance at the end of each contribution year. We assume the rules stay the same."],
-      nicht: ["What the calculator leaves out", "Taxes, social security contributions, the special-expenses deduction (a tax benefit for contributions), sign-up and switching costs, the payout phase and price swings."],
+      auszahlungTitel: "Rough monthly payout",
+      auszahlung: (bis: number) => `End capital ÷ number of months from the start of retirement to age ${bis}. Without further growth, without costs and without taxes. This is a cautious estimate, not a provider's payout plan.`,
+      nicht: ["What the calculator leaves out", "Taxes, social security contributions, the special-expenses deduction (a tax benefit for contributions), sign-up and switching costs, a lifelong pension and price swings."],
     },
     startTitel: "The starting values in the simple calculator",
     start: (kosten: string) =>
@@ -167,7 +171,9 @@ const T = {
       kaufkraft: ["Pouvoir d'achat (ce que l'argent vaudra plus tard)", "capital nominal ÷ (1 + inflation)"],
       jahre: "années",
       zulagen: ["Compléments de l'État (Zulagen)", "Selon les §§ 84–86 EStG (loi allemande de l'impôt sur le revenu) dans la version qui s'applique à partir de 2027. Pour simplifier, nous créditons le complément à la fin de chaque année de cotisation. Nous supposons que les règles restent les mêmes."],
-      nicht: ["Ce que le simulateur ne compte pas", "Les impôts, les cotisations sociales, la déduction fiscale des versements (Sonderausgabenabzug), les frais de souscription et de changement, la phase de versement et les variations de cours."],
+      auszahlungTitel: "Versement mensuel approximatif",
+      auszahlung: (bis: number) => `Capital final ÷ nombre de mois entre le début de la retraite et ${bis} ans. Sans croissance supplémentaire, sans frais et sans impôts. C'est une estimation prudente, pas le plan de versement d'un prestataire.`,
+      nicht: ["Ce que le simulateur ne compte pas", "Les impôts, les cotisations sociales, la déduction fiscale des versements (Sonderausgabenabzug), les frais de souscription et de changement, une rente à vie et les variations de cours."],
     },
     startTitel: "Les valeurs de départ du simulateur simple",
     start: (kosten: string) =>
@@ -266,6 +272,7 @@ export default async function QuellenSeite({ params }: LangParams) {
                 <tr><th scope="row">{z.dynamik[0]}</th><td>{z.dynamik[1]}</td></tr>
                 <tr><th scope="row">{z.kaufkraft[0]}</th><td>{z.kaufkraft[1]}<sup>{z.jahre}</sup></td></tr>
                 <tr><th scope="row">{z.zulagen[0]}</th><td>{z.zulagen[1]}</td></tr>
+                <tr><th scope="row">{z.auszahlungTitel}</th><td>{z.auszahlung(reform2027.produkt.auszahlungsplanEndetFruehestensAlter)}</td></tr>
                 <tr><th scope="row">{z.nicht[0]}</th><td>{z.nicht[1]}</td></tr>
               </tbody>
             </table>

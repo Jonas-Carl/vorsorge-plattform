@@ -221,7 +221,7 @@ export const artikelBEn: Artikel[] = [
       { t: "h2", x: "Early withdrawal" },
       { t: "p", x: "If subsidised capital is not used for retirement provision, the law calls this harmful use (schädliche Verwendung). Allowances and tax advantages then have to be paid back as a rule." },
       { t: "h2", x: "What our calculator cannot do here" },
-      { t: "p", x: "The [calculator](/rechner) ends with the modelled final capital. It calculates neither a monthly pension nor taxes or social security contributions on the payouts, because that depends on your contract and your personal situation in retirement." },
+      { t: "p", x: `Alongside the modelled final capital, the [calculator](/rechner) shows only a rough monthly payout: it spreads the final capital evenly over the months up to age ${FE.planBis} – without further growth. It calculates neither a lifelong pension nor taxes or social security contributions on the payouts, because that depends on your contract and your personal situation in retirement.` },
     ],
   },
   {
@@ -297,7 +297,7 @@ export const artikelBEn: Artikel[] = [
       { t: "ul", items: [
         "It does not know the future: the return is your assumption.",
         "It shows no fluctuations, but a steady development.",
-        "It does not calculate a pension, taxes or a personal pension gap.",
+        "It does not calculate taxes or a personal pension gap. The monthly payout is only a rough estimate.",
         "It does not check whether you are eligible for the subsidy.",
       ] },
     ],

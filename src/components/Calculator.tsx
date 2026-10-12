@@ -9,7 +9,7 @@ import { texte } from "@/i18n/texte";
 import { track } from "@/lib/analytics";
 import { berechneZulage } from "@/lib/foerderung";
 import { euro, euroGenau, prozent } from "@/lib/format";
-import { berechne, bereinigeEingabe, type RechnerEingabe } from "@/lib/rechner";
+import { berechne, bereinigeEingabe, monatlicheAuszahlung, type RechnerEingabe } from "@/lib/rechner";
 import { holeEingabe, merkeEingabe } from "@/lib/rechnerUebergabe";
 import { EINFACHE_STARTWERTE } from "@/lib/startwerte";
 import { FARBEN, GrowthChart } from "./GrowthChart";
@@ -20,7 +20,22 @@ const r = reform2027;
 
 const START = EINFACHE_STARTWERTE;
 
-const SCHNELLWAHL = [25, 50, 100, 150];
+/** Gesetzliche Marken für den Sparbetrag, auf den Monat umgerechnet. */
+const MIN_MONAT = r.mindesteigenbeitrag / 12;
+const VOLL_MONAT = r.grundzulage.stufe2.bis / 12;
+const MAX_MONAT = r.einzahlungsgrenzeJahr / 12;
+/** Der Regler endet hier, solange niemand das gesetzliche Maximum wählt. */
+const REGLER_MAX = 300;
+const PLAN_BIS = r.produkt.auszahlungsplanEndetFruehestensAlter;
+
+const SCHNELLWAHL: { betrag: number; marke?: "min" | "voll" | "max" }[] = [
+  { betrag: MIN_MONAT, marke: "min" },
+  { betrag: 25 },
+  { betrag: 50 },
+  { betrag: 100 },
+  { betrag: VOLL_MONAT, marke: "voll" },
+  { betrag: MAX_MONAT, marke: "max" },
+];
 const BEISPIELE = [
   { id: "azubi", alter: 17, sparrate: 25, kinder: 0 },
   { id: "start", alter: 24, sparrate: 50, kinder: 0 },
@@ -35,6 +50,8 @@ export function Calculator({ lang, kompakt = false }: { lang: Lang; kompakt?: bo
   const n = texte(lang).neu;
   const [roh, setRoh] = useState<RechnerEingabe>(() => ({ ...START, ...(kompakt ? null : holeEingabe()) }));
   const gestartet = useRef(false);
+  // Bleibt an, damit der Regler beim Zurückziehen vom Maximum nicht springt.
+  const [weiterRegler, setWeiterRegler] = useState(false);
 
   const e = useMemo(() => bereinigeEingabe(roh), [roh]);
   const ergebnis = useMemo(() => berechne(e), [e]);
@@ -69,6 +86,8 @@ export function Calculator({ lang, kompakt = false }: { lang: Lang; kompakt?: bo
   const stufe = szenarien.find((s) => Math.abs(s.renditePa - e.rendite) < 1e-9)?.id ?? null;
   const mitZulagen = ergebnis.zulagen > 0;
   const mitInflation = e.inflation > 0;
+  const auszahlung = monatlicheAuszahlung(ergebnis.endkapital, e.rentenalter, PLAN_BIS);
+  const reglerMax = weiterRegler || roh.sparrate > REGLER_MAX ? MAX_MONAT : REGLER_MAX;
 
   return (
     <div className={`rechner ${kompakt ? "rechner--kompakt" : ""}`}>
@@ -103,19 +122,24 @@ export function Calculator({ lang, kompakt = false }: { lang: Lang; kompakt?: bo
         <div>
           <NumberField
             id="sparrate" gross lang={lang} label={t.sparrate} unit="€" sliderLabel={t.regler}
-            value={roh.sparrate} min={grenzen.sparrate.min} max={300} step={grenzen.sparrate.schritt}
+            value={roh.sparrate} min={grenzen.sparrate.min} max={reglerMax} step={grenzen.sparrate.schritt}
+            info={t.info.sparrate} infoLabel={t.infoZeigen}
             onChange={(sparrate) => setze({ sparrate })}
           />
           <div className="chips" role="group" aria-label={t.sparrate}>
-            {SCHNELLWAHL.map((betrag) => (
+            {SCHNELLWAHL.filter((s) => !(kompakt && s.marke === "max")).map(({ betrag, marke }) => (
               <button
                 key={betrag}
                 type="button"
-                className="chip"
+                className={`chip ${marke ? "chip--marke" : ""}`}
                 aria-pressed={e.sparrate === betrag}
-                onClick={() => setze({ sparrate: betrag })}
+                onClick={() => {
+                  if (betrag > REGLER_MAX) setWeiterRegler(true);
+                  setze({ sparrate: betrag });
+                }}
               >
                 {E(betrag)}
+                {marke && <small>{t.schnell[marke]}</small>}
               </button>
             ))}
           </div>
@@ -168,11 +192,13 @@ export function Calculator({ lang, kompakt = false }: { lang: Lang; kompakt?: bo
             <NumberField
               id="rentenalter" lang={lang} label={t.rentenalter} unit={t.alterEinheit} sliderLabel={t.regler}
               value={e.rentenalter} min={grenzen.rentenalter.min} max={grenzen.rentenalter.max} step={1}
+              info={t.info.rentenalter} infoLabel={t.infoZeigen}
               onChange={(rentenalter) => setze({ rentenalter })}
             />
             <NumberField
               id="startkapital" lang={lang} label={t.startkapital} unit="€" sliderLabel={t.regler}
               value={roh.startkapital} min={grenzen.startkapital.min} max={grenzen.startkapital.max} step={grenzen.startkapital.schritt}
+              info={t.info.startkapital} infoLabel={t.infoZeigen}
               onChange={(startkapital) => setze({ startkapital })}
             />
             <NumberField
@@ -184,22 +210,26 @@ export function Calculator({ lang, kompakt = false }: { lang: Lang; kompakt?: bo
             <NumberField
               id="kosten" lang={lang} label={t.kostenFeld} unit="%" scale={100} decimals={2} sliderLabel={t.regler}
               value={roh.kosten} min={grenzen.kosten.min} max={grenzen.kosten.max} step={grenzen.kosten.schritt}
+              info={t.info.kosten} infoLabel={t.infoZeigen}
               onChange={(kosten) => setze({ kosten })}
             />
             <NumberField
               id="dynamik" lang={lang} label={t.dynamik} unit="%" scale={100} decimals={1} sliderLabel={t.regler}
               value={roh.dynamik} min={grenzen.dynamik.min} max={grenzen.dynamik.max} step={grenzen.dynamik.schritt}
+              info={t.info.dynamik} infoLabel={t.infoZeigen}
               onChange={(dynamik) => setze({ dynamik })}
             />
             <NumberField
               id="inflation" lang={lang} label={t.inflation} unit="%" scale={100} decimals={2} sliderLabel={t.regler}
               value={roh.inflation} min={grenzen.inflation.min} max={grenzen.inflation.max} step={grenzen.inflation.schritt}
+              info={t.info.inflation} infoLabel={t.infoZeigen}
               onChange={(inflation) => setze({ inflation })}
             />
             {e.foerderung.kinder > 0 && (
               <NumberField
                 id="kindergeldjahre" lang={lang} label={t.kindergeldJahre} unit={t.alterEinheit} sliderLabel={t.regler}
                 value={roh.foerderung.kindergeldJahre} min={grenzen.kindergeldJahre.min} max={grenzen.kindergeldJahre.max} step={1}
+                info={t.info.kindergeldJahre} infoLabel={t.infoZeigen}
                 onChange={(kindergeldJahre) => setzeFoerderung({ kindergeldJahre })}
               />
             )}
@@ -209,7 +239,7 @@ export function Calculator({ lang, kompakt = false }: { lang: Lang; kompakt?: bo
             </label>
           </div>
           <div className="btn-row" style={{ marginTop: "var(--s-5)" }}>
-            <button type="button" className="btn btn--ghost" onClick={() => setRoh(START)}>{t.zuruecksetzen}</button>
+            <button type="button" className="btn btn--ghost" onClick={() => { setRoh(START); setWeiterRegler(false); }}>{t.zuruecksetzen}</button>
           </div>
           <p className="small muted" style={{ marginTop: "var(--s-4)" }}>
             {t.nichtDrin} <Link href={pfad(lang, "/quellen-methodik")}>{t.methodik}</Link>
@@ -301,6 +331,14 @@ export function Calculator({ lang, kompakt = false }: { lang: Lang; kompakt?: bo
             {mitZulagen && <li><i style={{ background: FARBEN.zulage }} />{t.vomStaat} <b>{E(ergebnis.zulagen)}</b></li>}
             <li><i style={{ background: FARBEN.zuwachs }} />{t.wachstum} <b>{E(ergebnis.wertzuwachs)}</b></li>
           </ul>
+
+          {auszahlung > 0 && e.rentenalter < PLAN_BIS && (
+            <div className="auszahlung">
+              <p className="auszahlung__label">{t.auszahlung.label}</p>
+              <p className="auszahlung__zahl">{E(auszahlung)} <span>{t.auszahlung.proMonat}</span></p>
+              <p className="block__klein">{t.auszahlung.text(e.rentenalter, PLAN_BIS)}</p>
+            </div>
+          )}
 
           <p className="block__text">{t.erklaerung}</p>
           <p className="block__klein">

@@ -212,7 +212,7 @@ export const artikelB: Artikel[] = [
       { t: "h2", x: "Vorzeitige Entnahme" },
       { t: "p", x: "Wird gefördertes Kapital nicht für die Altersvorsorge verwendet, spricht das Gesetz von schädlicher Verwendung. Dann müssen Zulagen und Steuervorteile in der Regel zurückgezahlt werden." },
       { t: "h2", x: "Was unser Rechner hier nicht kann" },
-      { t: "p", x: "Der [Rechner](/rechner) endet mit dem modellierten Endkapital. Er berechnet weder eine monatliche Rente noch Steuern oder Sozialabgaben auf die Auszahlungen, weil das von deinem Vertrag und deiner persönlichen Situation im Ruhestand abhängt." },
+      { t: "p", x: `Der [Rechner](/rechner) zeigt zum modellierten Endkapital nur eine grobe monatliche Auszahlung: Er teilt das Endkapital gleichmäßig auf die Monate bis ${F.planBis} auf – ohne weiteres Wachstum. Er berechnet weder eine lebenslange Rente noch Steuern oder Sozialabgaben auf die Auszahlungen, weil das von deinem Vertrag und deiner persönlichen Situation im Ruhestand abhängt.` },
     ],
   },
   {
@@ -288,7 +288,7 @@ export const artikelB: Artikel[] = [
       { t: "ul", items: [
         "Er kennt die Zukunft nicht: Die Rendite ist deine Annahme.",
         "Er zeigt keine Schwankungen, sondern einen gleichmäßigen Verlauf.",
-        "Er berechnet keine Rente, keine Steuern und keine persönliche Rentenlücke.",
+        "Er berechnet keine Steuern und keine persönliche Rentenlücke. Die monatliche Auszahlung schätzt er nur grob.",
         "Er prüft nicht, ob du förderberechtigt bist.",
       ] },
     ],

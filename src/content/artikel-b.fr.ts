@@ -222,7 +222,7 @@ export const artikelBFr: Artikel[] = [
       { t: "h2", x: "Retrait anticipé" },
       { t: "p", x: "Si le capital aidé n'est pas utilisé pour la retraite, la loi parle d'utilisation préjudiciable (schädliche Verwendung). Dans ce cas, les primes et les avantages fiscaux doivent en général être remboursés." },
       { t: "h2", x: "Ce que notre simulateur ne sait pas faire ici" },
-      { t: "p", x: "Le [simulateur](/rechner) s'arrête au capital final modélisé. Il ne calcule ni une retraite mensuelle, ni les impôts ou les cotisations sociales sur les versements, car cela dépend de ton contrat et de ta situation personnelle à la retraite." },
+      { t: "p", x: `À côté du capital final modélisé, le [simulateur](/rechner) montre seulement un versement mensuel approximatif : il répartit le capital final de façon égale sur les mois jusqu'à ${F.planBis} ans – sans croissance supplémentaire. Il ne calcule ni une rente à vie, ni les impôts ou les cotisations sociales sur les versements, car cela dépend de ton contrat et de ta situation personnelle à la retraite.` },
     ],
   },
   {
@@ -298,7 +298,7 @@ export const artikelBFr: Artikel[] = [
       { t: "ul", items: [
         "Il ne connaît pas l'avenir : le rendement est ton hypothèse.",
         "Il ne montre pas de variations, mais une évolution régulière.",
-        "Il ne calcule ni retraite, ni impôts, ni manque personnel à la retraite.",
+        "Il ne calcule ni impôts ni manque personnel à la retraite. Le versement mensuel n'est qu'une estimation approximative.",
         "Il ne vérifie pas si tu as droit à l'aide.",
       ] },
     ],

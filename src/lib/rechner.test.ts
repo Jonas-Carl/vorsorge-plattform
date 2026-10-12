@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { berechne, berechneSzenarien, bereinigeEingabe, standardEingabe, type RechnerEingabe } from "./rechner";
+import { berechne, berechneSzenarien, bereinigeEingabe, monatlicheAuszahlung, standardEingabe, type RechnerEingabe } from "./rechner";
 import { berechneZulage } from "./foerderung";
 import { euro, prozent } from "./format";
 import { maxGrundzulage, reform2027, regelwerkFuerBeitragsjahr } from "@/config/foerderung";
@@ -135,6 +135,21 @@ describe("Rechner – Eingabegrenzen und ungültige Werte", () => {
     const r = berechne({ ...basis, sparrate: Number.NaN, startkapital: Number.NaN, rendite: Number.NaN });
     expect(Number.isFinite(r.endkapital)).toBe(true);
     expect(r.endkapital).toBe(0);
+  });
+});
+
+describe("Grobe monatliche Auszahlung", () => {
+  it("verteilt das Kapital gleichmäßig auf die Monate bis zum Endalter", () => {
+    expect(monatlicheAuszahlung(216_000, 67, 85)).toBeCloseTo(1000, 9);
+    expect(monatlicheAuszahlung(180_000, 70, 85)).toBeCloseTo(1000, 9);
+  });
+
+  it("liefert 0 statt unsinniger Werte", () => {
+    expect(monatlicheAuszahlung(0, 67, 85)).toBe(0);
+    expect(monatlicheAuszahlung(-500, 67, 85)).toBe(0);
+    expect(monatlicheAuszahlung(100_000, 85, 85)).toBe(0);
+    expect(monatlicheAuszahlung(100_000, 90, 85)).toBe(0);
+    expect(monatlicheAuszahlung(Number.NaN, 67, 85)).toBe(0);
   });
 });
 
