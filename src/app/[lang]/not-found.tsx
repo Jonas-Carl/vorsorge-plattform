@@ -2,11 +2,11 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { pfad, type Lang } from "@/i18n";
+import { pfad, spracheAusPfad } from "@/i18n";
 import { texte } from "@/i18n/texte";
 
 export default function NichtGefunden() {
-  const lang: Lang = usePathname().startsWith("/en") ? "en" : "de";
+  const lang = spracheAusPfad(usePathname());
   const t = texte(lang).nichtGefunden;
   return (
     <section className="section">

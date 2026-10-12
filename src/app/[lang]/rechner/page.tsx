@@ -12,7 +12,7 @@ export async function generateMetadata({ params }: LangParams): Promise<Metadata
   if (!istSprache(lang)) return {};
   const t = texte(lang);
   return {
-    title: lang === "en" ? "Calculator: how much could add up for you?" : "Rechner: Wie viel kommt bei dir zusammen?",
+    title: t.rechner.metaTitel,
     description: t.rechner.seitenText,
     alternates: alternativen(lang, "/rechner"),
   };

@@ -46,6 +46,27 @@ const T = {
     offen:
       "Still open: do we need a licence or registration under German trade law for putting people in touch with partners? And would it have to be listed here? That is part of the legal review, which is still under way.",
   },
+  fr: {
+    metaTitel: "Mentions légales",
+    eyebrow: "Mentions",
+    titel: "Mentions légales (Impressum)",
+    krume: "Mentions légales",
+    platzhalter:
+      "Ces mentions légales ne sont pas encore complètes. La loi allemande impose certaines informations (§ 5 DDG et § 18 MStV – ce sont les règles sur qui se trouve derrière un site web). Ces informations obligatoires doivent être remplies avec les vraies données de l'entreprise et vérifiées juridiquement avant la mise en ligne. D'ici là, le site ne doit pas être exploité publiquement.",
+    angaben: [
+      ["Éditeur (nom / société, forme juridique)", "[BETREIBER_NAME_UND_RECHTSFORM]"],
+      ["Adresse", "[BETREIBER_ANSCHRIFT]"],
+      ["Qui peut représenter l'entreprise (représentants légaux)", "[VERTRETUNGSBERECHTIGTE]"],
+      ["E-mail", "[KONTAKT_EMAIL]"],
+      ["Téléphone ou autre moyen de contact rapide", "[KONTAKT_TELEFON]"],
+      ["Tribunal d'enregistrement et numéro de registre", "[HANDELSREGISTER]"],
+      ["Numéro d'identification TVA", "[UST_ID]"],
+      ["Responsable du contenu (§ 18 Abs. 2 MStV)", "[VERANTWORTLICHE_PERSON_MIT_ANSCHRIFT]"],
+      ["Autorité de contrôle compétente / autorisations (si nécessaire)", "[AUFSICHT_UND_ERLAUBNISSE]"],
+    ],
+    offen:
+      "Encore ouvert : avons-nous besoin d'une autorisation ou d'un enregistrement selon le droit allemand des métiers pour mettre des personnes en contact ? Et devrait-il figurer ici ? Cela fait partie de l'examen juridique, qui est encore en cours.",
+  },
 } satisfies Record<Lang, unknown>;
 
 export async function generateMetadata({ params }: LangParams): Promise<Metadata> {

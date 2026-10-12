@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import type { Lang } from "@/lib/format";
+import { loc, type Lang } from "@/lib/format";
 
 type Props = {
   id: string;
@@ -34,7 +34,7 @@ export function NumberField({
   const [entwurf, setEntwurf] = useState<string | null>(null);
 
   const anzeige = (v: number) =>
-    new Intl.NumberFormat(lang === "en" ? "en-GB" : "de-DE", {
+    new Intl.NumberFormat(loc(lang), {
       minimumFractionDigits: 0, maximumFractionDigits: decimals, useGrouping: false,
     }).format(v * scale);
   const begrenze = (v: number) => Math.min(max, Math.max(min, v));

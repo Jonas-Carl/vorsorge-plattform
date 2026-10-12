@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { Block } from "@/content/typen";
 import { pfad, type Lang } from "@/i18n";
+import { texte } from "@/i18n/texte";
 
 /** Wandelt **fett** und [Text](/pfad) in React-Elemente um; interne Links erhalten das Sprachpräfix. */
 export function Inline({ text, lang }: { text: string; lang: Lang }) {
@@ -25,7 +26,7 @@ export function Inline({ text, lang }: { text: string; lang: Lang }) {
 }
 
 export function ArticleBody({ bloecke, lang }: { bloecke: Block[]; lang: Lang }) {
-  const beispielLabel = lang === "en" ? "Worked example" : "Rechenbeispiel";
+  const beispielLabel = texte(lang).allgemein.rechenbeispiel;
   return (
     <div className="prose">
       {bloecke.map((b, i) => {

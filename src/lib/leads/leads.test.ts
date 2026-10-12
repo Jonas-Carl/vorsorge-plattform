@@ -117,6 +117,17 @@ describe("Verarbeitung der Kontaktanfrage", () => {
     expect(ohne.antwort).toMatchObject({ ok: false, meldung: expect.stringContaining("not saved") });
   });
 
+  it("französische Anfragen erhalten französische Meldungen und einen französischen Bestätigungswortlaut", async () => {
+    const repo = speicher();
+    const fehler = pruefeAnfrage({ sprache: "fr" });
+    expect(!fehler.ok && fehler.fehler.email).toBe("Indique ton adresse e-mail, s'il te plaît.");
+    await verarbeiteAnfrage({ ...gueltig(), sprache: "fr" }, { repo });
+    expect(repo.leads[0]!.sprache).toBe("fr");
+    expect(repo.leads[0]!.einwilligungen[0]!.wortlaut).toContain("ne sont transmises à personne d'autre");
+    const ohne = await verarbeiteAnfrage({ ...gueltig(), sprache: "fr" }, { repo: null });
+    expect(ohne.antwort).toMatchObject({ ok: false, meldung: expect.stringContaining("ni enregistrées ni transmises") });
+  });
+
   it("ohne Speicher wird kein Erfolg vorgetäuscht", async () => {
     const { status, antwort } = await verarbeiteAnfrage(gueltig(), { repo: null });
     expect(status).toBe(503);

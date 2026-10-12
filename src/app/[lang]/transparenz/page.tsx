@@ -90,6 +90,48 @@ const T = {
     beratung: (n: string) =>
       `${n} does not give advice on investments, insurance, tax or law. We also do not arrange contracts ourselves. The partner in question is responsible for advice and for arranging contracts – within the limits of its licence.`,
   },
+  fr: {
+    metaTitel: "Comment nous gagnons de l'argent",
+    metaText:
+      "De quoi vit ce site, comment des partenaires pourraient nous payer plus tard et comment nous parlons ouvertement de notre propre intérêt.",
+    eyebrow: "En toute franchise",
+    titel: "Comment nous gagnons de l'argent",
+    heroText:
+      "Le simulateur et les articles ne te coûtent rien. Ici, tu lis de quoi ce site doit vivre plus tard – et ce que cela veut dire pour toi.",
+    krume: "Comment nous gagnons de l'argent",
+    standTitel: "La situation aujourd'hui",
+    stand: (n: string) =>
+      `Il n'y a pas encore de partenaires. Pour l'instant, ${n} ne reçoit pas d'argent de prestataires ou d'intermédiaires – rien du tout.`,
+    modellTitel: "Comment cela doit fonctionner plus tard",
+    modell: (n: string) =>
+      `${n} est une offre commerciale. Cela veut dire : nous voulons gagner de l'argent avec. Plus tard, des partenaires nous paieront quand tu enverras de ton plein gré, par notre formulaire, une demande à l'un d'eux. Cela ne te coûte rien.`,
+    modelleTitel: "Trois façons possibles d'être payés",
+    modelleText: "La façon qui s'applique dépend de ce que nous convenons avec chaque partenaire :",
+    spalteModell: "Type",
+    spalteWann: "Quand nous recevons de l'argent",
+    modelle: [
+      ["Paiement pour chaque demande adaptée", "quand une demande respecte des règles de qualité fixées et écrites, et qu'elle est arrivée chez le partenaire"],
+      ["Paiement pour chaque mise en relation réussie", "quand la demande aboutit vraiment à un contact ou à un rendez-vous"],
+      ["Commission à la signature d'un contrat", "quand tu signes un contrat avec le partenaire et que le contrat est confirmé"],
+    ],
+    nennenVor:
+      "Dès que des partenaires seront fixés, nous dirons pour chacun quel type s'applique. Ce sera écrit dans la note de transparence – sur la ",
+    nennenLink: "page des partenaires",
+    nennenNach: " et dans le formulaire de demande.",
+    inhalteTitel: "Ce que cela veut dire pour nos textes et le simulateur",
+    inhalte: [
+      "Les articles et le simulateur sont réalisés sans influence des partenaires. Ils ne citent aucun produit précis.",
+      "Le simulateur ne favorise aucun produit. Il ne mène pas non plus de lui-même à une demande.",
+      "Nous n'appelons aucun prestataire « le meilleur » ou « le moins cher » s'il n'existe pas de preuve actuelle et vérifiable.",
+      "Ce que paie un partenaire ne décide pas de la façon ni de l'ordre dans lesquels nous montrons les partenaires. Si nous mettons quand même un jour un partenaire en avant pour des raisons d'argent, nous l'indiquerons clairement.",
+    ],
+    konfliktTitel: "Notre propre intérêt – en toute franchise",
+    konflikt:
+      "Nous gagnons de l'argent quand des demandes sont envoyées. On appelle cela un conflit d'intérêts. C'est pourquoi ceci est important pour nous : tu reçois toutes les informations et tous les résultats de calcul en entier, sans donner tes coordonnées. Tu peux aussi obtenir des renseignements indépendants et gratuits auprès de l'assurance retraite allemande (Deutsche Rentenversicherung). Les centres de défense des consommateurs (Verbraucherzentralen) conseillent indépendamment des prestataires, mais c'est payant.",
+    beratungTitel: "Nous ne donnons pas de conseil",
+    beratung: (n: string) =>
+      `${n} ne donne pas de conseil sur les placements, les assurances, les impôts ou le droit. Nous ne vendons pas non plus de contrats nous-mêmes. Le partenaire concerné est responsable du conseil et de la vente – dans le cadre de son agrément.`,
+  },
 } satisfies Record<Lang, unknown>;
 
 export async function generateMetadata({ params }: LangParams): Promise<Metadata> {

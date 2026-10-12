@@ -49,13 +49,16 @@ Umgebungsvariablen: siehe `.env.example`. Für die lokale Entwicklung ist keine 
 - **Ehrliche Zustände:** Ohne Speicher antwortet die API mit 503 statt mit einem Scheinerfolg;
   eine Partner-Übergabe gilt nur bei bestätigter Annahme (HTTP 2xx) als erfolgreich.
 
-## Zwei Sprachen und einfache Sprache
+## Drei Sprachen und einfache Sprache
 
-- Alle Seiten liegen unter `src/app/[lang]/` und sind als `/de/...` und `/en/...` erreichbar; `/` leitet auf `/de` weiter.
-- Oberflächentexte: `src/i18n/de.ts` und `src/i18n/en.ts` (gleiche Struktur). Artikel: `src/content/artikel-*.ts` (deutsch) und `artikel-*.en.ts` (englisch).
+- Alle Seiten liegen unter `src/app/[lang]/` und sind als `/de/...`, `/en/...` und `/fr/...` erreichbar; `/` leitet auf `/de` weiter.
+- Oberflächentexte: `src/i18n/de.ts`, `en.ts` und `fr.ts` (gleiche Struktur, `de.ts` gibt den Typ vor). Artikel: `src/content/artikel-*.ts` (deutsch), `artikel-*.en.ts` (englisch) und `artikel-*.fr.ts` (französisch). Startseiten-FAQ und Themenseiten auf Französisch: `src/content/start.fr.ts`.
+- Texte einzelner Seiten (Impressum, Datenschutz, Transparenz …) stehen als `T = { de, en, fr }` direkt in der jeweiligen `page.tsx`.
+- Neue Sprache ergänzen: `Lang` und `LOCALE` in `src/lib/format.ts`, `sprachen` und `sprachName` in `src/i18n/index.ts` erweitern – der Typcheck zeigt danach jede Stelle, an der Texte fehlen.
 - Leitlinie für Texte: kurze Sätze, keine Fachwörter ohne Erklärung – ein zehnjähriges Kind soll verstehen, worum es geht. Jeder Artikel hat dafür das Feld `einfach` („Kurz gesagt“).
 - Der Rechner (`src/components/Calculator.tsx`) stellt drei Fragen und trennt „Das steht fest“ (Beitrag, gesetzlicher Zuschuss, gesetzlicher Kostendeckel von 1 %) von „Das weiß niemand vorher“ (Wachstum als Beispiel).
-- Die englischen Texte sind eine Arbeitsübersetzung; englische Bezeichnungen deutscher Rechtsbegriffe sind nicht amtlich.
+- Die englischen und französischen Texte sind Arbeitsübersetzungen; fremdsprachige Bezeichnungen deutscher Rechtsbegriffe sind nicht amtlich. Maßgeblich ist die deutsche Fassung.
+- Französisch: Du-Form („tu“), geschützte Leerzeichen vor `? ! : ;` und in « ».
 
 ## Neue Inhalte
 

@@ -58,6 +58,32 @@ const T = {
     platzhalter: (n: string) =>
       `Details about the operator, the team and who is responsible for the content (names, qualifications) are still missing. We do not make them up. They will be added before the site goes live – based on how the company is really set up. “${n}” is a working title.`,
   },
+  fr: {
+    metaTitel: "À propos",
+    metaText: (n: string) =>
+      `Ce que défend ${n} : l'épargne retraite expliquée simplement, avec des sources ouvertes. Et nous disons ouvertement comment nous gagnons de l'argent.`,
+    eyebrow: "À propos",
+    titel: "L'épargne retraite n'a pas besoin de sembler compliquée",
+    heroText: (n: string) =>
+      `${n} explique l'épargne retraite privée pour que tu la comprennes sans rien savoir avant. Et nous montrons ouvertement comment nous calculons.`,
+    krume: "À propos",
+    sindTitel: "Ce que nous sommes",
+    sind:
+      "Un site d'information privé sur l'épargne retraite en Allemagne. Nous voulons gagner de l'argent avec (offre commerciale). Nous expliquons. Nous calculons des exemples. Et si tu le veux, nous te mettons en contact avec des partenaires.",
+    nichtTitel: "Ce que nous ne sommes pas",
+    nicht:
+      "Nous ne sommes pas une administration. Nous ne sommes pas un organisme de l'assurance retraite légale. Et nous ne sommes pas un comparateur officiel. Nous ne te donnons pas de conseil personnel. Nous ne vendons pas non plus de contrats nous-mêmes.",
+    messenTitel: "Ce sur quoi tu peux nous juger",
+    verstaendlich: ["Compréhensible :", "des phrases courtes, des mots techniques expliqués, des exemples concrets."],
+    belegt: ["Prouvé :", "ce que nous disons sur les lois a une source officielle et une date – voir "],
+    belegtLink: "Sources et méthodes",
+    ehrlich: ["Honnête quand quelque chose est incertain :", "une hypothèse, nous l'appelons hypothèse. Ce qui est encore ouvert, nous l'indiquons comme ouvert."],
+    geld: ["Ouvert sur l'argent :", "ce dont nous vivons est expliqué sous "],
+    geldLink: "Comment nous gagnons de l'argent",
+    daten: ["Économe en données :", "pas de suivi sans ton accord. Tu n'as pas besoin de donner de coordonnées pour voir les résultats du simulateur."],
+    platzhalter: (n: string) =>
+      `Les informations sur l'exploitant, sur l'équipe et sur les personnes responsables des textes (noms, qualifications) manquent encore. Nous ne les inventons pas. Elles seront ajoutées avant la mise en ligne – telles que l'entreprise est réellement organisée. « ${n} » est un nom de travail.`,
+  },
 } satisfies Record<Lang, unknown>;
 
 export async function generateMetadata({ params }: LangParams): Promise<Metadata> {

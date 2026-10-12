@@ -49,7 +49,7 @@ const alt = riester2026;
 /**
  * Formatierte Förderwerte für Texte. Artikel verwenden ausschließlich diese
  * Werte – so bleibt config/foerderung.ts die einzige Quelle für Zahlen.
- * `F` ist deutsch formatiert, `FE` englisch.
+ * `F` ist deutsch formatiert, `FE` englisch, `FF` französisch.
  */
 export function makeF(lang: Lang) {
   const euro = (x: number) => euroL(x, lang);
@@ -92,3 +92,4 @@ export function makeF(lang: Lang) {
 
 export const F = makeF("de");
 export const FE = makeF("en");
+export const FF = makeF("fr");

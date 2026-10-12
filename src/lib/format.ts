@@ -1,6 +1,9 @@
-export type Lang = "de" | "en";
+export type Lang = "de" | "en" | "fr";
 
-const loc = (lang: Lang) => (lang === "en" ? "en-GB" : "de-DE");
+const LOCALE: Record<Lang, string> = { de: "de-DE", en: "en-GB", fr: "fr-FR" };
+
+/** BCP-47-Kennung für Intl-Formatierung, z. B. "fr" → "fr-FR". */
+export const loc = (lang: Lang) => LOCALE[lang];
 
 /** Euro ohne Nachkommastellen, z. B. „12.345 €“ (de) bzw. „€12,345“ (en). */
 export function euro(x: number, lang: Lang = "de"): string {
@@ -21,13 +24,18 @@ export function prozent(anteil: number, maxStellen = 2, lang: Lang = "de"): stri
   return new Intl.NumberFormat(loc(lang), { style: "percent", minimumFractionDigits: 0, maximumFractionDigits: maxStellen }).format(anteil);
 }
 
-/** Kompakte Achsenbeschriftung, z. B. 150000 → „150 Tsd. €“ / „€150k“. */
+/** Kompakte Achsenbeschriftung, z. B. 150000 → „150 Tsd. €“ / „€150k“ / „150 k€“. */
 export function euroKompakt(x: number, lang: Lang = "de"): string {
   const z = (v: number, s = 0) => new Intl.NumberFormat(loc(lang), { maximumFractionDigits: s }).format(v);
   if (lang === "en") {
     if (Math.abs(x) >= 1_000_000) return `€${z(x / 1_000_000, 1)}m`;
     if (Math.abs(x) >= 1000) return `€${z(x / 1000)}k`;
     return `€${z(x)}`;
+  }
+  if (lang === "fr") {
+    if (Math.abs(x) >= 1_000_000) return `${z(x / 1_000_000, 1)} M€`;
+    if (Math.abs(x) >= 1000) return `${z(x / 1000)} k€`;
+    return `${z(x)} €`;
   }
   if (Math.abs(x) >= 1_000_000) return `${z(x / 1_000_000, 1)} Mio. €`;
   if (Math.abs(x) >= 1000) return `${z(x / 1000)} Tsd. €`;

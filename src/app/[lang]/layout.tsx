@@ -7,6 +7,7 @@ import { Header } from "@/components/Header";
 import { site } from "@/config/site";
 import { alternativen, istSprache, statischeSprachen, type LangParams } from "@/i18n";
 import { texte } from "@/i18n/texte";
+import { loc } from "@/lib/format";
 import "../globals.css";
 import "../einfach.css";
 
@@ -28,7 +29,7 @@ export async function generateMetadata({ params }: LangParams): Promise<Metadata
     alternates: alternativen(lang, "/"),
     openGraph: {
       type: "website",
-      locale: lang === "en" ? "en_GB" : "de_DE",
+      locale: loc(lang).replace("-", "_"),
       siteName: site.name,
       title: `${site.name} – ${t.meta.claim}`,
       description: t.meta.beschreibung,

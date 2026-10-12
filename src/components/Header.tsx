@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { site } from "@/config/site";
-import { pfad, sprachen, wechslePfad, type Lang } from "@/i18n";
+import { pfad, sprachen, sprachName, wechslePfad, type Lang } from "@/i18n";
 import { texte } from "@/i18n/texte";
 import { Icon, LogoMark } from "./Icon";
 
@@ -56,7 +56,7 @@ export function Header({ lang }: { lang: Lang }) {
                 hrefLang={s}
                 lang={s}
                 aria-current={s === lang ? "true" : undefined}
-                aria-label={s === "de" ? "Deutsch" : "English"}
+                aria-label={sprachName[s]}
                 onClick={() => setOffen(false)}
               >
                 {s.toUpperCase()}

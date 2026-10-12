@@ -35,6 +35,7 @@ export const de = {
     kurzGesagt: "Kurz gesagt",
     platzhalterTitel: "Vor dem Start der Seite zu ergänzen",
     redaktion: "Redaktion",
+    rechenbeispiel: "Rechenbeispiel",
   },
   kategorien: {
     Grundlagen: "Grundlagen",
@@ -121,6 +122,7 @@ export const de = {
     ctaZweit: "Erst mehr lesen",
   },
   rechner: {
+    metaTitel: "Rechner: Wie viel kommt bei dir zusammen?",
     seitenTitel: "Wie viel kommt bei dir zusammen?",
     seitenText: "Beantworte drei Fragen. Du siehst sofort, wie viel du sparst, was der Staat dazulegt und was daraus werden kann.",
     hinweis: "Das ist eine Beispiel-Rechnung, keine Vorhersage. Deine Angaben bleiben auf deinem Gerät. Wir bekommen sie nicht.",

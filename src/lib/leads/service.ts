@@ -15,6 +15,11 @@ const M = {
     unvollstaendig: "The request was incomplete. Please reload the page.",
     keinSpeicher: "At the moment we cannot technically accept questions yet. Your details were not saved and not passed on.",
   },
+  fr: {
+    ungueltig: "La demande n'a pas pu être traitée. Recharge la page et réessaie.",
+    unvollstaendig: "La demande était incomplète. Recharge la page, s'il te plaît.",
+    keinSpeicher: "Pour l'instant, nous ne pouvons techniquement pas encore recevoir de questions. Tes données n'ont été ni enregistrées ni transmises.",
+  },
 } as const;
 
 /** Aufbewahrung offener Anfragen bis zur Löschung (Vorschlag – rechtlich zu prüfen). */

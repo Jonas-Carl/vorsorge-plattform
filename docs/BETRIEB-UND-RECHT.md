@@ -83,7 +83,10 @@ später ggf. Werbekonten (Meta, Google Ads) und ein einwilligungsbasiertes Analy
 7. **Barrierefreiheit (BFSG).** Prüfen, ob das Angebot erfasst ist; unabhängig davon vollständiges
    WCAG-2.2-AA-Audit inkl. Screenreader-Test und ggf. Erklärung zur Barrierefreiheit.
 8. **Marke.** Recherche zu „Morgenplan“ (DPMA/EUIPO, Domains, Firmennamen).
-9. **Fachliche Abnahme.** Die Förderparameter wurden am Gesetzestext (BGBl. 2026 I Nr. 156)
+9. **Übersetzungen.** Die englische und die französische Fassung sind Arbeitsübersetzungen ohne
+   muttersprachliche oder juristische Prüfung. Das betrifft auch den Bestätigungswortlaut im
+   Anfrageformular, der als Einwilligungsnachweis gespeichert wird. Vor dem Start prüfen lassen.
+10. **Fachliche Abnahme.** Die Förderparameter wurden am Gesetzestext (BGBl. 2026 I Nr. 156)
    geprüft. Vor dem Start sollte eine steuerlich fachkundige Person Artikel und Rechner abnehmen;
    danach bei jeder Rechtsänderung und mindestens jährlich.
 

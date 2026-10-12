@@ -34,6 +34,7 @@ const VORSCHAU = process.env.NEXT_PUBLIC_DEMO === "1";
 const VORSCHAU_TEXT = {
   de: "Das ist nur eine Vorschau der Seite. Hier kann noch nichts abgeschickt werden. Deine Angaben wurden nicht gespeichert und nicht übertragen.",
   en: "This is only a preview of the site. Nothing can be sent here yet. Your details were not saved and not transmitted.",
+  fr: "Ceci n'est qu'un aperçu du site. Rien ne peut encore être envoyé ici. Tes données n'ont été ni enregistrées ni transmises.",
 } as const;
 
 const REIHENFOLGE: (keyof Feldfehler)[] = [
@@ -51,6 +52,11 @@ const TECHNIK = {
     zu_viele_anfragen: "That was too many attempts in a short time. Please wait a few minutes.",
     serverfehler: "There was a technical error. Your question was not saved. Please try again later.",
     ungueltige_anfrage: "That did not work. Please reload the page and try again.",
+  },
+  fr: {
+    zu_viele_anfragen: "Trop d'essais en peu de temps. Attends quelques minutes, s'il te plaît.",
+    serverfehler: "Il y a eu une erreur technique. Ta question n'a pas été enregistrée. Réessaie plus tard.",
+    ungueltige_anfrage: "Cela n'a pas fonctionné. Recharge la page et réessaie.",
   },
 } as const;
 
@@ -307,7 +313,7 @@ export function LeadForm({ lang }: { lang: Lang }) {
             <dt>{t.boxWozu}</dt>
             <dd>{t.boxWozuText}{anPartner ? t.boxWozuPartner : ""}</dd>
             <dt>{t.boxDanach}</dt>
-            <dd>{t.boxDanachText(weg.replace(/^(Per|By) /, ""))}</dd>
+            <dd>{t.boxDanachText(weg.replace(/^(Per|By|Par) /, ""))}</dd>
             <dt>{t.boxDatenschutz}</dt>
             <dd>
               <Link href={pfad(lang, "/datenschutz")}>{texte(lang).footer.links.datenschutz}</Link>

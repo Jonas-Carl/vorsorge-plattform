@@ -8,7 +8,7 @@ export const EINWILLIGUNGSTEXT_VERSION = "2026-10-11.2";
 export const ANLIEGEN: Anliegen[] = ["allgemein", "reform-2027", "foerderung", "familie", "bestehender-vertrag"];
 export const KONTAKTZEITEN: Kontaktzeit[] = ["egal", "vormittags", "nachmittags", "abends"];
 
-export const sprache = (x: unknown): Lang => (x === "en" ? "en" : "de");
+export const sprache = (x: unknown): Lang => (x === "en" || x === "fr" ? x : "de");
 
 /** Name des Empfängers, wie er dem Nutzer angezeigt wird. Null = nicht auswählbar. */
 export function empfaengerName(id: string): string | null {
@@ -20,14 +20,19 @@ export function empfaengerName(id: string): string | null {
 /** Wortlaut der Bestätigung – wird exakt so angezeigt UND als Nachweis gespeichert. */
 export function einwilligungstext(empfaengerId: string, lang: Lang = "de"): string {
   if (empfaengerId === EMPFAENGER_PLATTFORM) {
-    return lang === "en"
-      ? `I would like ${site.name} to contact me about my question in the way I chose. My details are used only for this and are not passed on to anyone else.`
-      : `Ich möchte, dass ${site.name} sich zu meiner Frage bei mir meldet – auf dem Weg, den ich gewählt habe. Meine Angaben werden nur dafür verwendet und nicht an andere weitergegeben.`;
+    return {
+      de: `Ich möchte, dass ${site.name} sich zu meiner Frage bei mir meldet – auf dem Weg, den ich gewählt habe. Meine Angaben werden nur dafür verwendet und nicht an andere weitergegeben.`,
+      en: `I would like ${site.name} to contact me about my question in the way I chose. My details are used only for this and are not passed on to anyone else.`,
+      fr: `Je souhaite que ${site.name} me recontacte au sujet de ma question, par le moyen que j'ai choisi. Mes données servent uniquement à cela et ne sont transmises à personne d'autre.`,
+    }[lang];
   }
-  const name = empfaengerName(empfaengerId) ?? (lang === "en" ? "the chosen partner" : "den gewählten Partner");
-  return lang === "en"
-    ? `I agree that ${site.name} passes my contact details above and my question on to ${name}, so that ${name} can contact me about it in the way I chose. This consent is voluntary. I can withdraw it at any time for the future.`
-    : `Ich bin einverstanden, dass ${site.name} meine Kontaktdaten von oben und meine Frage an ${name} weitergibt, damit ${name} sich dazu bei mir meldet – auf dem Weg, den ich gewählt habe. Das ist freiwillig. Ich kann es jederzeit für die Zukunft widerrufen.`;
+  const ohneName = { de: "den gewählten Partner", en: "the chosen partner", fr: "le partenaire choisi" }[lang];
+  const name = empfaengerName(empfaengerId) ?? ohneName;
+  return {
+    de: `Ich bin einverstanden, dass ${site.name} meine Kontaktdaten von oben und meine Frage an ${name} weitergibt, damit ${name} sich dazu bei mir meldet – auf dem Weg, den ich gewählt habe. Das ist freiwillig. Ich kann es jederzeit für die Zukunft widerrufen.`,
+    en: `I agree that ${site.name} passes my contact details above and my question on to ${name}, so that ${name} can contact me about it in the way I chose. This consent is voluntary. I can withdraw it at any time for the future.`,
+    fr: `J'accepte que ${site.name} transmette mes coordonnées ci-dessus et ma question à ${name}, afin que ${name} me recontacte à ce sujet par le moyen que j'ai choisi. Ce consentement est facultatif. Je peux le retirer à tout moment pour l'avenir.`,
+  }[lang];
 }
 
 const MELDUNGEN = {
@@ -62,6 +67,22 @@ const MELDUNGEN = {
     empfaenger: "Please choose who your question should go to.",
     kontaktwegPartner: "This way of contact is not possible with the chosen partner.",
     einwilligung: "Please tick the box. Without your yes we cannot handle the question.",
+  },
+  fr: {
+    vornameFehlt: "Indique ton prénom, s'il te plaît.",
+    vornamePruefen: "Vérifie ton prénom, s'il te plaît.",
+    nachnameFehlt: "Indique ton nom, s'il te plaît.",
+    nachnamePruefen: "Vérifie ton nom, s'il te plaît.",
+    emailFehlt: "Indique ton adresse e-mail, s'il te plaît.",
+    emailPruefen: "Cette adresse e-mail semble incomplète. Un exemple : nom@exemple.fr",
+    kontaktweg: "Choisis comment nous devons te répondre.",
+    telefonFehlt: "Pour un appel, nous avons besoin de ton numéro de téléphone.",
+    telefonPruefen: "Écris le numéro uniquement avec des chiffres, des espaces et un + au début.",
+    kontaktzeit: "Choisis un moment, s'il te plaît.",
+    anliegen: "Choisis de quoi il s'agit.",
+    empfaenger: "Choisis à qui ta question doit être envoyée.",
+    kontaktwegPartner: "Ce moyen de contact n'est pas possible avec le partenaire choisi.",
+    einwilligung: "Coche la case, s'il te plaît. Sans ton accord, nous ne pouvons pas traiter la question.",
   },
 } satisfies Record<Lang, Record<string, string>>;
 

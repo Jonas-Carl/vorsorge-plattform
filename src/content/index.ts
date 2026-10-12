@@ -1,15 +1,20 @@
 import type { Lang } from "@/lib/format";
 import { artikelA } from "./artikel-a";
 import { artikelAEn } from "./artikel-a.en";
+import { artikelAFr } from "./artikel-a.fr";
 import { artikelB } from "./artikel-b";
 import { artikelBEn } from "./artikel-b.en";
+import { artikelBFr } from "./artikel-b.fr";
+import { landingpagesFr, startseitenFaqFr } from "./start.fr";
 import { makeF, type Artikel, type Kategorie } from "./typen";
 
 const artikelDe: Artikel[] = [...artikelA, ...artikelB];
 const artikelEn: Artikel[] = [...artikelAEn, ...artikelBEn];
+const artikelFr: Artikel[] = [...artikelAFr, ...artikelBFr];
+const ARTIKEL: Record<Lang, Artikel[]> = { de: artikelDe, en: artikelEn, fr: artikelFr };
 
 export function artikel(lang: Lang): Artikel[] {
-  return lang === "en" ? artikelEn : artikelDe;
+  return ARTIKEL[lang];
 }
 
 export function findeArtikel(slug: string, lang: Lang): Artikel | undefined {
@@ -24,6 +29,7 @@ export const kategorien: Kategorie[] = [
 
 /** Häufige Fragen der Startseite (auch als strukturierte Daten ausgegeben). */
 export function startseitenFaq(lang: Lang): { frage: string; antwort: string }[] {
+  if (lang === "fr") return startseitenFaqFr();
   const F = makeF(lang);
   if (lang === "en") {
     return [
@@ -70,6 +76,7 @@ export const landingpageSlugs = [
 ] as const;
 
 export function landingpages(lang: Lang): Landingpage[] {
+  if (lang === "fr") return landingpagesFr();
   const F = makeF(lang);
   const en = lang === "en";
   return [

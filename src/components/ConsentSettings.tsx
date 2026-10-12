@@ -37,6 +37,22 @@ const T = {
     zuletzt: (d: string) => `Last saved on ${d}.`,
     keine: "You have not saved a choice yet. Without a choice, everything that is not necessary stays off.",
   },
+  fr: {
+    noetigTitel: "Techniquement nécessaire",
+    noetigText:
+      "(toujours actif). Enregistre uniquement ton choix sur cette page – dans le stockage local de ton navigateur. Aucun cookie n'est déposé.",
+    statistikTitel: "Statistiques",
+    statistikVor:
+      "(désactivé par défaut). Cela nous permettrait de compter de façon anonyme quelles pages et fonctions sont utilisées.",
+    statistikKursiv: "Pour l'instant, aucun service de statistiques n'est intégré",
+    statistikNach:
+      "– même si tu l'actives, aucune donnée n'est collectée ni envoyée actuellement.",
+    speichern: "Enregistrer mon choix",
+    nurNoetig: "Seulement le nécessaire",
+    gespeichert: "Ton choix est enregistré.",
+    zuletzt: (d: string) => `Dernier enregistrement le ${d}.`,
+    keine: "Tu n'as pas encore enregistré de choix. Sans choix, tout ce qui n'est pas nécessaire reste désactivé.",
+  },
 } satisfies Record<Lang, unknown>;
 
 export function ConsentSettings({ lang }: { lang: Lang }) {

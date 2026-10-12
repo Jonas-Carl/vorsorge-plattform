@@ -47,6 +47,27 @@ const T = {
     datenschutzVor: "Privacy questions (access to your data, deletion, withdrawing consent): see ",
     datenschutzLink: "Privacy",
   },
+  fr: {
+    metaTitel: "Contact",
+    metaText:
+      "Comment nous joindre : pour des questions sur les textes, si tu trouves une erreur, pour des questions sur la protection des données ou si tu veux travailler avec nous.",
+    eyebrow: "Contact",
+    titel: "Comment nous joindre",
+    heroText:
+      "Tu as une question sur ta propre épargne retraite ? Alors utilise le formulaire de demande, s'il te plaît. Pour tout le reste, tu trouves ici le bon chemin.",
+    krume: "Contact",
+    frageTitel: "Questions sur l'épargne retraite",
+    frageText: "Tu veux en savoir plus ou parler à quelqu'un ? Envoie-nous une demande. Elle ne t'engage à rien.",
+    frageKnopf: "Poser une question",
+    fehlerTitel: "Erreurs ou remarques",
+    fehlerText: "Tu as trouvé une erreur dans un texte, ou une information n'est plus à jour ? Nous vérifions chaque remarque.",
+    koopTitel: "Collaboration et presse",
+    koopText: "Les prestataires, les intermédiaires et les médias peuvent nous joindre ici.",
+    platzhalter:
+      "Les adresses de contact (e-mail, adresse postale, peut-être téléphone) ne sont pas encore indiquées. Les mentions entre crochets doivent être remplacées par les vraies données de l'exploitant avant la mise en ligne.",
+    datenschutzVor: "Questions sur la protection des données (accès, suppression, retrait du consentement) : voir ",
+    datenschutzLink: "Protection des données",
+  },
 } satisfies Record<Lang, unknown>;
 
 export async function generateMetadata({ params }: LangParams): Promise<Metadata> {

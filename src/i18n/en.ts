@@ -32,6 +32,7 @@ export const en: Texte = {
     kurzGesagt: "In short",
     platzhalterTitel: "To be added before the site goes live",
     redaktion: "editorial team",
+    rechenbeispiel: "Worked example",
   },
   kategorien: {
     Grundlagen: "The basics",
@@ -116,6 +117,7 @@ export const en: Texte = {
     ctaZweit: "Read more first",
   },
   rechner: {
+    metaTitel: "Calculator: how much could add up for you?",
     seitenTitel: "How much could add up for you?",
     seitenText: "Answer three questions. You see straight away how much you save, what the state adds and what it could become.",
     hinweis: "This is an example calculation, not a forecast. Your entries stay on your device. We do not receive them.",

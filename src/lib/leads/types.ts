@@ -90,7 +90,7 @@ export type Lead = {
   attribution: Attribution;
   wertschoepfung: Wertschoepfung;
   /** Sprache, in der die Anfrage gestellt wurde (für die Antwort). */
-  sprache: "de" | "en";
+  sprache: "de" | "en" | "fr";
   /** Vom Client erzeugter Schlüssel zum Schutz vor Doppelübermittlung. */
   idempotenzSchluessel: string;
   /** Spätestes Löschdatum nach Löschkonzept (ISO). */
@@ -111,7 +111,7 @@ export type LeadAnfrage = {
   einwilligung?: unknown;
   idempotenzSchluessel?: unknown;
   attribution?: unknown;
-  /** Sprache der Oberfläche ("de" | "en") – bestimmt Meldungen und Bestätigungswortlaut. */
+  /** Sprache der Oberfläche ("de" | "en" | "fr") – bestimmt Meldungen und Bestätigungswortlaut. */
   sprache?: unknown;
   /** Honeypot – muss leer bleiben. */
   website?: unknown;

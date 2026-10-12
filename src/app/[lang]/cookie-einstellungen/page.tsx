@@ -30,6 +30,18 @@ const T = {
       "As long as you do not choose anything, nothing is stored or read that is not necessary. That is why we do not show a consent banner. More under ",
     hinweisLink: "Privacy",
   },
+  fr: {
+    metaTitel: "Réglages des cookies",
+    metaText: "Ce que ce site enregistre dans ton navigateur et comment tu modifies ton choix.",
+    eyebrow: "Mentions",
+    titel: "Réglages des cookies",
+    heroText:
+      "Ce site n'a besoin ni de cookies ni de suivi. Ici, tu vois ce qui est enregistré. Tu peux modifier ton choix à tout moment.",
+    krume: "Réglages des cookies",
+    hinweisVor:
+      "Tant que tu ne choisis rien, rien de ce qui n'est pas nécessaire n'est enregistré ni lu. C'est pourquoi nous n'affichons pas de bandeau de consentement. En savoir plus sous ",
+    hinweisLink: "Protection des données",
+  },
 } satisfies Record<Lang, unknown>;
 
 export async function generateMetadata({ params }: LangParams): Promise<Metadata> {

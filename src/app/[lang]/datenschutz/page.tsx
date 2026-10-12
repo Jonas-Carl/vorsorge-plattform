@@ -97,6 +97,51 @@ const T = {
       "You have these rights: access (you may ask what we have stored about you), correction, deletion, restriction of processing, data portability (you can take your data with you) and objection. You can withdraw consent at any time. This then applies for the future. You can also complain to a data protection supervisory authority.",
     kontakt: "Contact for privacy questions: ",
   },
+  fr: {
+    metaTitel: "Protection des données",
+    metaText: "Quelles données ce site traite, pourquoi et pendant combien de temps. Et quels sont tes droits.",
+    eyebrow: "Mentions",
+    titel: "Protection des données",
+    heroText: "Ce que ce site fait vraiment sur le plan technique – avec des mots simples.",
+    krume: "Protection des données",
+    platzhalter:
+      "Cette page décrit ce que l'application fait vraiment avec les données. Mais ce n'est pas encore une déclaration de protection des données complète selon l'art. 13 du RGPD (DSGVO) – la règle sur ce que l'on doit te dire à propos de tes données. Il manque entre autres : le nom et les coordonnées du responsable, un délégué à la protection des données si nécessaire, des informations sur l'hébergeur et sur les sous-traitants (des entreprises qui traitent des données pour notre compte) ainsi que les bases juridiques vérifiées. Avant la mise en ligne, un spécialiste doit vérifier cela.",
+    verantwortlichTitel: "Qui est responsable",
+    aufrufTitel: "Quand tu ouvres le site",
+    aufruf:
+      "Quand tu ouvres le site, le serveur web traite des données de connexion techniquement nécessaires. Par exemple : l'adresse IP, le moment et la page que tu demandes. Ce qui est exactement enregistré, et pendant combien de temps, dépend de l'hébergement : ",
+    schriften:
+      "Les polices viennent de notre propre serveur. Aucun fichier de police n'est chargé depuis d'autres entreprises. Aucun contenu externe, aucune carte ni vidéo ne sont intégrés.",
+    rechnerTitel: "Simulateur",
+    rechner:
+      "Le simulateur calcule entièrement dans ton navigateur. Ce que tu saisis n'est pas envoyé à notre serveur. Ce n'est pas enregistré. Et ce n'est pas relié à une demande.",
+    cookiesTitel: "Cookies et stockage dans le navigateur",
+    cookiesVor:
+      "Nous ne déposons pas de cookies. Dans le stockage local de ton navigateur, nous ne gardons qu'une chose : ton choix dans les ",
+    cookiesLink: "réglages des cookies",
+    cookiesNach:
+      " – et seulement quand tu y enregistres quelque chose. C'est techniquement nécessaire pour que nous puissions respecter ta décision.",
+    messungTitel: "Compter les visiteurs et publicité",
+    messung:
+      "Pour l'instant, aucun service d'analyse ni aucun service publicitaire n'est intégré. Aucune donnée ne part vers des réseaux sociaux ou des plateformes publicitaires. Si nous voulons un jour compter comment le site est utilisé (mesure d'audience), ce sera seulement avec ton accord. Et ce sera alors décrit ici.",
+    anfrageTitel: "Quand tu envoies une demande",
+    zeilen: {
+      welche: ["Quelles données", "Prénom, nom, adresse e-mail, moyen de contact choisi, ton sujet. Facultatif : numéro de téléphone, moment souhaité et message. En plus : la date et l'heure, le destinataire choisi et le texte exact de ta confirmation."],
+      nicht: ["Ce que nous n'enregistrons pas", "L'adresse IP et l'identifiant du navigateur dans la fiche de la demande, tes saisies dans le simulateur, des données sur le revenu ou la santé."],
+      zweck: ["Pour quoi faire", "Pour répondre à ta demande. Si tu as choisi un partenaire : pour la transmettre à ce partenaire précis, afin qu'il te contacte."],
+      grundlage: ["Base juridique (ce qui l'autorise)", "Il est prévu ceci : nous traitons les données parce que tu nous envoies une demande (Art. 6 Abs. 1 lit. b DSGVO). La transmission au partenaire choisi se fait avec ton consentement (Art. 6 Abs. 1 lit. a DSGVO)."],
+      empfaengerTitel: "Qui reçoit les données",
+      empfaenger: (n: string) => `Seulement le destinataire que tu as choisi dans le formulaire et qui t'est affiché avant l'envoi. Pour l'instant, c'est seulement ${n}. Il n'y a pas encore de partenaires.`,
+      kampagne: ["Lien avec une campagne", "Tu es arrivé par un lien de campagne ? Alors nous enregistrons avec la demande les informations générales de la campagne (source, support, nom de la campagne) et le chemin de la page par laquelle tu es entré. Nous n'enregistrons ni identifiants de clic ni identifiant d'utilisateur."],
+      dauerTitel: "Pendant combien de temps",
+      dauer: (tage: number) => `Il est prévu ceci : nous supprimons au plus tard ${tage} jours après la réception – sauf si une loi nous oblige à conserver quelque chose plus longtemps.`,
+      schutz: ["Protection contre les abus", "Un champ de formulaire invisible et un contrôle du temps écartent les envois automatiques. Nous limitons aussi le nombre de demandes qui peuvent venir de la même origine. Pour cela, l'adresse IP est traitée brièvement – seulement en mémoire vive et seulement sous la forme d'une valeur à partir de laquelle on ne peut pas retrouver l'adresse."],
+    },
+    rechteTitel: "Tes droits",
+    rechte:
+      "Tu as ces droits : accès (tu peux demander ce que nous avons enregistré sur toi), rectification, suppression, limitation du traitement, portabilité des données (tu peux emporter tes données) et opposition. Tu peux retirer un consentement à tout moment. Cela vaut alors pour l'avenir. Tu peux aussi déposer une réclamation auprès d'une autorité de protection des données.",
+    kontakt: "Contact pour les questions sur la protection des données : ",
+  },
 } satisfies Record<Lang, unknown>;
 
 export async function generateMetadata({ params }: LangParams): Promise<Metadata> {
