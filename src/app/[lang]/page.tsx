@@ -2,12 +2,14 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArtikelKarte, BeratungCta, CtaRechner, Faq, JsonLd, organisation, PartnerKarte } from "@/components/Bausteine";
 import { Calculator } from "@/components/Calculator";
-import { Icon, Muenzen, type IconName } from "@/components/Icon";
+import { HeroVisual } from "@/components/HeroVisual";
+import { Icon, type IconName } from "@/components/Icon";
 import { partner } from "@/config/partner";
 import { site } from "@/config/site";
 import { findeArtikel, startseitenFaq } from "@/content";
 import { istSprache, pfad, type LangParams } from "@/i18n";
 import { texte } from "@/i18n/texte";
+import "../start.css";
 
 const schrittBilder: IconName[] = ["coins", "gift", "sprout", "sun"];
 const festFarben = ["gold", "mint", "rose", "sky", "sand", "petrol"];
@@ -17,13 +19,14 @@ export default async function Startseite({ params }: LangParams) {
   if (!istSprache(lang)) notFound();
   const t = texte(lang).start;
   const n = texte(lang).neu;
+  const h = texte(lang).hero2;
   const faq = startseitenFaq(lang);
   const vorschau = ["private-altersvorsorge-einfach-erklaert", "staatliche-foerderung-verstehen", "altersvorsorgedepot"]
     .map((s) => findeArtikel(s, lang))
     .filter((a) => a !== undefined);
 
   return (
-    <>
+    <div className="start">
       <JsonLd
         daten={{
           "@context": "https://schema.org",
@@ -46,31 +49,27 @@ export default async function Startseite({ params }: LangParams) {
       <section className="hero">
         <div className="wrap hero__in">
           <div>
-            <p className="eyebrow">{t.eyebrow}</p>
-            <h1>
-              {t.h1a}
-              <br />
-              <em>{t.h1b}</em>
-            </h1>
-            <p className="hero__sub">{t.sub}</p>
+            <p className="eyebrow">{h.eyebrow}</p>
+            <h1>{h.h1}</h1>
+            <p className="hero__sub">{h.sub}</p>
             <div className="btn-row">
-              <a href="#rechner" className="btn btn--light">{t.cta1} <Icon name="arrow" size={18} /></a>
-              <a href="#so-gehts" className="btn btn--ghost-light">{t.cta2}</a>
+              <a href="#rechner" className="btn btn--primary">{h.cta1} <Icon name="arrow" size={18} /></a>
+              <a href="#so-gehts" className="btn btn--ghost">{h.cta2}</a>
             </div>
             <ul className="hero__facts">
-              {t.chips.map((c) => <li key={c}><Icon name="check" size={16} /> {c}</li>)}
+              {h.chips.map((c) => <li key={c}><Icon name="check" size={16} /> {c}</li>)}
             </ul>
           </div>
-          <div className="hero__bild">
-            <Muenzen links={t.muenze1} rechts={t.muenze2} />
-            <p className="hero__fussnote">{t.fussnote}</p>
-          </div>
+          <HeroVisual lang={lang} />
         </div>
-        <ul className="wrap hero__zahlen">
-          {n.zahlen.map((z) => (
-            <li key={z.text}><b>{z.zahl}</b><span>{z.text}</span></li>
-          ))}
-        </ul>
+        <div className="wrap hero__nach">
+          <ul className="vorteile">
+            {n.zahlen.map((z) => (
+              <li key={z.text}><b>{z.zahl}</b><span>{z.text}</span></li>
+            ))}
+          </ul>
+          <small>{h.vorteilHinweis}</small>
+        </div>
       </section>
 
       {/* Rechner */}
@@ -81,7 +80,9 @@ export default async function Startseite({ params }: LangParams) {
             <h2 id="rechner-titel">{t.rechnerTitel}</h2>
             <p className="lead">{t.rechnerSub}</p>
           </div>
-          <Calculator lang={lang} kompakt />
+          <div className="rechner-buehne">
+            <Calculator lang={lang} kompakt />
+          </div>
           <BeratungCta lang={lang} />
         </div>
       </section>
@@ -159,7 +160,7 @@ export default async function Startseite({ params }: LangParams) {
       </section>
 
       {/* Lexikon */}
-      <section className="section section--navy" aria-labelledby="woerter-titel">
+      <section className="section section--mint" aria-labelledby="woerter-titel">
         <div className="wrap">
           <div className="section-head">
             <p className="eyebrow">{t.woerterEyebrow}</p>
@@ -221,6 +222,6 @@ export default async function Startseite({ params }: LangParams) {
       </section>
 
       <CtaRechner lang={lang} />
-    </>
+    </div>
   );
 }

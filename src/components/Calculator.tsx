@@ -9,24 +9,16 @@ import { texte } from "@/i18n/texte";
 import { track } from "@/lib/analytics";
 import { berechneZulage } from "@/lib/foerderung";
 import { euro, euroGenau, prozent } from "@/lib/format";
-import { berechne, bereinigeEingabe, standardEingabe, type RechnerEingabe } from "@/lib/rechner";
+import { berechne, bereinigeEingabe, type RechnerEingabe } from "@/lib/rechner";
 import { holeEingabe, merkeEingabe } from "@/lib/rechnerUebergabe";
+import { EINFACHE_STARTWERTE } from "@/lib/startwerte";
 import { FARBEN, GrowthChart } from "./GrowthChart";
 import { Icon } from "./Icon";
 import { NumberField } from "./NumberField";
 
 const r = reform2027;
 
-/**
- * Startwerte des einfachen Rechners. Er rechnet mit dem, was gesetzlich
- * feststeht: Zulagen nach §§ 84–86 EStG n. F. und Kosten in Höhe des
- * gesetzlichen Höchstwerts für das Standarddepot.
- */
-const START: RechnerEingabe = {
-  ...standardEingabe,
-  kosten: r.produkt.effektivkostenStandarddepotMax,
-  foerderung: { aktiv: true, kinder: 0, kindergeldJahre: grenzen.kindergeldJahre.start },
-};
+const START = EINFACHE_STARTWERTE;
 
 const SCHNELLWAHL = [25, 50, 100, 150];
 const BEISPIELE = [
