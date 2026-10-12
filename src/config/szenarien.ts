@@ -36,7 +36,9 @@ export const szenarien: Szenario[] = [
 
 /** Zulässige Eingabebereiche und Startwerte des Rechners. */
 export const grenzen = {
-  alter: { min: 18, max: 66, start: 32, schritt: 1 },
+  // Ab 15: Das Gesetz kennt kein Mindestalter; wer z. B. als Azubi in die
+  // Rentenversicherung einzahlt, ist auch unter 18 förderberechtigt.
+  alter: { min: 15, max: 66, start: 32, schritt: 1 },
   rentenalter: { min: 60, max: 70, start: 67, schritt: 1 },
   sparrate: { min: 5, max: 1000, start: 100, schritt: 5 },
   startkapital: { min: 0, max: 500_000, start: 0, schritt: 500 },

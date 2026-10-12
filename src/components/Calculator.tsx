@@ -80,6 +80,7 @@ export function Calculator({ lang, kompakt = false }: { lang: Lang; kompakt?: bo
           value={roh.alter} min={grenzen.alter.min} max={grenzen.alter.max} step={1}
           onChange={(alter) => setze({ alter })}
         />
+        {e.alter < 18 && <p className="note" role="status" style={{ marginTop: "calc(var(--s-4) * -1)" }}>{t.unter18}</p>}
 
         <div>
           <NumberField
