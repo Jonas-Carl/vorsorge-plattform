@@ -3,7 +3,7 @@ import { site } from "@/config/site";
 import { pfad, type Lang } from "@/i18n";
 import { texte } from "@/i18n/texte";
 import { datum } from "@/lib/format";
-import { LogoMark } from "./Icon";
+import { LogoMark, Wortmarke } from "./Icon";
 
 export function Footer({ lang }: { lang: Lang }) {
   const t = texte(lang);
@@ -21,7 +21,7 @@ export function Footer({ lang }: { lang: Lang }) {
           <div className="stack">
             <Link href={pfad(lang, "/")} className="logo" aria-label={`${site.name} – ${t.nav.start}`}>
               <LogoMark />
-              <span className="logo__name">{site.name}</span>
+              <Wortmarke />
             </Link>
             <p style={{ maxWidth: "24rem" }}>{t.footer.text}</p>
           </div>

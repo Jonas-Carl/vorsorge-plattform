@@ -1,13 +1,15 @@
 /**
  * Zentrale Marken- und Seitenkonfiguration.
  *
- * WICHTIG: "Morgenplan" ist ein ARBEITSTITEL. Vor dem Livegang sind Marken- und
+ * WICHTIG: "RenteKannMehr" ist noch nicht markenrechtlich geprüft. Vor dem Livegang sind Marken- und
  * Domainrecherche erforderlich. Unternehmensangaben (Betreiber, Anschrift,
  * Registernummern) sind bewusst NICHT hinterlegt – sie werden nicht erfunden,
  * sondern müssen anhand der tatsächlichen Unternehmensstruktur ergänzt werden.
  */
 export const site = {
-  name: "Morgenplan",
+  name: "RenteKannMehr",
+  /** Der Name in zwei Teilen für die Wortmarke: der zweite Teil wird farbig gesetzt. */
+  nameTeile: ["Rente", "KannMehr"],
   claim: "Private Altersvorsorge, verständlich erklärt",
   beschreibung:
     "Unabhängige Finanzbildung zur privaten Altersvorsorge in Deutschland: Reform 2027 verstehen, Beispielrechnungen erstellen, Möglichkeiten einordnen.",

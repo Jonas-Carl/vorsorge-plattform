@@ -1,3 +1,4 @@
+import { site } from "@/config/site";
 import { F } from "@/content/typen";
 
 /**
@@ -17,7 +18,7 @@ export const de = {
     wissen: "Wissen",
     partner: "Partner",
     ueber: "Über uns",
-    cta: "Jetzt ausrechnen",
+    cta: "Jetzt berechnen",
     menue: "Menü",
     haupt: "Hauptnavigation",
     sprache: "Sprache",
@@ -475,16 +476,23 @@ export const de = {
     fallbackKnopf: "Frage an uns schicken",
   },
   hero2: {
-    eyebrow: "Deine Zukunft beginnt heute",
-    h1a: "Heute klein anfangen.",
-    h1b: "Morgen mehr haben.",
-    sub: "Was wird aus deinem Geld, wenn du früh anfängst zu sparen? Finde es in einer Minute heraus.",
-    cta1: "Jetzt ausprobieren",
+    eyebrow: "DEINE PRIVATE ALTERSVORSORGE",
+    h1a: "Deine Zukunft verdient einen",
+    h1b: "Plan.",
+    sub: "Finde heraus, welche Möglichkeiten du für deine private Altersvorsorge hast – verständlich erklärt, transparent und einfach berechnet.",
+    cta1: "Jetzt Vorsorge berechnen",
     cta2: "So funktioniert's",
     chips: ["Kostenlos", "Einfach erklärt", "Ohne Anmeldung"],
-    bildAlt: "Zeichnung: Vier Stapel Münzen werden von links nach rechts höher. Auf jedem wächst eine Pflanze – links ein kleiner Keim, rechts eine große Pflanze.",
     heute: "Heute",
-    morgen: "Morgen",
+    karteTitel: "Deine Möglichkeiten",
+    karteLabel: "Mögliches Endvermögen",
+    karteAlter: (a: number) => `Alter ${a}`,
+    karteHinweis: (rate: string, alter: number, rendite: string) => `Unverbindliches Beispiel: ${rate} im Monat ab ${alter} Jahren, bei ${rendite} Wachstum pro Jahr. Keine Vorhersage.`,
+    punkte: [
+      { titel: "Staatliche Förderung", text: "Mögliche Zulagen für deine Altersvorsorge", bild: "gift" },
+      { titel: "Förderung deiner Einzahlungen", text: "Abhängig von Eigenbeitrag und gesetzlichen Regeln", bild: "coins" },
+      { titel: "Förderung für Familien", text: "Mögliche zusätzliche Unterstützung für Kinder", bild: "users" },
+    ],
     vorteileLabel: "Das kannst du hier machen",
     vorteile: [
       { titel: "Verstehen", text: "Lerne, wie Altersvorsorge funktioniert.", link: "#so-gehts", bild: "book" },
@@ -493,8 +501,8 @@ export const de = {
     ],
     beispielHinweis: "Alles hier sind Beispiele. Niemand kann dir Gewinne versprechen.",
     wasEyebrow: "Über uns",
-    wasTitel: "Was ist Morgenplan?",
-    wasText: "Morgenplan erklärt Sparen fürs Alter in einfachen Worten. Du kannst hier kostenlos rechnen und lesen.",
+    wasTitel: `Was ist ${site.name}?`,
+    wasText: `${site.name} erklärt Sparen fürs Alter in einfachen Worten. Du kannst hier kostenlos rechnen und lesen.`,
     was: [
       "Wir sind eine private Seite. Kein Amt und keine Bank.",
       "Wir zeigen Beispiele. Wir versprechen keine Gewinne.",

@@ -35,7 +35,7 @@ jobs:
           NEXT_PUBLIC_SITE_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}
       # Startadresse ohne Sprache -> deutsche Fassung
       - run: |
-          echo '<!doctype html><html lang="de"><meta charset="utf-8"><meta name="robots" content="noindex"><title>Morgenplan</title><meta http-equiv="refresh" content="0; url=./de/"><a href="./de/">Weiter zur Seite</a></html>' > out/index.html
+          echo '<!doctype html><html lang="de"><meta charset="utf-8"><meta name="robots" content="noindex"><title>RenteKannMehr</title><meta http-equiv="refresh" content="0; url=./de/"><a href="./de/">Weiter zur Seite</a></html>' > out/index.html
           touch out/.nojekyll
       - uses: actions/upload-pages-artifact@v3
         with:

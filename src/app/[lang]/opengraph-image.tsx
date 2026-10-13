@@ -16,16 +16,21 @@ export default async function OpenGraphBild({ params }: LangParams) {
       <div
         style={{
           width: "100%", height: "100%", display: "flex", flexDirection: "column", justifyContent: "space-between",
-          padding: 72, background: "linear-gradient(135deg, #0b1f3a 0%, #0f4c5c 100%)", color: "#ffffff",
+          padding: 72, background: "linear-gradient(135deg, #06121d 0%, #0b3b47 100%)", color: "#ffffff",
         }}
       >
         <div style={{ display: "flex", alignItems: "center", gap: 20, fontSize: 40 }}>
-          <div style={{ width: 56, height: 56, borderRadius: 14, background: "#6fd3bd", display: "flex" }} />
-          {site.name}
+          <svg width="60" height="60" viewBox="0 0 32 32">
+            <rect width="32" height="32" rx="8" fill="#0f5d5a" />
+            <path d="M7 21.5l6.5-6.5 4 4L25 11.5M19.5 11H25v5.5" fill="none" stroke="#7ff5dc" strokeWidth="2.7" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+          <div style={{ display: "flex" }}>
+            {site.name}
+          </div>
         </div>
         <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-          <div style={{ fontSize: 88, lineHeight: 1.05, letterSpacing: -2 }}>{t.start.h1a}</div>
-          <div style={{ fontSize: 88, lineHeight: 1.05, letterSpacing: -2, color: "#6fd3bd" }}>{t.start.h1b}</div>
+          <div style={{ fontSize: 76, lineHeight: 1.08, letterSpacing: -2 }}>{t.hero2.h1a}</div>
+          <div style={{ fontSize: 76, lineHeight: 1.08, letterSpacing: -2, color: "#7fdcc4" }}>{t.hero2.h1b}</div>
           <div style={{ fontSize: 32, color: "#c9d5e3", marginTop: 16 }}>{t.meta.claim}</div>
         </div>
       </div>

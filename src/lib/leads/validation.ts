@@ -3,7 +3,7 @@ import { site } from "@/config/site";
 import type { Lang } from "@/lib/format";
 import type { Anliegen, Attribution, Feldfehler, Kontaktweg, Kontaktzeit, LeadAnfrage } from "./types";
 
-export const EINWILLIGUNGSTEXT_VERSION = "2026-10-11.2";
+export const EINWILLIGUNGSTEXT_VERSION = "2026-10-13.1";
 
 export const ANLIEGEN: Anliegen[] = ["allgemein", "reform-2027", "foerderung", "familie", "bestehender-vertrag"];
 export const KONTAKTZEITEN: Kontaktzeit[] = ["egal", "vormittags", "nachmittags", "abends"];

@@ -1,6 +1,9 @@
+import { site } from "@/config/site";
+
 const pfade = {
   arrow: "M5 12h14M13 6l6 6-6 6",
   check: "M5 12.5l4.5 4.5L19 7.5",
+  checkCircle: "M12 21a9 9 0 100-18 9 9 0 000 18zM8.300 12.400l2.500 2.500 4.900-5.200",
   chart: "M4 19V5M4 19h16M8 15l3.5-4 3 2.5L19 8",
   book: "M5 4.5h9a3 3 0 013 3V20H8a3 3 0 01-3-3V4.5zM17 20h2V8",
   shield: "M12 3l7 3v5.5c0 4.4-2.9 7.9-7 9.5-4.1-1.6-7-5.1-7-9.5V6l7-3zM9 12l2.2 2.2L15.2 10",
@@ -41,13 +44,28 @@ export function Icon({ name, size = 20 }: { name: IconName; size?: number }) {
   );
 }
 
+/**
+ * Bildmarke: ein Kurs, der nach oben zeigt – Wachstum und Orientierung. Dieselbe Zeichnung liegt als Favicon in
+ * `src/app/icon.svg`; beide Stellen zusammen ändern.
+ */
 export function LogoMark() {
   return (
     <svg className="logo__mark" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
-      <rect width="32" height="32" rx="8" fill="#0f4c5c" />
-      <path d="M7 22.500c4.500 0 6-3 9-8.500s4.500-6 9-6" fill="none" stroke="#6fd3bd" strokeWidth="2.400" strokeLinecap="round" />
-      <circle cx="25" cy="8" r="2.300" fill="#d9bd83" />
+      <rect width="32" height="32" rx="8" fill="#0f5d5a" />
+      <rect x="0.5" y="0.5" width="31" height="31" rx="7.5" fill="none" stroke="#7ff5dc" strokeOpacity="0.28" />
+      <path d="M7 21.500l6.500-6.500 4 4L25 11.500M19.500 11H25v5.500" fill="none" stroke="#7ff5dc" strokeWidth="2.700" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
+  );
+}
+
+/** Wortmarke „RenteKannMehr“. Der zweite Teil lässt sich über `.logo__akzent` absetzen. */
+export function Wortmarke() {
+  const [vorn, hinten] = site.nameTeile;
+  return (
+    <span className="logo__name">
+      {vorn}
+      <span className="logo__akzent">{hinten}</span>
+    </span>
   );
 }
 

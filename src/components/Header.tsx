@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { site } from "@/config/site";
 import { pfad, sprachen, sprachName, wechslePfad, type Lang } from "@/i18n";
 import { texte } from "@/i18n/texte";
-import { Icon, LogoMark } from "./Icon";
+import { Icon, LogoMark, Wortmarke } from "./Icon";
 
 export function Header({ lang }: { lang: Lang }) {
   const aktuell = usePathname();
@@ -29,14 +29,17 @@ export function Header({ lang }: { lang: Lang }) {
     { href: "/ueber-uns", label: t.ueber },
   ].map((p) => ({ ...p, href: pfad(lang, p.href) }));
 
+  // Auf der Startseite ist die Kopfzeile dunkel, passend zum Kopfbereich darunter.
+  const aufStart = aktuell.replace(/\/$/, "") === pfad(lang, "/");
+
   const aktiv = (href: string) => (aktuell === href || aktuell.startsWith(`${href}/`) ? "page" : undefined);
 
   return (
-    <header className="header">
+    <header className={`header ${aufStart ? "header--dunkel" : ""}`}>
       <div className="wrap header__in">
         <Link href={pfad(lang, "/")} className="logo" aria-label={`${site.name} – ${t.start}`}>
           <LogoMark />
-          <span className="logo__name">{site.name}</span>
+          <Wortmarke />
         </Link>
 
         <nav className="nav" aria-label={t.haupt}>
@@ -66,7 +69,7 @@ export function Header({ lang }: { lang: Lang }) {
           <Link href={pfad(lang, "/rechner")} className="btn btn--primary header__cta">{t.cta}</Link>
           <button type="button" className="menu-btn" aria-expanded={offen} aria-controls="mobile-nav" onClick={() => setOffen((o) => !o)}>
             <Icon name={offen ? "close" : "menu"} size={18} />
-            {t.menue}
+            <span className="menu-btn__text">{t.menue}</span>
           </button>
         </div>
       </div>

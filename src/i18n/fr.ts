@@ -1,3 +1,4 @@
+import { site } from "@/config/site";
 import { FF as F } from "@/content/typen";
 import type { Texte } from "./de";
 
@@ -470,16 +471,23 @@ export const fr: Texte = {
     fallbackKnopf: "Nous envoyer la question",
   },
   hero2: {
-    eyebrow: "Ton avenir commence aujourd'hui",
-    h1a: "Commencer petit aujourd'hui.",
-    h1b: "Avoir plus demain.",
-    sub: "Que devient ton argent si tu commences tôt à épargner ? Découvre-le en une minute.",
-    cta1: "Essayer maintenant",
+    eyebrow: "TON ÉPARGNE RETRAITE PRIVÉE",
+    h1a: "Ton avenir mérite un",
+    h1b: "plan.",
+    sub: "Découvre quelles possibilités tu as pour ton épargne retraite privée – expliqué clairement, en toute transparence et facile à calculer.",
+    cta1: "Calculer mon épargne",
     cta2: "Comment ça marche",
     chips: ["Gratuit", "Expliqué simplement", "Sans inscription"],
-    bildAlt: "Dessin : quatre piles de pièces de plus en plus hautes de gauche à droite. Une plante pousse sur chacune – une petite pousse à gauche, une grande plante à droite.",
     heute: "Aujourd'hui",
-    morgen: "Demain",
+    karteTitel: "Tes possibilités",
+    karteLabel: "Capital final possible",
+    karteAlter: (a: number) => `${a} ans`,
+    karteHinweis: (rate: string, alter: number, rendite: string) => `Exemple sans engagement : ${rate} par mois à partir de ${alter} ans, avec ${rendite} de croissance par an. Pas une prévision.`,
+    punkte: [
+      { titel: "Aide de l'État", text: "Des primes possibles pour ton épargne retraite", bild: "gift" },
+      { titel: "Aide sur tes versements", text: "Selon ton versement et les règles légales", bild: "coins" },
+      { titel: "Aide pour les familles", text: "Un soutien supplémentaire possible pour les enfants", bild: "users" },
+    ],
     vorteileLabel: "Ce que tu peux faire ici",
     vorteile: [
       { titel: "Comprendre", text: "Découvre comment fonctionne l'épargne retraite.", link: "#so-gehts", bild: "book" },
@@ -488,8 +496,8 @@ export const fr: Texte = {
     ],
     beispielHinweis: "Tout ici est un exemple. Personne ne peut te promettre des gains.",
     wasEyebrow: "À propos",
-    wasTitel: "Qu'est-ce que Morgenplan ?",
-    wasText: "Morgenplan explique l'épargne retraite avec des mots simples. Tu peux calculer et lire ici gratuitement.",
+    wasTitel: `Qu'est-ce que ${site.name} ?`,
+    wasText: `${site.name} explique l'épargne retraite avec des mots simples. Tu peux calculer et lire ici gratuitement.`,
     was: [
       "Nous sommes un site privé. Ni une administration ni une banque.",
       "Nous montrons des exemples. Nous ne promettons aucun gain.",

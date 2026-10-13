@@ -23,7 +23,20 @@
 }
 .lang a[aria-current="true"] { background: var(--petrol-700); color: #fff; }
 .lang a:not([aria-current="true"]):hover { background: var(--white); color: var(--ink-900); }
-@media (max-width: 420px) { .logo__name { font-size: 1.15rem; } .menu-btn { padding: 0 0.7rem; } .header__in { gap: var(--s-2); } }
+@media (max-width: 420px) { .logo__name { font-size: 1.05rem; } .logo { gap: 0.45rem; } .logo__mark { width: 1.75rem; height: 1.75rem; } .menu-btn { padding: 0 0.7rem; } .header__in { gap: var(--s-2); } }
+/* Schmale Displays: Der längere Markenname braucht Platz – Menü-Knopf nur mit Symbol, Umschalter kompakter. */
+@media (max-width: 480px) {
+  .menu-btn__text { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; }
+  .menu-btn { min-width: 2.75rem; padding: 0; justify-content: center; }
+  .header__right { gap: var(--s-2); }
+  .lang a { min-width: 2.15rem; padding: 0 0.35rem; }
+}
+/* Sehr schmale Displays (unter 350 px): nur die Wortmarke, damit nichts seitlich übersteht. */
+@media (max-width: 350px) {
+  .header .logo__mark { display: none; }
+  .header .logo__name { font-size: 0.98rem; }
+  .lang a { min-width: 1.95rem; padding: 0 0.25rem; }
+}
 
 /* Hero ------------------------------------------------------------------- */
 .hero h1 { font-size: clamp(2.5rem, 1.4rem + 5vw, 4.9rem); margin-top: 1rem; }

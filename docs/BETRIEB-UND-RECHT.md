@@ -82,7 +82,8 @@ später ggf. Werbekonten (Meta, Google Ads) und ein einwilligungsbasiertes Analy
    bei Einführung von Analyse oder Werbe-Pixeln ist eine Einwilligungslösung nötig.
 7. **Barrierefreiheit (BFSG).** Prüfen, ob das Angebot erfasst ist; unabhängig davon vollständiges
    WCAG-2.2-AA-Audit inkl. Screenreader-Test und ggf. Erklärung zur Barrierefreiheit.
-8. **Marke.** Recherche zu „Morgenplan“ (DPMA/EUIPO, Domains, Firmennamen).
+8. **Marke.** Recherche zu „RenteKannMehr“ (DPMA/EUIPO, Domains, Firmennamen) – auch zu ähnlichen
+   Schreibweisen wie „Rente kann mehr“. Der frühere Arbeitstitel war „Morgenplan“.
 9. **Übersetzungen.** Die englische und die französische Fassung sind Arbeitsübersetzungen ohne
    muttersprachliche oder juristische Prüfung. Das betrifft auch den Bestätigungswortlaut im
    Anfrageformular, der als Einwilligungsnachweis gespeichert wird. Vor dem Start prüfen lassen.
@@ -123,6 +124,8 @@ Beim Redesign der Startseite wurde keine dieser Aussagen inhaltlich verändert.
 | Rechner, „Das steht fest“ | Zuschuss wird standardmäßig eingerechnet | Annahme: Person ist förderberechtigt | fachlich zu prüfen |
 | Rechner | Extra-Geld für Kinder für 10 Jahre gerechnet | eigene Annahme, kein Gesetzeswert | Annahme bestätigen |
 | Rechner | Wachstum 2 % / 5 % / 7 % | eigene Beispielwerte, kein Gesetzeswert | Annahme bestätigen |
+| Kopfbereich, Karte „Deine Möglichkeiten“ | „Mögliches Endvermögen“ mit Balkendiagramm | Ergebnis des Rechners mit dessen Startwerten (100 € im Monat ab 32, 5 % Wachstum, Zuschuss eingerechnet); Annahmen stehen in der Karte, gekennzeichnet als unverbindliches Beispiel | Annahme bestätigen |
+| Kopfbereich, Förderhinweise | „Staatliche Förderung“, „Förderung deiner Einzahlungen“, „Förderung für Familien“ – ohne Beträge | allgemeine Hinweise auf §§ 84–86 EStG n. F. | fachlich zu prüfen |
 | Rechner, „Das weiß niemand vorher“ | grobe monatliche Auszahlung: Endkapital gleichmäßig bis 85 verteilt, ohne Wachstum, vor Steuern | eigene Vereinfachung; 85 = frühestes Ende eines Auszahlungsplans (AltZertG n. F.) | fachlich zu prüfen |
 | Rechner, Schnellwahl | 10 € Minimum, 150 € voller Zuschuss, 570 € Maximum im Monat | § 86, § 84 EStG n. F., Einzahlungsgrenze 6.840 € im Jahr – jeweils durch 12 | fachlich zu prüfen |
 | Häufige Fragen | unter 18 möglich, Eltern müssen zustimmen | kein Mindestalter im Reformgesetz; Zustimmung nach allgemeinem Vertragsrecht | fachlich zu prüfen |

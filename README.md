@@ -1,6 +1,6 @@
-# Morgenplan – Finanzbildungsplattform zur privaten Altersvorsorge
+# RenteKannMehr – Finanzbildungsplattform zur privaten Altersvorsorge
 
-> „Morgenplan“ ist ein **Arbeitstitel** (zentral in `src/config/site.ts`). Marken- und Domainprüfung stehen aus.
+> Der Name „RenteKannMehr“ steht zentral in `src/config/site.ts`, das Logo in `src/components/Icon.tsx` und `src/app/icon.svg`. Marken- und Domainprüfung stehen aus.
 
 Next.js-Anwendung mit Altersvorsorgerechner, Reform-Guide 2027, Wissensbereich (18 Artikel),
 Partner-Platzhaltern und einem Lead-System mit ehrlichem Übermittlungsstatus.

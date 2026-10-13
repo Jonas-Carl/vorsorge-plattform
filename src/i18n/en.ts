@@ -1,3 +1,4 @@
+import { site } from "@/config/site";
 import { FE as F } from "@/content/typen";
 import type { Texte } from "./de";
 
@@ -470,16 +471,23 @@ export const en: Texte = {
     fallbackKnopf: "Send question to us",
   },
   hero2: {
-    eyebrow: "Your future starts today",
-    h1a: "Start small today.",
-    h1b: "Have more tomorrow.",
-    sub: "What happens to your money if you start saving early? Find out in one minute.",
-    cta1: "Try it now",
+    eyebrow: "YOUR PRIVATE PENSION SAVING",
+    h1a: "Your future deserves a",
+    h1b: "plan.",
+    sub: "Find out which options you have for your private pension saving – clearly explained, transparent and easy to calculate.",
+    cta1: "Calculate your savings",
     cta2: "How it works",
     chips: ["Free", "Simply explained", "No sign-up"],
-    bildAlt: "Drawing: four stacks of coins get taller from left to right. A plant grows on each – a small sprout on the left, a big plant on the right.",
     heute: "Today",
-    morgen: "Tomorrow",
+    karteTitel: "Your options",
+    karteLabel: "Possible final amount",
+    karteAlter: (a: number) => `Age ${a}`,
+    karteHinweis: (rate: string, alter: number, rendite: string) => `Non-binding example: ${rate} a month from age ${alter}, with ${rendite} growth per year. Not a forecast.`,
+    punkte: [
+      { titel: "State support", text: "Possible allowances for your pension saving", bild: "gift" },
+      { titel: "Support for what you pay in", text: "Depends on your own contribution and the legal rules", bild: "coins" },
+      { titel: "Support for families", text: "Possible extra support for children", bild: "users" },
+    ],
     vorteileLabel: "What you can do here",
     vorteile: [
       { titel: "Understand", text: "Learn how saving for old age works.", link: "#so-gehts", bild: "book" },
@@ -488,8 +496,8 @@ export const en: Texte = {
     ],
     beispielHinweis: "Everything here is an example. Nobody can promise you profits.",
     wasEyebrow: "About us",
-    wasTitel: "What is Morgenplan?",
-    wasText: "Morgenplan explains saving for old age in simple words. You can calculate and read here for free.",
+    wasTitel: `What is ${site.name}?`,
+    wasText: `${site.name} explains saving for old age in simple words. You can calculate and read here for free.`,
     was: [
       "We are a private website. Not a public authority and not a bank.",
       "We show examples. We promise no profits.",

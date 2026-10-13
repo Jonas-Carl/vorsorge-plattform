@@ -2,7 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArtikelKarte, BeratungCta, CtaRechner, Faq, JsonLd, organisation, PartnerKarte } from "@/components/Bausteine";
 import { Calculator } from "@/components/Calculator";
-import { HeroBild } from "@/components/HeroBild";
+import { HeroKarte } from "@/components/HeroKarte";
 import { Icon, type IconName } from "@/components/Icon";
 import { partner } from "@/config/partner";
 import { site } from "@/config/site";
@@ -53,7 +53,7 @@ export default async function Startseite({ params }: LangParams) {
           <div className="held__text">
             <p className="held__eyebrow">{h.eyebrow}</p>
             <h1>
-              {h.h1a} <span className="marker">{h.h1b}</span>
+              {h.h1a} <span className="held__akzent">{h.h1b}</span>
             </h1>
             <p className="held__sub">{h.sub}</p>
             <div className="held__aktion">
@@ -61,10 +61,12 @@ export default async function Startseite({ params }: LangParams) {
               <a href="#so-gehts" className="held__link">{h.cta2}</a>
             </div>
             <ul className="held__chips">
-              {h.chips.map((c) => <li key={c}>{c}</li>)}
+              {h.chips.map((c) => (
+                <li key={c}><Icon name="checkCircle" size={22} /> {c}</li>
+              ))}
             </ul>
           </div>
-          <HeroBild alt={h.bildAlt} heute={h.heute} morgen={h.morgen} />
+          <div className="held__bild"><HeroKarte lang={lang} /></div>
         </div>
       </section>
 
@@ -118,7 +120,7 @@ export default async function Startseite({ params }: LangParams) {
         </div>
       </section>
 
-      {/* Was ist Morgenplan? */}
+      {/* Was ist RenteKannMehr? */}
       <section className="section" aria-labelledby="was-titel">
         <div className="wrap was">
           <div className="stack">
