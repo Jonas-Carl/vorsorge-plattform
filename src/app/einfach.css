@@ -355,6 +355,10 @@
 .stufe { display: grid; gap: var(--s-4); padding: var(--s-4); border-radius: var(--r-md); background: var(--sand-50); border: 1px solid var(--sand-200); }
 
 /* Letzter Abschnitt jedes Wissensartikels: Hinweis auf persönliche Beratung */
-.artikel-frage { margin-top: var(--s-7); padding-top: var(--s-6); border-top: 1px solid var(--sand-200); }
+.artikel-frage {
+  margin-top: var(--s-7); padding: clamp(1.25rem, 1rem + 1.5vw, 2rem);
+  background: var(--mint-100); border-left: 5px solid var(--petrol-700); border-radius: var(--r-lg);
+}
 .artikel-frage h2 { margin-top: 0; }
-.artikel-frage .btn { margin-top: var(--s-2); }
+.artikel-frage p:not(:last-child) { font-size: var(--text-lg); font-weight: 650; line-height: 1.55; color: var(--ink-900); }
+.artikel-frage .btn { margin-top: var(--s-2); font-size: var(--text-lg); min-height: 3.25rem; padding-inline: 1.6rem; }
