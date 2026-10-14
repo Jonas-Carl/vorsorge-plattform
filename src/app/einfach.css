@@ -362,3 +362,53 @@
 .artikel-frage h2 { margin-top: 0; }
 .artikel-frage p:not(:last-child) { font-size: var(--text-lg); font-weight: 650; line-height: 1.55; color: var(--ink-900); }
 .artikel-frage .btn { margin-top: var(--s-2); font-size: var(--text-lg); min-height: 3.25rem; padding-inline: 1.6rem; }
+
+/* Rechner: „Jetzt berechnen“, Rechen-Anzeige und nächster Schritt ------- */
+.berechnen { display: grid; gap: var(--s-2); }
+.btn--berechnen { width: 100%; min-height: 3.6rem; font-size: var(--text-lg); }
+.btn--berechnen[disabled] { opacity: 0.75; }
+.berechnung {
+  display: grid; gap: var(--s-3); justify-items: center; align-content: center; text-align: center; min-height: 20rem;
+  background: var(--white); border: 2px dashed var(--sand-300); border-radius: var(--r-lg); padding: clamp(1.5rem, 1rem + 3vw, 3rem);
+}
+.berechnung h3 { font-size: var(--text-xl); }
+.berechnung p { color: var(--ink-500); max-width: 26rem; }
+.berechnung__bild { width: 4.5rem; height: 4.5rem; border-radius: 50%; display: grid; place-items: center; background: var(--mint-100); color: var(--petrol-700); }
+.berechnung--laeuft { border-style: solid; border-color: var(--mint-400); justify-items: stretch; text-align: left; }
+.berechnung__balken { height: 0.6rem; border-radius: var(--r-pill); background: var(--sand-200); overflow: hidden; }
+.berechnung__balken span { display: block; height: 100%; border-radius: inherit; background: linear-gradient(90deg, var(--petrol-700), var(--mint-400)); transition: width 0.95s linear; }
+.berechnung__schritte { list-style: none; display: grid; gap: 0.75rem; padding: 0; }
+.berechnung__schritte li { display: flex; align-items: center; gap: 0.75rem; color: var(--ink-500); }
+.berechnung__schritte li::before { content: ""; flex: none; width: 1.3rem; height: 1.3rem; border-radius: 50%; border: 2px solid var(--sand-300); box-sizing: border-box; }
+.berechnung__schritte li[data-status="aktiv"] { color: var(--ink-900); font-weight: 650; }
+.berechnung__schritte li[data-status="aktiv"]::before { border-color: var(--petrol-700); border-top-color: transparent; animation: drehen 0.8s linear infinite; }
+.berechnung__schritte li[data-status="fertig"] { color: var(--ink-900); }
+.berechnung__schritte li[data-status="fertig"]::before { background: var(--mint-700); border-color: var(--mint-700); box-shadow: inset 0 0 0 3px var(--white); }
+@keyframes drehen { to { transform: rotate(360deg); } }
+
+.umsetzen {
+  display: grid; gap: var(--s-4); border-radius: var(--r-lg); padding: clamp(1.5rem, 1rem + 2.5vw, 2.5rem);
+  background: linear-gradient(135deg, var(--navy-900) 0%, var(--petrol-800) 100%); color: #d6e2ee; box-shadow: var(--shadow-lg);
+}
+.umsetzen__eyebrow { font-size: var(--text-xs); font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--mint-400); }
+.rechner .umsetzen h3 { color: #fff; font-size: var(--text-2xl); }
+.umsetzen__text { font-size: var(--text-lg); line-height: 1.55; max-width: 40rem; }
+.umsetzen__liste { list-style: none; display: grid; gap: 0.5rem; padding: 0; }
+.rechner .umsetzen__liste li { display: flex; align-items: center; gap: 0.6rem; font-weight: 600; color: #fff; }
+.umsetzen__liste svg { color: var(--mint-400); flex: none; }
+.umsetzen__aktion { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem 1.25rem; margin-top: var(--s-2); }
+.btn--umsetzen { background: var(--mint-400); color: var(--navy-900); min-height: 3.5rem; padding-inline: 1.75rem; font-size: var(--text-lg); box-shadow: 0 14px 28px -14px rgba(111, 211, 189, 0.7); }
+.btn--umsetzen:hover { background: #8adfcc; color: var(--navy-900); transform: translateY(-2px); }
+.umsetzen__klein { font-size: var(--text-sm); color: #b9cbda; }
+.umsetzen__netz { font-size: var(--text-xs); color: #93a8bb; }
+.umsetzen :focus-visible { box-shadow: 0 0 0 3px var(--navy-900), 0 0 0 6px var(--mint-400); }
+.rechner .umsetzen a { color: inherit; }
+.rechner .umsetzen .btn--umsetzen { color: var(--navy-900); }
+
+@media (prefers-reduced-motion: no-preference) {
+  .rechner__ergebnis > .block, .rechner__ergebnis > .umsetzen, .rechner__ergebnis > .chart-card { animation: auftauchen 0.5s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+  .rechner__ergebnis > .block--offen { animation-delay: 0.08s; }
+  .rechner__ergebnis > .umsetzen { animation-delay: 0.18s; }
+}
+@keyframes auftauchen { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+@media (max-width: 640px) { .btn--umsetzen { width: 100%; } }

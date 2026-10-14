@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { reform2027 } from "@/config/foerderung";
 import { grenzen, szenarien } from "@/config/szenarien";
 import { pfad, type Lang } from "@/i18n";
@@ -44,11 +44,24 @@ const BEISPIELE = [
   { id: "spaet", alter: 52, sparrate: 150, kinder: 0 },
 ] as const;
 const MAX_KINDER_EINFACH = 5;
+/** Dauer der Rechen-Anzeige: drei Schritte, die der Rechner tatsächlich ausführt. */
+const RECHENDAUER_MS = 3000;
+const RECHENDAUER_RUHIG_MS = 900;
+
+type Phase = "eingabe" | "rechnet" | "fertig";
 
 export function Calculator({ lang, kompakt = false }: { lang: Lang; kompakt?: boolean }) {
   const t = texte(lang).rechner;
   const n = texte(lang).neu;
-  const [roh, setRoh] = useState<RechnerEingabe>(() => ({ ...START, ...(kompakt ? null : holeEingabe()) }));
+  const b = texte(lang).berechnen;
+  // Werte, die der Kurzrechner der Startseite mitgegeben hat: dann ist schon gerechnet.
+  const [uebergeben] = useState(() => (kompakt ? null : holeEingabe()));
+  const [roh, setRoh] = useState<RechnerEingabe>(() => ({ ...START, ...uebergeben }));
+  const [phase, setPhase] = useState<Phase>(uebergeben ? "fertig" : "eingabe");
+  const [schritt, setSchritt] = useState(0);
+  const uhren = useRef<number[]>([]);
+  const ergebnisRef = useRef<HTMLDivElement>(null);
+  useEffect(() => () => uhren.current.forEach((u) => window.clearTimeout(u)), []);
   const gestartet = useRef(false);
   // Bleibt an, damit der Regler beim Zurückziehen vom Maximum nicht springt.
   const [weiterRegler, setWeiterRegler] = useState(false);
@@ -63,6 +76,28 @@ export function Calculator({ lang, kompakt = false }: { lang: Lang; kompakt?: bo
     }
     setRoh((alt) => ({ ...alt, ...teil }));
   }
+  /**
+   * „Jetzt berechnen“: zeigt kurz die drei Rechenschritte, dann das Ergebnis.
+   * Danach rechnet der Rechner bei jeder Änderung wie gewohnt sofort neu.
+   */
+  function berechnenStarten() {
+    uhren.current.forEach((u) => window.clearTimeout(u));
+    const ruhig = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const dauer = ruhig ? RECHENDAUER_RUHIG_MS : RECHENDAUER_MS;
+    const anzahl = b.schritte.length;
+    setPhase("rechnet");
+    setSchritt(0);
+    track("rechner_gestartet");
+    ergebnisRef.current?.scrollIntoView({ behavior: ruhig ? "auto" : "smooth", block: "start" });
+    uhren.current = [
+      ...Array.from({ length: anzahl }, (_, i) => window.setTimeout(() => setSchritt(i + 1), ((i + 1) * dauer) / anzahl - 120)),
+      window.setTimeout(() => {
+        setPhase("fertig");
+        track("rechner_ergebnis_gesehen");
+      }, dauer),
+    ];
+  }
+
   const setzeFoerderung = (teil: Partial<RechnerEingabe["foerderung"]>) =>
     setze({ foerderung: { ...roh.foerderung, ...teil } });
 
@@ -249,6 +284,12 @@ export function Calculator({ lang, kompakt = false }: { lang: Lang; kompakt?: bo
             onChange={(alter) => setzeGeplant(geplant.map((x, k) => (k === i ? alter : x)))}
           />
         ))}
+        <div className="berechnen">
+          <button type="button" className="btn btn--primary btn--berechnen" onClick={berechnenStarten} disabled={phase === "rechnet"}>
+            {phase === "fertig" ? b.neu : b.knopf} <Icon name="arrow" size={20} />
+          </button>
+          <p className="field__hint">{b.knopfHinweis}</p>
+        </div>
       </form>
 
         {kompakt ? (
@@ -328,7 +369,31 @@ export function Calculator({ lang, kompakt = false }: { lang: Lang; kompakt?: bo
       </div>
 
       {/* ------------------------------ Ergebnis ------------------------------ */}
-      <div className="rechner__ergebnis" aria-live="polite">
+      <div className="rechner__ergebnis" aria-live="polite" ref={ergebnisRef}>
+        {phase !== "fertig" ? (
+          <section className={`berechnung ${phase === "rechnet" ? "berechnung--laeuft" : ""}`}>
+            {phase === "eingabe" ? (
+              <>
+                <span className="berechnung__bild"><Icon name="chart" size={34} /></span>
+                <h3>{b.wartetTitel}</h3>
+                <p>{b.wartetText}</p>
+              </>
+            ) : (
+              <>
+                <h3>{b.laeuftTitel}</h3>
+                <div className="berechnung__balken" aria-hidden="true">
+                  <span style={{ width: `${(schritt / b.schritte.length) * 100}%` }} />
+                </div>
+                <ol className="berechnung__schritte">
+                  {b.schritte.map((text, i) => (
+                    <li key={text} data-status={i < schritt ? "fertig" : i === schritt ? "aktiv" : "offen"}>{text}</li>
+                  ))}
+                </ol>
+              </>
+            )}
+          </section>
+        ) : (
+        <>
         {/* Das steht fest */}
         <section className="block block--fest" aria-labelledby={`fest-${kompakt ? "k" : "v"}`}>
           <div className="block__kopf">
@@ -429,6 +494,23 @@ export function Calculator({ lang, kompakt = false }: { lang: Lang; kompakt?: bo
           </p>
         </section>
 
+        {/* Nächster Schritt: aus dem Beispiel einen Plan machen */}
+        <section className="umsetzen" aria-labelledby={`umsetzen-${kompakt ? "k" : "v"}`}>
+          <p className="umsetzen__eyebrow">{b.ctaEyebrow}</p>
+          <h3 id={`umsetzen-${kompakt ? "k" : "v"}`}>{b.ctaTitel}</h3>
+          <p className="umsetzen__text">{b.ctaText(E(e.sparrate))}</p>
+          <ul className="umsetzen__liste">
+            {b.ctaPunkte.map((punkt) => <li key={punkt}><Icon name="check" size={18} /> {punkt}</li>)}
+          </ul>
+          <div className="umsetzen__aktion">
+            <Link href={pfad(lang, "/partner")} className="btn btn--umsetzen" onClick={() => track("anfrage_begonnen", { herkunft: "rechner-ergebnis" })}>
+              {b.ctaKnopf} <Icon name="arrow" size={18} />
+            </Link>
+            <span className="umsetzen__klein">{b.ctaKlein}</span>
+          </div>
+          <p className="umsetzen__netz">{n.beratungKlein}</p>
+        </section>
+
         {!kompakt && (
           <>
             <section className="card card--pad chart-card" aria-labelledby="verlauf-titel">
@@ -479,6 +561,8 @@ export function Calculator({ lang, kompakt = false }: { lang: Lang; kompakt?: bo
 
 
           </>
+        )}
+        </>
         )}
       </div>
     </div>

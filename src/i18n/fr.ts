@@ -512,6 +512,26 @@ export const fr: Texte = {
       "Si tu le veux, nous te mettrons plus tard en contact avec des spécialistes.",
     ],
   },
+  berechnen: {
+    knopf: "Calculer maintenant",
+    neu: "Recalculer",
+    knopfHinweis: "Gratuit et sans inscription. Tes données restent sur ton appareil.",
+    wartetTitel: "Ton résultat s'affichera ici",
+    wartetText: "Réponds aux questions et appuie sur « Calculer maintenant ».",
+    laeuftTitel: "Nous calculons ton exemple …",
+    schritte: [
+      "Additionner tes versements",
+      "Vérifier l'aide de l'État selon la loi",
+      "Calculer la croissance jusqu'à la retraite",
+    ],
+    ctaEyebrow: "Ta prochaine étape",
+    ctaTitel: "Passe maintenant à la réalité.",
+    ctaText: (rate: string) =>
+      `Tu as déjà fait le premier pas. Un conseiller personnel près de chez toi voit avec toi comment placer au mieux tes ${rate} par mois – et si tu peux obtenir l'aide de l'État.`,
+    ctaPunkte: ["En personne et près de chez toi", "Pour ta situation, pas pour n'importe qui", "Ensuite, tu décides tranquillement toi-même"],
+    ctaKnopf: "Demander un conseiller près de chez toi",
+    ctaKlein: "La demande est gratuite et sans engagement.",
+  },
   nichtGefunden: {
     eyebrow: "Erreur 404",
     titel: "Cette page n'existe pas.",

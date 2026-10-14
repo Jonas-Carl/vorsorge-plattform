@@ -512,6 +512,26 @@ export const en: Texte = {
       "If you want, we will later put you in touch with experts.",
     ],
   },
+  berechnen: {
+    knopf: "Calculate now",
+    neu: "Calculate again",
+    knopfHinweis: "Free and without sign-up. Your entries stay on your device.",
+    wartetTitel: "Your result will appear here",
+    wartetText: "Answer the questions and press “Calculate now”.",
+    laeuftTitel: "We are working through your example …",
+    schritte: [
+      "Adding up your payments",
+      "Checking the state top-up under the law",
+      "Calculating growth until retirement",
+    ],
+    ctaEyebrow: "Your next step",
+    ctaTitel: "Now make it real.",
+    ctaText: (rate: string) =>
+      `You have already taken the first step. A personal adviser near you can work out with you how best to invest your ${rate} a month – and whether you can get the state top-up.`,
+    ctaPunkte: ["In person and near you", "For your situation, not for just anyone", "Afterwards you decide calmly for yourself"],
+    ctaKnopf: "Request an adviser near you",
+    ctaKlein: "Asking is free and without obligation.",
+  },
   nichtGefunden: {
     eyebrow: "Error 404",
     titel: "This page does not exist.",

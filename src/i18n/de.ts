@@ -517,6 +517,26 @@ export const de = {
       "Wenn du willst, stellen wir später einen Kontakt zu Fachleuten her.",
     ],
   },
+  berechnen: {
+    knopf: "Jetzt berechnen",
+    neu: "Neu berechnen",
+    knopfHinweis: "Kostenlos und ohne Anmeldung. Deine Angaben bleiben auf deinem Gerät.",
+    wartetTitel: "Hier erscheint dein Ergebnis",
+    wartetText: "Beantworte die Fragen und drück auf „Jetzt berechnen“.",
+    laeuftTitel: "Wir rechnen dein Beispiel durch …",
+    schritte: [
+      "Deine Einzahlungen zusammenzählen",
+      "Zuschuss vom Staat nach dem Gesetz prüfen",
+      "Wachstum bis zur Rente durchrechnen",
+    ],
+    ctaEyebrow: "Dein nächster Schritt",
+    ctaTitel: "Jetzt in die Realität umsetzen.",
+    ctaText: (rate: string) =>
+      `Du hast den ersten Schritt schon gemacht. Ein persönlicher Berater in deiner Nähe klärt mit dir, wie du deine ${rate} im Monat am besten anlegst – und ob du den Zuschuss vom Staat bekommen kannst.`,
+    ctaPunkte: ["Persönlich und in deiner Nähe", "Für deine Situation, nicht für irgendwen", "Du entscheidest danach in Ruhe selbst"],
+    ctaKnopf: "Berater in deiner Nähe anfragen",
+    ctaKlein: "Die Anfrage ist kostenlos und unverbindlich.",
+  },
   nichtGefunden: {
     eyebrow: "Fehler 404",
     titel: "Diese Seite gibt es nicht.",
