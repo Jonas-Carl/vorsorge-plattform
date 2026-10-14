@@ -122,7 +122,7 @@ export const fr: Texte = {
     alter: "Quel âge as-tu ?",
     alterEinheit: "ans",
     unter18: "Moins de 18 ans ? C'est possible. La loi ne fixe pas d'âge minimum. Mais tu dois y avoir droit – par exemple en tant qu'apprenti. Et tes parents doivent donner leur accord pour le contrat.",
-    sparrate: "Combien épargnes-tu par mois ?",
+    sparrate: "Combien veux-tu investir par mois ?",
     kinder: "Combien d'enfants as-tu ?",
     kinderHinweis: "Seulement les enfants pour lesquels tu reçois les allocations familiales (Kindergeld).",
     mehrSparen: "Tu veux épargner plus plus tard ?",
