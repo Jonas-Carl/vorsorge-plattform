@@ -127,7 +127,7 @@ export const de = {
     alter: "Wie alt bist du?",
     alterEinheit: "Jahre",
     unter18: "Unter 18? Das geht. Im Gesetz steht kein Mindestalter. Du musst aber berechtigt sein – zum Beispiel als Azubi. Und deine Eltern müssen dem Vertrag zustimmen.",
-    sparrate: "Wie viel sparst du im Monat?",
+    sparrate: "Wie viel willst du im Monat investieren?",
     kinder: "Wie viele Kinder hast du?",
     kinderHinweis: "Nur Kinder, für die du Kindergeld bekommst.",
     mehrSparen: "Willst du später mehr sparen?",

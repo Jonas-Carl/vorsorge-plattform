@@ -122,7 +122,7 @@ export const en: Texte = {
     alter: "How old are you?",
     alterEinheit: "years",
     unter18: "Under 18? That works. The law sets no minimum age. But you must be eligible – for example as an apprentice. And your parents must agree to the contract.",
-    sparrate: "How much do you save per month?",
+    sparrate: "How much do you want to invest per month?",
     kinder: "How many children do you have?",
     kinderHinweis: "Only children you receive child benefit (Kindergeld) for.",
     mehrSparen: "Do you want to save more later?",
