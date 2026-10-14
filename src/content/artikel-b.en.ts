@@ -266,7 +266,6 @@ export const artikelBEn: Artikel[] = [
         "**Ongoing costs per year** as a share of the assets.",
         "Optional: **yearly increase** of the contribution and **inflation**.",
       ] },
-      { t: "p", x: "The slider and the number field each control the same value. Every change is recalculated immediately; there is no submit button." },
       { t: "h2", x: "The results" },
       { t: "ul", items: [
         "**Your own payments:** what you put in yourself.",

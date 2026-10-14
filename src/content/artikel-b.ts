@@ -257,7 +257,6 @@ export const artikelB: Artikel[] = [
         "**Laufende Kosten pro Jahr** als Anteil des Vermögens.",
         "Optional: **jährliche Erhöhung** des Beitrags und **Inflation**.",
       ] },
-      { t: "p", x: "Schieberegler und Zahlenfeld steuern jeweils denselben Wert. Jede Änderung wird sofort neu berechnet; es gibt keinen Absenden-Knopf." },
       { t: "h2", x: "Die Ergebnisse" },
       { t: "ul", items: [
         "**Eigene Einzahlungen:** was du selbst einbringst.",
