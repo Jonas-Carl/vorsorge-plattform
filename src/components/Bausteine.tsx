@@ -147,15 +147,15 @@ export function CtaRechner({ lang }: { lang: Lang }) {
 }
 
 /** Deutlicher Einstieg zur persönlichen Beratung – führt zur Partner-Auswahl. */
-export function BeratungCta({ lang }: { lang: Lang }) {
+export function BeratungCta({ lang, titel, text }: { lang: Lang; titel?: string; text?: string }) {
   const n = texte(lang).neu;
   return (
     <aside className="beratung" aria-labelledby="beratung-titel">
       <span className="beratung__bild"><Icon name="users" size={40} /></span>
       <div className="stack">
         <p className="eyebrow">{n.beratungEyebrow}</p>
-        <h2 id="beratung-titel">{n.beratungTitel}</h2>
-        <p>{n.beratungText}</p>
+        <h2 id="beratung-titel">{titel ?? n.beratungTitel}</h2>
+        <p>{text ?? n.beratungText}</p>
       </div>
       <div className="beratung__aktion">
         <Link href={pfad(lang, "/partner")} className="btn btn--gold">{n.beratungKnopf} <Icon name="arrow" size={18} /></Link>

@@ -353,3 +353,7 @@
 
 /* Spätere Erhöhung des Sparbetrags: Alter und Betrag als Paar, leicht abgesetzt */
 .stufe { display: grid; gap: var(--s-4); padding: var(--s-4); border-radius: var(--r-md); background: var(--sand-50); border: 1px solid var(--sand-200); }
+
+/* Beratungs-Hinweis am Ende jedes Wissensartikels */
+.artikel-beratung { padding-bottom: clamp(3rem, 2rem + 4vw, 5.5rem); }
+.artikel-beratung .beratung { margin-top: 0; }

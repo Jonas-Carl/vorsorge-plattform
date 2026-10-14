@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArticleBody } from "@/components/ArticleBody";
-import { ArtikelKarte, JsonLd, PageHero, QuellenListe } from "@/components/Bausteine";
+import { ArtikelKarte, BeratungCta, JsonLd, PageHero, QuellenListe } from "@/components/Bausteine";
 import { site } from "@/config/site";
 import { artikelSlugs, findeArtikel } from "@/content";
 import { alternativen, istSprache, pfad, sprachen } from "@/i18n";
@@ -105,6 +105,9 @@ export default async function ArtikelSeite({ params }: Props) {
             </p>
           </aside>
         </div>
+      </div>
+      <div className="wrap artikel-beratung">
+        <BeratungCta lang={lang} titel={t.neu.artikelBeratungTitel} text={t.neu.artikelBeratungText} />
       </div>
       {verwandt.length > 0 && (
         <section className="section section--sand" aria-labelledby="verwandt-titel">

@@ -463,6 +463,8 @@ export const en: Texte = {
     beratungText: "Choose who advises you – ideally someone near you. Asking costs nothing and commits you to nothing.",
     beratungKnopf: "Personal advice near you",
     beratungKlein: "We are still building our partner network. Until then we answer your question ourselves.",
+    artikelBeratungTitel: "Any questions about this topic?",
+    artikelBeratungText: "Talk to a personal adviser near you. Asking is free and without obligation.",
     beispiele: "Or take an example:",
     presets: { azubi: "Apprentice, 17", start: "First job, 24", familie: "Family, 2 children", selbst: "Self-employed, 40", spaet: "Starting at 52" },
     partnerTitel: "Personal advice near you",

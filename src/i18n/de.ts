@@ -468,6 +468,8 @@ export const de = {
     beratungText: "Such dir aus, wer dich berät – am besten jemand in deiner Nähe. Die Anfrage kostet nichts und verpflichtet dich zu nichts.",
     beratungKnopf: "Persönliche Beratung in deiner Nähe",
     beratungKlein: "Wir bauen unser Partner-Netz gerade auf. Bis dahin beantworten wir deine Frage selbst.",
+    artikelBeratungTitel: "Noch Fragen zu diesem Thema?",
+    artikelBeratungText: "Sprich mit einem persönlichen Berater in deiner Nähe. Die Anfrage ist kostenlos und unverbindlich.",
     beispiele: "Oder nimm ein Beispiel:",
     presets: { azubi: "Azubi, 17", start: "Berufsstart, 24", familie: "Familie, 2 Kinder", selbst: "Selbstständig, 40", spaet: "Mit 52 anfangen" },
     partnerTitel: "Persönliche Beratung in deiner Nähe",

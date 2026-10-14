@@ -463,6 +463,8 @@ export const fr: Texte = {
     beratungText: "Choisis qui te conseille – de préférence quelqu'un près de chez toi. Demander ne coûte rien et ne t'engage à rien.",
     beratungKnopf: "Conseil personnel près de chez toi",
     beratungKlein: "Nous construisons encore notre réseau de partenaires. D'ici là, nous répondons nous-mêmes à ta question.",
+    artikelBeratungTitel: "Encore des questions sur ce sujet ?",
+    artikelBeratungText: "Parle à un conseiller personnel près de chez toi. La demande est gratuite et sans engagement.",
     beispiele: "Ou prends un exemple :",
     presets: { azubi: "Apprenti, 17 ans", start: "Premier emploi, 24 ans", familie: "Famille, 2 enfants", selbst: "Indépendant, 40 ans", spaet: "Début à 52 ans" },
     partnerTitel: "Conseil personnel près de chez toi",
