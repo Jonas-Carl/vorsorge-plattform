@@ -354,6 +354,7 @@
 /* Spätere Erhöhung des Sparbetrags: Alter und Betrag als Paar, leicht abgesetzt */
 .stufe { display: grid; gap: var(--s-4); padding: var(--s-4); border-radius: var(--r-md); background: var(--sand-50); border: 1px solid var(--sand-200); }
 
-/* Beratungs-Hinweis am Ende jedes Wissensartikels */
-.artikel-beratung { padding-bottom: clamp(3rem, 2rem + 4vw, 5.5rem); }
-.artikel-beratung .beratung { margin-top: 0; }
+/* Letzter Abschnitt jedes Wissensartikels: Hinweis auf persönliche Beratung */
+.artikel-frage { margin-top: var(--s-7); padding-top: var(--s-6); border-top: 1px solid var(--sand-200); }
+.artikel-frage h2 { margin-top: 0; }
+.artikel-frage .btn { margin-top: var(--s-2); }

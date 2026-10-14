@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArticleBody } from "@/components/ArticleBody";
-import { ArtikelKarte, BeratungCta, JsonLd, PageHero, QuellenListe } from "@/components/Bausteine";
+import { ArtikelKarte, JsonLd, PageHero, QuellenListe } from "@/components/Bausteine";
+import { Icon } from "@/components/Icon";
 import { site } from "@/config/site";
 import { artikelSlugs, findeArtikel } from "@/content";
 import { alternativen, istSprache, pfad, sprachen } from "@/i18n";
@@ -84,6 +85,15 @@ export default async function ArtikelSeite({ params }: Props) {
             </p>
             <p className="eyebrow" style={{ marginBottom: "var(--s-4)" }}>{t.wissen.genauer}</p>
             <ArticleBody bloecke={a.bloecke} lang={lang} />
+            <section className="prose artikel-frage" aria-labelledby="artikel-frage">
+              <h2 id="artikel-frage">{t.neu.artikelBeratungTitel}</h2>
+              <p>{t.neu.artikelBeratungText}</p>
+              <p>
+                <Link href={pfad(lang, "/partner")} className="btn btn--primary">
+                  {t.neu.artikelBeratungKnopf} <Icon name="arrow" size={18} />
+                </Link>
+              </p>
+            </section>
           </article>
           <aside className="article-aside">
             <div className="card">
@@ -105,9 +115,6 @@ export default async function ArtikelSeite({ params }: Props) {
             </p>
           </aside>
         </div>
-      </div>
-      <div className="wrap artikel-beratung">
-        <BeratungCta lang={lang} titel={t.neu.artikelBeratungTitel} text={t.neu.artikelBeratungText} />
       </div>
       {verwandt.length > 0 && (
         <section className="section section--sand" aria-labelledby="verwandt-titel">
