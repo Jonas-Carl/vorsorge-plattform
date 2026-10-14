@@ -70,21 +70,6 @@ export default async function Startseite({ params }: LangParams) {
         </div>
       </section>
 
-      {/* Drei Vorteile */}
-      <section className="vorteile-band" aria-label={h.vorteileLabel}>
-        <ul className="wrap vorteile3">
-          {h.vorteile.map((v, i) => (
-            <li key={v.titel}>
-              <a href={v.link} className={`vorteil vorteil--${akzent(i)}`}>
-                <span className="vorteil__bild"><Icon name={v.bild as IconName} size={28} /></span>
-                <h2>{v.titel}</h2>
-                <p>{v.text}</p>
-              </a>
-            </li>
-          ))}
-        </ul>
-      </section>
-
       {/* Rechner */}
       <section className="section section--rechner" id="rechner" aria-labelledby="rechner-titel">
         <div className="wrap">
