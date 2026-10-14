@@ -213,11 +213,11 @@ strong { font-weight: 650; color: var(--ink-900); }
 .header--dunkel .mobile-nav .btn { background: #45e2c4; border-color: #45e2c4; color: #05121a; }
 .header--dunkel :focus-visible { box-shadow: 0 0 0 3px #05121a, 0 0 0 6px #45e2c4; }
 @media (min-width: 900px) {
-  .header--dunkel .header__in { min-height: clamp(4.75rem, 7vw, 7.2rem); }
-  .header--dunkel .logo__mark { width: clamp(2.75rem, 4.1vw, 4.2rem); height: clamp(2.75rem, 4.1vw, 4.2rem); }
-  .header--dunkel .logo__name { font-size: clamp(1.45rem, 1.85vw, 1.9rem); }
-  .header--dunkel .nav a { font-size: clamp(1rem, 1.1vw, 1.15rem); padding-inline: clamp(0.9rem, 1.3vw, 1.35rem); }
-  .header--dunkel .header__cta { min-height: clamp(2.9rem, 3.4vw, 3.5rem); padding-inline: clamp(1.4rem, 1.8vw, 1.9rem); font-size: clamp(1rem, 1.1vw, 1.15rem); }
+  .header--dunkel .header__in { min-height: clamp(4rem, 4.6vw, 4.75rem); }
+  .header--dunkel .logo__mark { width: clamp(2.25rem, 2.6vw, 2.75rem); height: clamp(2.25rem, 2.6vw, 2.75rem); }
+  .header--dunkel .logo__name { font-size: clamp(1.3rem, 1.5vw, 1.55rem); }
+  .header--dunkel .nav a { font-size: clamp(0.95rem, 1vw, 1.05rem); padding-inline: clamp(0.8rem, 1.1vw, 1.15rem); }
+  .header--dunkel .header__cta { min-height: clamp(2.5rem, 2.8vw, 2.85rem); padding-inline: clamp(1.2rem, 1.5vw, 1.6rem); font-size: clamp(0.95rem, 1vw, 1.05rem); }
 }
 
 /* Hero ------------------------------------------------------------------- */
