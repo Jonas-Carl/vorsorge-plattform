@@ -66,8 +66,33 @@ export function Calculator({ lang, kompakt = false }: { lang: Lang; kompakt?: bo
   const setzeFoerderung = (teil: Partial<RechnerEingabe["foerderung"]>) =>
     setze({ foerderung: { ...roh.foerderung, ...teil } });
 
+  // Spätere Erhöhungen des Sparbetrags: ab einem Alter ein neuer Monatsbetrag.
+  const stufen = roh.erhoehungen ?? [];
+  const setzeStufen = (liste: NonNullable<RechnerEingabe["erhoehungen"]>) => setze({ erhoehungen: liste });
+  function stufeDazu() {
+    const vorher = stufen[stufen.length - 1];
+    const abAlter = Math.min(grenzen.erhoehungen.abAlterMax, Math.max(e.alter + 1, (vorher?.abAlter ?? e.alter) + 5));
+    const sparrate = Math.min(grenzen.sparrate.max, (vorher?.sparrate ?? e.sparrate) + 50);
+    setzeStufen([...stufen, { abAlter, sparrate }]);
+  }
+
+  // Geplante Kinder: je Kind das eigene Alter bei der Geburt.
+  const geplant = roh.foerderung.geplanteKinder ?? [];
+  const setzeGeplant = (liste: number[]) => setzeFoerderung({ geplanteKinder: liste });
+  function geplantDazu() {
+    const vorher = geplant[geplant.length - 1] ?? e.alter;
+    setzeGeplant([...geplant, Math.min(grenzen.geburtsalter.max, Math.max(grenzen.geburtsalter.min, vorher + 2))]);
+  }
+
   const E = (x: number) => euro(x, lang);
   const P = (x: number) => prozent(x, 2, lang);
+
+  // Für den Hinweis im Block „Das steht fest“: alle Erhöhungen, die in die Laufzeit fallen.
+  const stufenListe = [...(e.erhoehungen ?? [])]
+    .filter((s) => s.abAlter > e.alter && s.abAlter < e.rentenalter)
+    .sort((a, b) => a.abAlter - b.abAlter)
+    .map((s) => t.stufeEintrag(s.abAlter, E(s.sparrate)))
+    .join(", ");
 
   // --- Das steht fest: Beitrag und Zuschuss pro Jahr -------------------------
   const eigenJahr = e.sparrate * 12;
@@ -147,6 +172,36 @@ export function Calculator({ lang, kompakt = false }: { lang: Lang; kompakt?: bo
 
         <div className="field field--gross">
           <div className="field__top">
+            <span className="field__label" id={`stufen-label-${kompakt ? "k" : "v"}`}>{t.mehrSparen}</span>
+            <div className="stepper" role="group" aria-labelledby={`stufen-label-${kompakt ? "k" : "v"}`}>
+              <button type="button" aria-label={t.weniger} disabled={stufen.length <= 0} onClick={() => setzeStufen(stufen.slice(0, -1))}>
+                −
+              </button>
+              <output aria-live="polite">{stufen.length}</output>
+              <button type="button" aria-label={t.mehr} disabled={stufen.length >= grenzen.erhoehungen.max} onClick={stufeDazu}>
+                +
+              </button>
+            </div>
+          </div>
+          <p className="field__hint">{t.mehrSparenHinweis}</p>
+        </div>
+        {stufen.map((s, i) => (
+          <div key={i} className="stufe">
+            <NumberField
+              id={`stufe-ab-${kompakt ? "k" : "v"}-${i}`} lang={lang} label={t.stufeAb(i + 1)} unit={t.alterEinheit} sliderLabel={t.regler}
+              value={s.abAlter} min={grenzen.erhoehungen.abAlterMin} max={grenzen.erhoehungen.abAlterMax} step={1}
+              onChange={(abAlter) => setzeStufen(stufen.map((x, k) => (k === i ? { ...x, abAlter } : x)))}
+            />
+            <NumberField
+              id={`stufe-rate-${kompakt ? "k" : "v"}-${i}`} lang={lang} label={t.stufeRate(i + 1)} unit="€" sliderLabel={t.regler}
+              value={s.sparrate} min={0} max={MAX_MONAT} step={grenzen.sparrate.schritt}
+              onChange={(sparrate) => setzeStufen(stufen.map((x, k) => (k === i ? { ...x, sparrate } : x)))}
+            />
+          </div>
+        ))}
+
+        <div className="field field--gross">
+          <div className="field__top">
             <span className="field__label" id="kinder-label">{t.kinder}</span>
             <div className="stepper" role="group" aria-labelledby="kinder-label">
               <button
@@ -170,13 +225,37 @@ export function Calculator({ lang, kompakt = false }: { lang: Lang; kompakt?: bo
           </div>
           <p className="field__hint">{t.kinderHinweis}</p>
         </div>
+
+        <div className="field field--gross">
+          <div className="field__top">
+            <span className="field__label" id={`geplant-label-${kompakt ? "k" : "v"}`}>{t.geplant}</span>
+            <div className="stepper" role="group" aria-labelledby={`geplant-label-${kompakt ? "k" : "v"}`}>
+              <button type="button" aria-label={t.weniger} disabled={geplant.length <= 0} onClick={() => setzeGeplant(geplant.slice(0, -1))}>
+                −
+              </button>
+              <output aria-live="polite">{geplant.length}</output>
+              <button type="button" aria-label={t.mehr} disabled={geplant.length >= grenzen.geplanteKinder.max} onClick={geplantDazu}>
+                +
+              </button>
+            </div>
+          </div>
+          <p className="field__hint">{t.geplantHinweis}</p>
+        </div>
+        {geplant.map((g, i) => (
+          <NumberField
+            key={i}
+            id={`geplant-${kompakt ? "k" : "v"}-${i}`} lang={lang} label={t.geplantKind(i + 1)} unit={t.alterEinheit} sliderLabel={t.regler}
+            value={g} min={grenzen.geburtsalter.min} max={grenzen.geburtsalter.max} step={grenzen.geburtsalter.schritt}
+            onChange={(alter) => setzeGeplant(geplant.map((x, k) => (k === i ? alter : x)))}
+          />
+        ))}
       </form>
 
         {kompakt ? (
         <Link
           href={pfad(lang, "/rechner")}
           className="btn btn--ghost rechner__mehr"
-          onClick={() => merkeEingabe({ alter: e.alter, sparrate: e.sparrate, rendite: e.rendite, foerderung: e.foerderung })}
+          onClick={() => merkeEingabe({ alter: e.alter, sparrate: e.sparrate, rendite: e.rendite, foerderung: e.foerderung, erhoehungen: e.erhoehungen })}
         >
           {t.vollerRechner} <Icon name="arrow" size={18} />
         </Link>
@@ -283,6 +362,8 @@ export function Calculator({ lang, kompakt = false }: { lang: Lang; kompakt?: bo
               <strong>{t.proEuro(centProEuro >= 100 ? euroGenau(centProEuro / 100, lang) : `${centProEuro} ${t.cent}`)}</strong>
               {bonusMoeglich && <> {t.bonus(E(r.berufseinsteigerbonus.betrag))}</>}
               {kinderAktiv > 0 && <> {t.kinderJahre(Math.min(e.foerderung.kindergeldJahre, ergebnis.jahre))}</>}
+              {(e.foerderung.geplanteKinder?.length ?? 0) > 0 && <> {t.geplantText(e.foerderung.geplanteKinder!.length)}</>}
+              {stufenListe && <> {t.stufenText(stufenListe)}</>}
             </p>
           )}
           {eigenJahr > r.einzahlungsgrenzeJahr && <p className="note note--gold" role="status">{t.ueberGrenze}</p>}
@@ -301,7 +382,7 @@ export function Calculator({ lang, kompakt = false }: { lang: Lang; kompakt?: bo
           {e.foerderung.aktiv && <p className="block__klein">{t.festHinweis}</p>}
         </section>
 
-        {/* Das weiß niemand vorher */}
+        {/* Voraussichtlich (Beispiel, hängt vom Wachstum ab) */}
         <section className="block block--offen" aria-labelledby={`offen-${kompakt ? "k" : "v"}`}>
           <div className="block__kopf">
             <h3 id={`offen-${kompakt ? "k" : "v"}`}><Icon name="trend" size={20} /> {t.offenTitel}</h3>

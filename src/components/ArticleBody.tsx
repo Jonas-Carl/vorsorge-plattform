@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Block } from "@/content/typen";
 import { pfad, type Lang } from "@/i18n";
 import { texte } from "@/i18n/texte";
+import { Icon } from "./Icon";
 
 /** Wandelt **fett** und [Text](/pfad) in React-Elemente um; interne Links erhalten das Sprachpräfix. */
 export function Inline({ text, lang }: { text: string; lang: Lang }) {
@@ -53,6 +54,12 @@ export function ArticleBody({ bloecke, lang }: { bloecke: Block[]; lang: Lang })
                 <h4>{b.titel}</h4>
                 {b.x.map((zeile, j) => <p key={j}><Inline text={zeile} lang={lang} /></p>)}
               </div>
+            );
+          case "knopf":
+            return (
+              <p key={i}>
+                <Link href={pfad(lang, b.href)} className="btn btn--primary">{b.text} <Icon name="arrow" size={18} /></Link>
+              </p>
             );
           case "tabelle":
             return (

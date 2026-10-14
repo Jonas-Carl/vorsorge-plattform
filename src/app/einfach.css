@@ -230,8 +230,6 @@
   content: ""; position: absolute; left: 0.48rem; top: 0.42rem; width: 0.4rem; height: 0.7rem;
   border-right: 2.5px solid var(--mint-700); border-bottom: 2.5px solid var(--mint-700); transform: rotate(45deg);
 }
-.haken--nein li::before { background: var(--rose-100); }
-.haken--nein li::after { left: 0.33rem; top: 0.78rem; width: 0.75rem; height: 0; border-right: 0; border-bottom: 2.5px solid #9b3c22; transform: none; }
 
 /* Reform: Ampel ---------------------------------------------------------- */
 .ampel { display: grid; gap: var(--s-2); }
@@ -344,7 +342,7 @@
   border-radius: var(--r-md); padding: var(--s-3) var(--s-4);
 }
 
-/* Grobe monatliche Auszahlung im Block „Das weiß niemand vorher“ */
+/* Grobe monatliche Auszahlung im Block „Voraussichtlich“ */
 .auszahlung { border-top: 1px solid rgba(255, 255, 255, 0.18); padding-top: var(--s-4); display: grid; gap: var(--s-1); }
 .auszahlung__label { font-size: var(--text-sm); color: #a9b9cb; }
 .auszahlung__zahl {
@@ -352,3 +350,6 @@
   font-variant-numeric: tabular-nums lining-nums; letter-spacing: -0.01em;
 }
 .auszahlung__zahl span { font-family: var(--font-body, inherit); font-size: var(--text-base); font-weight: 600; letter-spacing: 0; }
+
+/* Spätere Erhöhung des Sparbetrags: Alter und Betrag als Paar, leicht abgesetzt */
+.stufe { display: grid; gap: var(--s-4); padding: var(--s-4); border-radius: var(--r-md); background: var(--sand-50); border: 1px solid var(--sand-200); }

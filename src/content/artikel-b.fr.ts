@@ -6,15 +6,6 @@ import { FF as F, STAND, type Artikel } from "./typen";
 const euro = (x: number) => euroL(x, "fr");
 const prozent = (x: number) => prozentL(x, 2, "fr");
 
-/** Exemple de calcul : 100 € par mois, 35 ans, 5 % de rendement avant frais. */
-const mitKosten = (kosten: number) =>
-  berechne({ ...standardEingabe, alter: 32, rentenalter: 67, sparrate: 100, rendite: 0.05, kosten, inflation: 0 });
-const k0 = mitKosten(0);
-const kostenZeile = (k: number) => {
-  const e = mitKosten(k);
-  return [prozent(k), euro(e.endkapital), euro(k0.endkapital - e.endkapital)];
-};
-
 const kaufkraft = (jahre: number, inflation: number) => euro(1000 / Math.pow(1 + inflation, jahre));
 
 const start = (alter: number) =>
@@ -31,15 +22,15 @@ export const artikelBFr: Artikel[] = [
   {
     slug: "kosten-und-gebuehren",
     titel: "Frais et commissions",
-    einfach: "Celui qui gère ton argent en prend un petit peu chaque année. Sur de nombreuses années, cela fait beaucoup.",
-    kurz: "Quels frais existent pour les produits d'épargne retraite, ce que veulent dire les frais effectifs et pourquoi un point de pourcentage compte beaucoup sur des dizaines d'années.",
+    einfach: "La gestion de ton argent s'accompagne de petits frais – comme partout où quelqu'un travaille pour toi. Un conseiller ou une conseillère peut te montrer combien cela fait exactement pour ton offre.",
+    kurz: "Quels frais existent pour les produits d'épargne retraite, ce que sont les frais effectifs et comment comparer les offres tranquillement.",
     kategorie: "Geldanlage",
     lesezeitMin: 5,
     stand: STAND,
     quellen: ["bgbl-2026-156", "bundestag-kw13-2026"],
     verwandt: ["altersvorsorgedepot", "etfs-und-fonds", "annahmen-hinter-den-berechnungen"],
     bloecke: [
-      { t: "p", x: "Les frais sont la partie du placement que tu connais avec certitude – contrairement au rendement. Comme ils reviennent chaque année et réduisent aussi les intérêts composés, même de petites différences ont un grand effet sur de longues durées." },
+      { t: "p", x: "Celui qui place et gère ton argent reçoit des frais pour cela. C'est tout à fait normal. Bonne nouvelle : tu peux comparer les frais à l'avance – et trouver tranquillement une offre qui te convient." },
       { t: "h2", x: "Quels frais existe-t-il ?" },
       { t: "ul", items: [
         "**Frais de souscription et de distribution :** pour l'intermédiaire et la mise en place du contrat.",
@@ -49,12 +40,10 @@ export const artikelBFr: Artikel[] = [
         "**Frais de changement :** quand tu changes de prestataire.",
       ] },
       { t: "h2", x: "Frais effectifs : un seul chiffre pour tout" },
-      { t: "p", x: "Les frais effectifs (Effektivkosten) indiquent de combien de points de pourcentage l'ensemble des frais réduit le rendement annuel jusqu'au début du versement. Ils figurent dans la fiche d'information du produit et permettent de comparer les offres." },
-      { t: "beispiel", titel: `${euro(100)} par mois, 35 ans, 5 % de rendement avant frais`, x: [
-        `Sans frais, le calcul modèle donnerait ${euro(k0.endkapital)}.`,
-      ] },
-      { t: "tabelle", titel: "Effet des frais courants dans le calcul modèle", kopf: ["Frais par an", "Capital final", "En moins par rapport à sans frais"], zeilen: [0.005, 0.01, 0.015, 0.02].map(kostenZeile) },
-      { t: "p", x: "Les valeurs viennent de la même logique de calcul que notre [simulateur](/rechner) : rendement constant, frais comme part annuelle du capital. Ce sont des exemples de calcul, pas des prévisions." },
+      { t: "p", x: "Les frais effectifs (Effektivkosten) réunissent tous les frais en un seul chiffre. Ils figurent dans la fiche d'information du produit et rendent les offres faciles à comparer." },
+      { t: "h2", x: "Combien coûte mon offre ?" },
+      { t: "p", x: "Les chiffres exacts dépendent du prestataire et du produit. Un conseiller ou une conseillère peut te montrer les frais de ton offre et les comparer avec d'autres – sans engagement." },
+      { t: "knopf", text: "Parler à un conseiller", href: "/partner" },
       { t: "h2", x: `Ce que la loi règle à partir de ${F.ab}` },
       { t: "ul", items: [
         `Pour le **compte-titres standard (Standarddepot)**, les frais effectifs ne peuvent pas dépasser ${F.kostenMax}.`,
@@ -62,13 +51,13 @@ export const artikelBFr: Artikel[] = [
         `Un changement de prestataire coûte au maximum ${F.wechselMax} pendant les ${F.wechselJahre} premières années et il est gratuit ensuite.`,
         "Tu n'as pas à payer des frais qui n'ont pas été indiqués.",
       ] },
-      { t: "hinweis", titel: "Important", x: "Le plafond de frais vaut pour le compte-titres standard. Les autres comptes-titres retraite et les produits à garantie peuvent coûter plus cher – un coup d'œil à la fiche d'information du produit vaut toujours la peine." },
+      { t: "hinweis", titel: "Bon à savoir", x: "Le plafond de frais vaut pour le compte-titres standard. Pour les autres offres, un conseil t'aide à comparer les frais." },
     ],
   },
   {
     slug: "risiken-von-kapitalmarktanlagen",
     titel: "Les risques des placements sur les marchés financiers",
-    einfach: "L'argent placé en actions peut augmenter, mais aussi baisser. Si tu le répartis sur beaucoup d'entreprises et que tu attends longtemps, le risque diminue – il ne disparaît pas complètement.",
+    einfach: "L'argent placé en actions monte et descend de temps en temps – cela fait tout simplement partie du jeu. Si tu le répartis sur beaucoup d'entreprises et que tu prends ton temps, le chemin devient bien plus calme. Le temps et la diversification sont tes meilleurs alliés.",
     kurz: "Variations de cours, risque de perte, moment du versement : quels risques ont les placements en actions et en fonds, et ce qui les limite.",
     kategorie: "Geldanlage",
     lesezeitMin: 5,
@@ -127,7 +116,8 @@ export const artikelBFr: Artikel[] = [
         ["Frais", "Ton contrat est peu cher et les frais de souscription sont déjà payés", "Ton contrat a des frais courants élevés"],
         ["Détails du contrat", "Tu as un taux garanti élevé ou des facteurs de rente avantageux", "Le contrat n'offre pas d'avantages particuliers"],
       ] },
-      { t: "p", x: "Le côté qui l'emporte dépend de ton contrat. Une réponse générale ne serait pas sérieuse." },
+      { t: "p", x: "Le côté qui l'emporte dépend de ton contrat. Le mieux est qu'un conseiller examine ton contrat avec toi." },
+      { t: "knopf", text: "Trouver un conseiller personnel ici", href: "/partner" },
       { t: "h2", x: "Penser à l'époux ou à l'épouse" },
       { t: "p", x: "Si la personne qui a directement droit à l'aide passe au nouveau système, la situation juridique de l'époux qui y a droit indirectement change automatiquement avec elle. À l'inverse, le partenaire qui y a droit indirectement ne peut pas changer seul – la décision revient à la personne qui y a directement droit." },
       { t: "h2", x: "Où obtenir des renseignements fiables" },
@@ -163,7 +153,8 @@ export const artikelBFr: Artikel[] = [
       { t: "p", x: "Les montants du relevé de retraite sont des valeurs nominales. Ce que tu pourras t'offrir avec dans 30 ans dépend de l'évolution des prix. En savoir plus sous [Inflation et pouvoir d'achat](/wissen/inflation-und-kaufkraft)." },
       { t: "h2", x: "Du besoin au montant à épargner" },
       { t: "p", x: "Si tu connais à peu près ton manque, tu peux essayer avec le [simulateur](/rechner) quel capital pourrait se constituer, par le calcul, avec quel montant épargné. La retraite mensuelle que cela donne dépend de la forme du versement – voir [Phase de versement et imposition](/wissen/auszahlungsphase-und-besteuerung)." },
-      { t: "hinweis", titel: "Aide gratuite", x: "L'assurance retraite allemande (Deutsche Rentenversicherung) propose des entretiens gratuits sur l'épargne retraite. Le relevé numérique de retraite de l'État fédéral (Digitale Rentenübersicht) regroupe en plus les droits issus de différentes sources." },
+      { t: "hinweis", titel: "Aide gratuite", x: "Parle gratuitement à ton conseiller personnel. Il examine ta situation et te montre comment combler ton manque – sans aucun engagement." },
+      { t: "knopf", text: "Trouver un conseiller personnel ici", href: "/partner" },
     ],
   },
   {
@@ -306,7 +297,7 @@ export const artikelBFr: Artikel[] = [
   {
     slug: "annahmen-hinter-den-berechnungen",
     titel: "Quelles hypothèses se cachent derrière nos calculs ?",
-    einfach: "Notre simulateur calcule selon des règles fixes que nous avons choisies. Ici, nous te les montrons toutes, pour que tu puisses vérifier comment il arrive à son résultat.",
+    einfach: "Notre simulateur associe deux choses : des règles fixées par la loi – par exemple ce que l'État ajoute – et des hypothèses comme le rendement, que personne ne connaît avec certitude. Ici, nous te montrons tout, pour que tu puisses vérifier comment il arrive à son résultat.",
     kurz: "Formules, dates de versement, modèle de frais, scénarios et primes : la méthode du simulateur présentée en entier.",
     kategorie: "Rechner & Methodik",
     lesezeitMin: 5,
@@ -338,6 +329,7 @@ export const artikelBFr: Artikel[] = [
         "Pour simplifier, les primes sont créditées à la fin de chaque année de cotisation. En réalité, elles n'arrivent qu'après la demande et son examen.",
         "Les règles sont supposées inchangées pendant toute la durée.",
         "La prime pour enfant est comptée pour le nombre d'années indiqué, et de la même façon pour tous les enfants.",
+        "Les enfants prévus comptent pendant 18 ans à partir de l'année où tu atteins l'âge indiqué. Les allocations familiales sont versées au moins jusqu'à 18 ans, souvent plus longtemps – nous calculons prudemment.",
         `La prime de départ est prise en compte une seule fois, la première année, si l'âge indiqué est inférieur à ${F.bonusAlter} ans.`,
         "Non calculé : la déduction fiscale, le droit indirect à l'aide, l'imposition des versements.",
       ] },

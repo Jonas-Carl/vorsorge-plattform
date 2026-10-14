@@ -75,7 +75,10 @@ später ggf. Werbekonten (Meta, Google Ads) und ein einwilligungsbasiertes Analy
    vollständige Datenschutzerklärung.
 3. **Telefonische Kontaktaufnahme (§ 7 UWG).** Anforderungen an die Einwilligung in
    Werbeanrufe und deren Dokumentation, auch für Anrufe durch Partner.
-4. **Werbung und Transparenz (UWG, MStV).** Kennzeichnung kommerzieller Inhalte, Aussagen zu
+4. **Werbung und Transparenz (UWG, MStV).** Die Hinweise zur Vergütung sind bewusst knapp gehalten:
+   eine kurze Seite „Unabhängigkeit & Partner“ (`/transparenz`, verlinkt in der Fußzeile und im
+   Anfrageformular), ein Satz „kommerzielles Angebot“ auf „Über uns“ und das Feld „Vergütung“ je Partner.
+   Prüfen, ob das für § 5a UWG reicht. Außerdem: Kennzeichnung kommerzieller Inhalte, Aussagen zu
    Förderung und Rendite in Anzeigen, Werberichtlinien der Plattformen für Finanzprodukte.
 5. **Impressum (§ 5 DDG, § 18 MStV)** und Betreiberangaben – derzeit Platzhalter.
 6. **TDDDG.** Solange nur die Einwilligungsauswahl gespeichert wird, ist kein Banner vorgesehen;
@@ -112,7 +115,7 @@ Beim Redesign der Startseite wurde keine dieser Aussagen inhaltlich verändert.
 | --- | --- | --- | --- |
 | „Das steht schon fest“ | 50 Cent Zuschuss je Euro für die ersten 360 € im Jahr | § 84 EStG n. F. | fachlich zu prüfen |
 | „Das steht schon fest“ | 25 Cent je weiterem Euro bis 1.800 €, höchstens 540 € | § 84 EStG n. F. | fachlich zu prüfen |
-| „Das steht schon fest“ | bis 300 € extra je Kind, ab 25 € im Monat, solange Kindergeld | § 85 EStG n. F. | fachlich zu prüfen |
+| „Das steht schon fest“ | bis 300 € extra je Kind, ab 25 € im Monat, solange Kindergeld | § 85 Abs. 1 EStG n. F.: „Für jedes Kind … 100 Prozent der im Beitragsjahr bis zu einer Höhe von 1 800 Euro geleisteten Altersvorsorgebeiträge …, höchstens 300 Euro pro Kind“ – Bemessung je Kind, keine Aufteilung auf mehrere Kinder (Wortlaut am 14.10.2026 über die NWB-Datenbank abgeglichen, nicht am BGBl.-PDF) | Wortlaut abgeglichen; am BGBl. bestätigen |
 | „Das steht schon fest“ | 200 € Start-Bonus unter 25, einmalig | § 84 Satz 2 EStG n. F. | fachlich zu prüfen |
 | „Das steht schon fest“ | mindestens 120 € im Jahr sparen | § 86 EStG n. F. | fachlich zu prüfen |
 | „Das steht schon fest“ | höchstens 1 % Kosten beim Standard-Depot | § 2a Abs. 2 AltZertG n. F. | fachlich zu prüfen |
@@ -123,9 +126,13 @@ Beim Redesign der Startseite wurde keine dieser Aussagen inhaltlich verändert.
 | „Passt das zu mir?“ | Schüler ohne Job und Rentner meist nicht berechtigt | abgeleitet aus § 10a EStG | fachlich zu prüfen |
 | Rechner, „Das steht fest“ | Zuschuss wird standardmäßig eingerechnet | Annahme: Person ist förderberechtigt | fachlich zu prüfen |
 | Rechner | Extra-Geld für Kinder für 10 Jahre gerechnet | eigene Annahme, kein Gesetzeswert | Annahme bestätigen |
-| Rechner | Wachstum 2 % / 5 % / 7 % | eigene Beispielwerte, kein Gesetzeswert | Annahme bestätigen |
-| Kopfbereich, Karte „Deine Möglichkeiten“ | „Mögliches Endvermögen“ mit Balkendiagramm | Ergebnis des Rechners mit dessen Startwerten (100 € im Monat ab 32, 5 % Wachstum, Zuschuss eingerechnet); Annahmen stehen in der Karte, gekennzeichnet als unverbindliches Beispiel | Annahme bestätigen |
-| Kopfbereich, Förderhinweise | „Staatliche Förderung“, „Förderung deiner Einzahlungen“, „Förderung für Familien“ – ohne Beträge | allgemeine Hinweise auf §§ 84–86 EStG n. F. | fachlich zu prüfen |
-| Rechner, „Das weiß niemand vorher“ | grobe monatliche Auszahlung: Endkapital gleichmäßig bis 85 verteilt, ohne Wachstum, vor Steuern | eigene Vereinfachung; 85 = frühestes Ende eines Auszahlungsplans (AltZertG n. F.) | fachlich zu prüfen |
+| Artikel „Rentenlücke“, Kasten „Kostenlose Hilfe“ | „Rede kostenlos mit deinem persönlichen Berater … ganz unverbindlich“ | Aussage über Partner, die es noch nicht gibt; gilt nur, wenn jeder Partner ein kostenloses, unverbindliches Erstgespräch anbietet | mit Partnern vertraglich sicherstellen |
+| Rechner | Geplante Kinder: Extra-Geld 18 Jahre ab dem angegebenen Alter bei der Geburt | eigene Annahme (Kindergeld mindestens bis 18, § 32 Abs. 3 und 4 EStG); Zuordnung zwischen den Eltern nicht abgebildet | Annahme bestätigen |
+| Rechner | Rendite 2 % / 6 % / 10 %, voreingestellt 6 % (vor 1 % Kosten); 10 % liegt deutlich über langjährigen Durchschnitten breit gestreuter Aktienfonds | eigene Beispielwerte, kein Gesetzeswert | Annahme bestätigen |
+| Kopfbereich, Karte „Deine Möglichkeiten“ | „Mögliches Endvermögen“ 568.527 € mit Balkendiagramm | Rechenlogik des Rechners mit eigenem Beispiel: 150 € im Monat ab 20 bis 67 (47 Jahre), 7 % Wachstum vor 1 % Kosten, Zuschuss inkl. Start-Bonus eingerechnet; Annahmen stehen in der Karte, gekennzeichnet als unverbindliches Beispiel. 7 % liegt zwischen der mittleren (6 %) und der höchsten Stufe (10 %) des Rechners | Annahme bestätigen (Werbung mit optimistischer Rendite) |
+| Kopfbereich, Förderkarte 1 | bis zu 540 € im Jahr: 50 Cent je Euro bis 360 €, danach 25 Cent bis 1.800 € (ab 2027) | § 84 EStG n. F. | fachlich zu prüfen |
+| Kopfbereich, Förderkarte 2 | bis zu 300 € pro Kind und Jahr, solange es Kindergeld gibt | § 85 EStG n. F. | fachlich zu prüfen |
+| Kopfbereich, Förderkarte 3 | 200 € Start-Bonus, einmalig unter 25 | § 84 Satz 2 EStG n. F. | fachlich zu prüfen |
+| Rechner, „Voraussichtlich“ | grobe monatliche Auszahlung: Endkapital gleichmäßig bis 85 verteilt, ohne Wachstum, vor Steuern | eigene Vereinfachung; 85 = frühestes Ende eines Auszahlungsplans (AltZertG n. F.) | fachlich zu prüfen |
 | Rechner, Schnellwahl | 10 € Minimum, 150 € voller Zuschuss, 570 € Maximum im Monat | § 86, § 84 EStG n. F., Einzahlungsgrenze 6.840 € im Jahr – jeweils durch 12 | fachlich zu prüfen |
 | Häufige Fragen | unter 18 möglich, Eltern müssen zustimmen | kein Mindestalter im Reformgesetz; Zustimmung nach allgemeinem Vertragsrecht | fachlich zu prüfen |

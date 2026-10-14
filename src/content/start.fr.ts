@@ -5,7 +5,7 @@ import { FF as F } from "./typen";
 export function startseitenFaqFr(): { frage: string; antwort: string }[] {
   return [
     { frage: "Est-ce un site de l'État ?", antwort: "Non. Nous sommes un site privé et pas une administration. Ce que nous disons sur la loi, nous le prouvons avec des sources officielles. Tu les trouves sous [Sources et méthodes](/quellen-methodik)." },
-    { frage: "Est-ce que cela coûte quelque chose ?", antwort: "Non. Le simulateur et tous les textes sont gratuits. Plus tard, nous gagnerons de l'argent quand des partenaires nous paieront pour des questions que tu envoies de ton plein gré. Nous l'expliquons sous [Comment nous gagnons de l'argent](/transparenz)." },
+    { frage: "Est-ce que cela coûte quelque chose ?", antwort: "Non. Le simulateur et tous les textes sont gratuits." },
     { frage: "Dois-je donner mon nom ou mon e-mail ?", antwort: "Non. Le simulateur fonctionne uniquement sur ton appareil. Nous ne recevons pas tes réponses. Tu n'as besoin de coordonnées que si tu veux nous envoyer toi-même une question." },
     { frage: "Les nouvelles règles s'appliquent-elles déjà ?", antwort: `Pas encore. La loi est adoptée. Les nouvelles règles s'appliquent à partir du 1er janvier ${F.ab}. En savoir plus sous [Nouveau en ${F.ab}](/reform-2027).` },
     { frage: "Puis-je commencer avant 18 ans ?", antwort: "Oui, si tu y as droit. La loi ne fixe pas d'âge minimum. Ce qui compte, c'est si tu cotises à l'assurance retraite – par exemple en tant qu'apprenti. Tes parents doivent donner leur accord pour le contrat. Les élèves sans emploi n'y ont en général pas droit." },
@@ -47,7 +47,7 @@ export function landingpagesFr(): Landingpage[] {
       frage: "Quel argent en plus pour les familles ?",
       kurz: `À partir de ${F.ab}, il y a jusqu'à ${F.kindMax} en plus par enfant – même pour de petits montants.`,
       antwort: [
-        `Pour chaque enfant pour lequel tu reçois les allocations familiales, l'État ajoute un euro pour chaque euro épargné – jusqu'à ${F.kindMax} par enfant et par an. Tu obtiens le montant complet dès que tu épargnes ${F.kindMaxMonat} par mois.`,
+        `Pour chaque enfant pour lequel tu reçois les allocations familiales, l'État ajoute un euro pour chaque euro épargné – jusqu'à ${F.kindMax} par enfant et par an. Tu obtiens le montant complet dès que tu épargnes ${F.kindMaxMonat} par mois – et cela pour chaque enfant.`,
         `Le complément normal s'y ajoute. Tu dois épargner au moins ${F.mindest} par an et y avoir droit.`,
       ],
       punkte: ["Un euro en plus pour chaque euro épargné", `Au maximum ${F.kindMax} par enfant et par an`, "Seulement tant qu'il y a des allocations familiales", "Un seul parent le reçoit par enfant"],

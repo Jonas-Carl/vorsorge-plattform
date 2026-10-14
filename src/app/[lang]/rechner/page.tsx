@@ -59,7 +59,7 @@ export default async function RechnerSeite({ params }: LangParams) {
           </div>
           <div className="stack">
             <h2>{r.grenzenTitel}</h2>
-            <ul className="haken haken--nein">{r.grenzen.map((x) => <li key={x}>{x}</li>)}</ul>
+            <ul className="haken">{r.grenzen.map((x) => <li key={x}>{x}</li>)}</ul>
           </div>
         </div>
       </section>

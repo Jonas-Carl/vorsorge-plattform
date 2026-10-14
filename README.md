@@ -56,7 +56,7 @@ Umgebungsvariablen: siehe `.env.example`. Für die lokale Entwicklung ist keine 
 - Texte einzelner Seiten (Impressum, Datenschutz, Transparenz …) stehen als `T = { de, en, fr }` direkt in der jeweiligen `page.tsx`.
 - Neue Sprache ergänzen: `Lang` und `LOCALE` in `src/lib/format.ts`, `sprachen` und `sprachName` in `src/i18n/index.ts` erweitern – der Typcheck zeigt danach jede Stelle, an der Texte fehlen.
 - Leitlinie für Texte: kurze Sätze, keine Fachwörter ohne Erklärung – ein zehnjähriges Kind soll verstehen, worum es geht. Jeder Artikel hat dafür das Feld `einfach` („Kurz gesagt“).
-- Der Rechner (`src/components/Calculator.tsx`) stellt drei Fragen und trennt „Das steht fest“ (Beitrag, gesetzlicher Zuschuss, gesetzlicher Kostendeckel von 1 %) von „Das weiß niemand vorher“ (Wachstum als Beispiel).
+- Der Rechner (`src/components/Calculator.tsx`) stellt drei Fragen und trennt „Das steht fest“ (Beitrag, gesetzlicher Zuschuss, gesetzlicher Kostendeckel von 1 %) von „Voraussichtlich“ (Wachstum als Beispiel).
 - Die englischen und französischen Texte sind Arbeitsübersetzungen; fremdsprachige Bezeichnungen deutscher Rechtsbegriffe sind nicht amtlich. Maßgeblich ist die deutsche Fassung.
 - Französisch: Du-Form („tu“), geschützte Leerzeichen vor `? ! : ;` und in « ».
 

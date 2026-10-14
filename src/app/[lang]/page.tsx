@@ -101,6 +101,30 @@ export default async function Startseite({ params }: LangParams) {
         </div>
       </section>
 
+      {/* Für wen ist das? */}
+      <section className="section" aria-labelledby="wer-titel">
+        <div className="wrap">
+          <div className="section-head section-head--mitte">
+            <p className="eyebrow">{n.werEyebrow}</p>
+            <h2 id="wer-titel">{n.werTitel}</h2>
+            <p className="lead">{n.werSub}</p>
+          </div>
+          <ul className="wer">
+            {n.wer.map((w, i) => (
+              <li key={w.titel}>
+                <Link href={pfad(lang, w.link)} className={`wer__karte wer__karte--${akzent(i)}`}>
+                  <span className="wer__bild"><Icon name={w.bild as IconName} size={30} /></span>
+                  <h3>{w.titel}</h3>
+                  <p>{w.text}</p>
+                  <span className="wer__mehr">{mehr} <Icon name="arrow" size={16} /></span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+          <p className="small muted" style={{ marginTop: "var(--s-5)", textAlign: "center" }}>{n.werHinweis}</p>
+        </div>
+      </section>
+
       {/* So funktioniert es */}
       <section className="section section--hauch" id="so-gehts" aria-labelledby="schritte-titel">
         <div className="wrap">
@@ -130,7 +154,6 @@ export default async function Startseite({ params }: LangParams) {
           </div>
           <div className="was__karte">
             <ul className="haken">{h.was.map((x) => <li key={x}>{x}</li>)}</ul>
-            <Link href={pfad(lang, "/transparenz")} className="link-arrow">{h.wasLink} <Icon name="arrow" size={16} /></Link>
           </div>
         </div>
       </section>
@@ -157,39 +180,11 @@ export default async function Startseite({ params }: LangParams) {
             <Link href={pfad(lang, "/reform-2027")} className="link-arrow">{mehr} <Icon name="arrow" size={16} /></Link>
           </p>
 
-          <div className="offen">
-            <h3><Icon name="info" size={22} /> {t.offenTitel}</h3>
-            <ul>{t.offen.map((o) => <li key={o}>{o}</li>)}</ul>
-          </div>
-        </div>
-      </section>
-
-      {/* Für wen ist das? */}
-      <section className="section" aria-labelledby="wer-titel">
-        <div className="wrap">
-          <div className="section-head section-head--mitte">
-            <p className="eyebrow">{n.werEyebrow}</p>
-            <h2 id="wer-titel">{n.werTitel}</h2>
-            <p className="lead">{n.werSub}</p>
-          </div>
-          <ul className="wer">
-            {n.wer.map((w, i) => (
-              <li key={w.titel}>
-                <Link href={pfad(lang, w.link)} className={`wer__karte wer__karte--${akzent(i)}`}>
-                  <span className="wer__bild"><Icon name={w.bild as IconName} size={30} /></span>
-                  <h3>{w.titel}</h3>
-                  <p>{w.text}</p>
-                  <span className="wer__mehr">{mehr} <Icon name="arrow" size={16} /></span>
-                </Link>
-              </li>
-            ))}
-          </ul>
-          <p className="small muted" style={{ marginTop: "var(--s-5)", textAlign: "center" }}>{n.werHinweis}</p>
         </div>
       </section>
 
       {/* Lexikon – eingeklappt, damit die Seite ruhig bleibt */}
-      <section className="section section--hauch section--klapp" aria-labelledby="woerter-titel">
+      <section className="section section--klapp" aria-labelledby="woerter-titel">
         <div className="wrap">
           <details className="klapp">
             <summary>
@@ -212,7 +207,7 @@ export default async function Startseite({ params }: LangParams) {
       </section>
 
       {/* Wissen */}
-      <section className="section" aria-labelledby="wissen-titel">
+      <section className="section section--hauch" aria-labelledby="wissen-titel">
         <div className="wrap">
           <div className="section-head section-head--mitte">
             <p className="eyebrow">{t.wissenEyebrow}</p>
@@ -228,7 +223,7 @@ export default async function Startseite({ params }: LangParams) {
       </section>
 
       {/* Partner – eingeklappt, solange es nur Platzhalter gibt */}
-      <section className="section section--hauch section--klapp" aria-labelledby="partner-titel">
+      <section className="section section--klapp" aria-labelledby="partner-titel">
         <div className="wrap">
           <details className="klapp">
             <summary>
@@ -250,7 +245,7 @@ export default async function Startseite({ params }: LangParams) {
       </section>
 
       {/* FAQ */}
-      <section className="section" aria-labelledby="faq-titel">
+      <section className="section section--hauch" aria-labelledby="faq-titel">
         <div className="wrap">
           <div className="section-head section-head--mitte">
             <p className="eyebrow">{t.faqEyebrow}</p>

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { berechne, berechneSzenarien, bereinigeEingabe, monatlicheAuszahlung, standardEingabe, type RechnerEingabe } from "./rechner";
+import { berechne, berechneSzenarien, bereinigeEingabe, kinderMitKindergeld, monatlicheAuszahlung, sparrateImAlter, standardEingabe, type RechnerEingabe } from "./rechner";
 import { berechneZulage } from "./foerderung";
 import { euro, prozent } from "./format";
 import { maxGrundzulage, reform2027, regelwerkFuerBeitragsjahr } from "@/config/foerderung";
@@ -138,6 +138,26 @@ describe("Rechner – Eingabegrenzen und ungültige Werte", () => {
   });
 });
 
+describe("Spätere Erhöhung des Sparbetrags", () => {
+  it("ab dem angegebenen Alter gilt der neue Betrag, die letzte passende Stufe gewinnt", () => {
+    const e = { sparrate: 50, erhoehungen: [{ abAlter: 30, sparrate: 300 }, { abAlter: 25, sparrate: 150 }] };
+    expect(sparrateImAlter(e, 18)).toBe(50);
+    expect(sparrateImAlter(e, 25)).toBe(150);
+    expect(sparrateImAlter(e, 29)).toBe(150);
+    expect(sparrateImAlter(e, 30)).toBe(300);
+  });
+
+  it("Einzahlungen: mit 18 50 €, ab 25 150 € bis 67", () => {
+    const r = berechne({ ...basis, alter: 18, rentenalter: 67, sparrate: 50, erhoehungen: [{ abAlter: 25, sparrate: 150 }] });
+    expect(r.einzahlungen).toBeCloseTo(50 * 12 * 7 + 150 * 12 * 42, 6);
+  });
+
+  it("höchstens drei Stufen, Werte werden begrenzt", () => {
+    const e = bereinigeEingabe({ ...basis, erhoehungen: [{ abAlter: 5, sparrate: -10 }, { abAlter: 40, sparrate: 5000 }, { abAlter: 50, sparrate: 100 }, { abAlter: 55, sparrate: 100 }] });
+    expect(e.erhoehungen).toEqual([{ abAlter: 15, sparrate: 0 }, { abAlter: 40, sparrate: 1000 }, { abAlter: 50, sparrate: 100 }]);
+  });
+});
+
 describe("Grobe monatliche Auszahlung", () => {
   it("verteilt das Kapital gleichmäßig auf die Monate bis zum Endalter", () => {
     expect(monatlicheAuszahlung(216_000, 67, 85)).toBeCloseTo(1000, 9);
@@ -205,6 +225,36 @@ describe("Zulagen nach Altersvorsorgereformgesetz (§§ 84–86 EStG n. F.)", ()
     expect(mit.zulagen).toBeCloseTo(540 * 37, 6);
     expect(mit.endkapital).toBeCloseTo(ohne.endkapital + 540 * 37, 6);
     expect(mit.wertzuwachs).toBeCloseTo(0, 6);
+  });
+
+  it("Geplante Kinder zählen ab dem Geburtsjahr für 18 Jahre", () => {
+    const f = { aktiv: true, kinder: 1, kindergeldJahre: 3, geplanteKinder: [30, 33] };
+    expect(kinderMitKindergeld(f, 0, 28)).toBe(1); // nur das vorhandene Kind
+    expect(kinderMitKindergeld(f, 2, 30)).toBe(2); // vorhandenes + erstes geplantes
+    expect(kinderMitKindergeld(f, 5, 33)).toBe(2); // vorhandenes ohne Kindergeld, zwei geplante
+    expect(kinderMitKindergeld(f, 19, 47)).toBe(2); // beide geplanten noch unter 18 Jahren
+    expect(kinderMitKindergeld(f, 20, 48)).toBe(1); // das erste ist 18 geworden
+    expect(kinderMitKindergeld(f, 23, 51)).toBe(0);
+  });
+
+  it("Rechner: geplante Kinder erhöhen die Zulagen genau um 18 Jahre Kinderzulage", () => {
+    const ohne = berechne({ ...basis, alter: 28, rentenalter: 67, sparrate: 30, foerderung: { aktiv: true, kinder: 0, kindergeldJahre: 0 } });
+    const mit = berechne({ ...basis, alter: 28, rentenalter: 67, sparrate: 30, foerderung: { aktiv: true, kinder: 0, kindergeldJahre: 0, geplanteKinder: [31] } });
+    // 360 € Eigenbeitrag im Jahr → 300 € Kinderzulage, 18 Jahre lang
+    expect(mit.zulagen - ohne.zulagen).toBeCloseTo(300 * 18, 6);
+    // Geburt mit 20, heute 28: nur noch 10 Jahre bis zum 18. Geburtstag
+    const frueher = berechne({ ...basis, alter: 28, rentenalter: 67, sparrate: 30, foerderung: { aktiv: true, kinder: 0, kindergeldJahre: 0, geplanteKinder: [20] } });
+    expect(frueher.zulagen - ohne.zulagen).toBeCloseTo(300 * 10, 6);
+    // Geburt erst mit 60: nur noch 7 Beitragsjahre bis 67
+    const spaet = berechne({ ...basis, alter: 28, rentenalter: 67, sparrate: 30, foerderung: { aktiv: true, kinder: 0, kindergeldJahre: 0, geplanteKinder: [60] } });
+    expect(spaet.zulagen - ohne.zulagen).toBeCloseTo(300 * 7, 6);
+  });
+
+  it("Geplante Kinder: Alter bei Geburt zwischen 15 und 100, höchstens vier Kinder", () => {
+    const e = bereinigeEingabe({ ...basis, alter: 30, rentenalter: 67, foerderung: { aktiv: true, kinder: 0, kindergeldJahre: 0, geplanteKinder: [20, 99, 35, 36, 37, 38] } });
+    expect(e.foerderung.geplanteKinder).toEqual([20, 99, 35, 36]);
+    const grenzfaelle = bereinigeEingabe({ ...basis, foerderung: { aktiv: true, kinder: 0, kindergeldJahre: 0, geplanteKinder: [3, 140] } });
+    expect(grenzfaelle.foerderung.geplanteKinder).toEqual([15, 100]);
   });
 
   it("Rechner: Kinderzulage nur für die Jahre mit Kindergeld, Bonus nur unter 25 im ersten Jahr", () => {

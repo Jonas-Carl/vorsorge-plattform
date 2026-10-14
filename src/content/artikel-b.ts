@@ -3,15 +3,6 @@ import { euro, prozent } from "@/lib/format";
 import { berechne, standardEingabe } from "@/lib/rechner";
 import { F, STAND, type Artikel } from "./typen";
 
-/** Beispielrechnung: 100 € monatlich, 35 Jahre, 5 % Rendite vor Kosten. */
-const mitKosten = (kosten: number) =>
-  berechne({ ...standardEingabe, alter: 32, rentenalter: 67, sparrate: 100, rendite: 0.05, kosten, inflation: 0 });
-const k0 = mitKosten(0);
-const kostenZeile = (k: number) => {
-  const e = mitKosten(k);
-  return [prozent(k), euro(e.endkapital), euro(k0.endkapital - e.endkapital)];
-};
-
 const kaufkraft = (jahre: number, inflation: number) => euro(1000 / Math.pow(1 + inflation, jahre));
 
 const start = (alter: number) =>
@@ -21,15 +12,15 @@ export const artikelB: Artikel[] = [
   {
     slug: "kosten-und-gebuehren",
     titel: "Kosten und Gebühren",
-    einfach: "Wer dein Geld verwaltet, nimmt dafür jedes Jahr ein bisschen davon. Über viele Jahre wird daraus viel.",
-    kurz: "Welche Kosten bei Vorsorgeprodukten anfallen, was Effektivkosten bedeuten und warum ein Prozentpunkt über Jahrzehnte viel ausmacht.",
+    einfach: "Für die Verwaltung deines Geldes fällt eine kleine Gebühr an – wie überall, wo dir jemand Arbeit abnimmt. Wie viel das bei deinem Angebot genau ist, zeigt dir eine Beraterin oder ein Berater.",
+    kurz: "Welche Kosten es bei Vorsorgeprodukten gibt, was Effektivkosten sind und wie du Angebote in Ruhe vergleichen kannst.",
     kategorie: "Geldanlage",
     lesezeitMin: 5,
     stand: STAND,
     quellen: ["bgbl-2026-156", "bundestag-kw13-2026"],
     verwandt: ["altersvorsorgedepot", "etfs-und-fonds", "annahmen-hinter-den-berechnungen"],
     bloecke: [
-      { t: "p", x: "Kosten sind der Teil der Geldanlage, den du sicher kennst – anders als die Rendite. Weil sie Jahr für Jahr anfallen und auch den Zinseszins schmälern, haben schon kleine Unterschiede über lange Zeiträume große Wirkung." },
+      { t: "p", x: "Wer dein Geld anlegt und verwaltet, bekommt dafür eine Gebühr. Das ist ganz normal. Das Gute: Kosten kannst du vorher vergleichen – so findest du in Ruhe ein Angebot, das zu dir passt." },
       { t: "h2", x: "Welche Kosten gibt es?" },
       { t: "ul", items: [
         "**Abschluss- und Vertriebskosten:** für Vermittlung und Einrichtung des Vertrags.",
@@ -39,12 +30,10 @@ export const artikelB: Artikel[] = [
         "**Wechselkosten:** wenn du den Anbieter wechselst.",
       ] },
       { t: "h2", x: "Effektivkosten: eine Zahl für alles" },
-      { t: "p", x: "Die Effektivkosten geben an, um wie viele Prozentpunkte alle Kosten zusammen die jährliche Rendite bis zum Beginn der Auszahlung mindern. Sie stehen im Produktinformationsblatt und machen Angebote vergleichbar." },
-      { t: "beispiel", titel: `${euro(100)} im Monat, 35 Jahre, 5 % Rendite vor Kosten`, x: [
-        `Ohne Kosten ergäbe die Modellrechnung ${euro(k0.endkapital)}.`,
-      ] },
-      { t: "tabelle", titel: "Wirkung laufender Kosten in der Modellrechnung", kopf: ["Kosten pro Jahr", "Endkapital", "Weniger als ohne Kosten"], zeilen: [0.005, 0.01, 0.015, 0.02].map(kostenZeile) },
-      { t: "p", x: "Die Werte stammen aus derselben Rechenlogik wie unser [Rechner](/rechner): gleichbleibende Rendite, Kosten als jährlicher Anteil des Vermögens. Es sind Rechenbeispiele, keine Prognosen." },
+      { t: "p", x: "Die Effektivkosten fassen alle Kosten in einer einzigen Zahl zusammen. Sie stehen im Produktinformationsblatt und machen Angebote leicht vergleichbar." },
+      { t: "h2", x: "Wie viel kostet mein Angebot?" },
+      { t: "p", x: "Die genauen Zahlen hängen vom Anbieter und vom Produkt ab. Eine Beraterin oder ein Berater kann dir die Kosten für dein Angebot zeigen und mit anderen vergleichen – unverbindlich." },
+      { t: "knopf", text: "Mit einem Berater sprechen", href: "/partner" },
       { t: "h2", x: `Was das Gesetz ab ${F.ab} regelt` },
       { t: "ul", items: [
         `Beim **Standarddepot** dürfen die Effektivkosten höchstens ${F.kostenMax} betragen.`,
@@ -52,13 +41,13 @@ export const artikelB: Artikel[] = [
         `Ein Anbieterwechsel kostet in den ersten ${F.wechselJahre} Jahren höchstens ${F.wechselMax} und ist danach kostenfrei.`,
         "Kosten, die nicht ausgewiesen wurden, musst du nicht zahlen.",
       ] },
-      { t: "hinweis", titel: "Wichtig", x: "Der Kostendeckel gilt für das Standarddepot. Andere Altersvorsorgedepots und Garantieprodukte können teurer sein – ein Blick ins Produktinformationsblatt lohnt immer." },
+      { t: "hinweis", titel: "Gut zu wissen", x: "Der Kostendeckel gilt für das Standarddepot. Bei anderen Angeboten hilft dir eine Beratung, die Kosten zu vergleichen." },
     ],
   },
   {
     slug: "risiken-von-kapitalmarktanlagen",
     titel: "Risiken von Kapitalmarktanlagen",
-    einfach: "Geld in Aktien kann mehr werden, aber auch weniger. Wenn du es auf viele Firmen verteilst und lange wartest, wird das Risiko kleiner – ganz weg geht es nicht.",
+    einfach: "Geld in Aktien bewegt sich mal nach oben und mal nach unten – das gehört einfach dazu. Wenn du es auf viele Firmen verteilst und dir Zeit lässt, wird der Weg viel ruhiger. Zeit und Streuung sind dabei deine besten Helfer.",
     kurz: "Kursschwankungen, Verlustrisiko, Zeitpunkt der Auszahlung: welche Risiken Aktien- und Fondsanlagen haben und was sie begrenzt.",
     kategorie: "Geldanlage",
     lesezeitMin: 5,
@@ -117,7 +106,8 @@ export const artikelB: Artikel[] = [
         ["Kosten", "Dein Vertrag ist günstig und die Abschlusskosten sind bereits bezahlt", "Dein Vertrag hat hohe laufende Kosten"],
         ["Vertragsdetails", "Du hast einen hohen Garantiezins oder günstige Rentenfaktoren", "Der Vertrag bietet keine besonderen Vorteile"],
       ] },
-      { t: "p", x: "Welche Seite überwiegt, hängt von deinem Vertrag ab. Eine pauschale Antwort wäre unseriös." },
+      { t: "p", x: "Welche Seite überwiegt, hängt von deinem Vertrag ab. Am besten schaut sich ein Berater deinen Vertrag gemeinsam mit dir an." },
+      { t: "knopf", text: "Hier zum persönlichen Berater", href: "/partner" },
       { t: "h2", x: "Ehepartner mitdenken" },
       { t: "p", x: "Wechselt die unmittelbar berechtigte Person in die neue Systematik, ändert sich die Rechtslage für den mittelbar berechtigten Ehepartner automatisch mit. Umgekehrt kann der mittelbar berechtigte Partner nicht allein wechseln – die Entscheidung liegt bei der unmittelbar berechtigten Person." },
       { t: "h2", x: "Wo du verlässliche Auskunft bekommst" },
@@ -153,7 +143,8 @@ export const artikelB: Artikel[] = [
       { t: "p", x: "Die Beträge in der Renteninformation sind nominale Werte. Was du dir davon in 30 Jahren leisten kannst, hängt von der Preisentwicklung ab. Mehr dazu unter [Inflation und Kaufkraft](/wissen/inflation-und-kaufkraft)." },
       { t: "h2", x: "Vom Bedarf zum Sparbeitrag" },
       { t: "p", x: "Kennst du deine ungefähre Lücke, kannst du mit dem [Rechner](/rechner) ausprobieren, welches Kapital sich mit welchem Sparbeitrag rechnerisch aufbauen ließe. Wie viel monatliche Rente daraus wird, hängt von der Form der Auszahlung ab – siehe [Auszahlungsphase und Besteuerung](/wissen/auszahlungsphase-und-besteuerung)." },
-      { t: "hinweis", titel: "Kostenlose Hilfe", x: "Die Deutsche Rentenversicherung bietet kostenlose Gespräche zur Altersvorsorge an. Die digitale Rentenübersicht des Bundes bündelt außerdem Ansprüche aus verschiedenen Quellen." },
+      { t: "hinweis", titel: "Kostenlose Hilfe", x: "Rede kostenlos mit deinem persönlichen Berater. Er schaut sich deine Situation an und zeigt dir, wie du deine Lücke schließen kannst – ganz unverbindlich." },
+      { t: "knopf", text: "Hier zum persönlichen Berater", href: "/partner" },
     ],
   },
   {
@@ -296,7 +287,7 @@ export const artikelB: Artikel[] = [
   {
     slug: "annahmen-hinter-den-berechnungen",
     titel: "Welche Annahmen stecken hinter unseren Berechnungen?",
-    einfach: "Unser Rechner rechnet nach festen Regeln, die wir uns ausgedacht haben. Hier zeigen wir dir alle davon, damit du nachprüfen kannst, wie er zu seinem Ergebnis kommt.",
+    einfach: "Unser Rechner verbindet zwei Dinge: feste Regeln aus dem Gesetz – zum Beispiel, wie viel der Staat dazulegt – und Annahmen wie die Rendite, die niemand sicher kennt. Hier zeigen wir dir alles, damit du nachprüfen kannst, wie er zu seinem Ergebnis kommt.",
     kurz: "Formeln, Zahlungszeitpunkte, Kostenmodell, Szenarien und Zulagen: die Methodik des Rechners vollständig offengelegt.",
     kategorie: "Rechner & Methodik",
     lesezeitMin: 5,
@@ -328,6 +319,7 @@ export const artikelB: Artikel[] = [
         "Zulagen werden vereinfachend am Ende des jeweiligen Beitragsjahres gutgeschrieben. Tatsächlich fließen sie erst nach Antrag und Prüfung.",
         "Die Regeln werden über die gesamte Laufzeit als unverändert angenommen.",
         "Die Kinderzulage wird für die angegebene Zahl von Jahren und für alle Kinder gleich angesetzt.",
+        "Geplante Kinder zählen ab dem Jahr, in dem du das angegebene Alter erreichst, für 18 Jahre mit. Kindergeld gibt es mindestens bis 18, oft länger – wir rechnen vorsichtig.",
         `Der Berufseinsteigerbonus wird einmalig im ersten Jahr berücksichtigt, wenn das eingegebene Alter unter ${F.bonusAlter} liegt.`,
         "Nicht berechnet: Sonderausgabenabzug, mittelbare Berechtigung, Besteuerung der Auszahlungen.",
       ] },

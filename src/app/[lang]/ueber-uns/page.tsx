@@ -9,7 +9,7 @@ const T = {
   de: {
     metaTitel: "Über uns",
     metaText: (n: string) =>
-      `Wofür ${n} steht: Sparen fürs Alter einfach erklärt, mit offenen Quellen. Und wir sagen offen, wie wir Geld verdienen.`,
+      `Wofür ${n} steht: Sparen fürs Alter einfach erklärt, mit offenen Quellen.`,
     eyebrow: "Über uns",
     titel: "Sparen fürs Alter muss nicht kompliziert klingen",
     heroText: (n: string) =>
@@ -26,8 +26,6 @@ const T = {
     belegt: ["Belegt:", "Was wir über Gesetze sagen, hat eine amtliche Quelle und ein Datum – siehe "],
     belegtLink: "Quellen und Rechenwege",
     ehrlich: ["Ehrlich, wenn etwas unsicher ist:", "Eine Annahme nennen wir Annahme. Was noch offen ist, kennzeichnen wir als offen."],
-    geld: ["Offen beim Geld:", "Wovon wir leben, steht unter "],
-    geldLink: "Wie wir Geld verdienen",
     daten: ["Sparsam mit Daten:", "kein Tracking ohne deine Einwilligung. Für Rechenergebnisse brauchst du keine Kontaktdaten."],
     platzhalter: (n: string) =>
       `Angaben zum Betreiber, zum Team und dazu, wer für die Texte verantwortlich ist (Namen, Qualifikationen), fehlen noch. Wir erfinden sie nicht. Sie werden vor dem Livegang ergänzt – so, wie das Unternehmen wirklich aufgebaut ist. „${n}“ ist ein Arbeitstitel.`,
@@ -35,7 +33,7 @@ const T = {
   en: {
     metaTitel: "About us",
     metaText: (n: string) =>
-      `What ${n} stands for: saving for old age explained simply, with open sources. And we say openly how we earn money.`,
+      `What ${n} stands for: saving for old age explained simply, with open sources.`,
     eyebrow: "About us",
     titel: "Saving for old age does not have to sound complicated",
     heroText: (n: string) =>
@@ -52,8 +50,6 @@ const T = {
     belegt: ["Backed up:", "What we say about the law has an official source and a date – see "],
     belegtLink: "Sources and methods",
     ehrlich: ["Honest when something is uncertain:", "We call an assumption an assumption. What is still open is marked as open."],
-    geld: ["Open about money:", "What we live on is explained under "],
-    geldLink: "How we earn money",
     daten: ["Careful with data:", "no tracking without your consent. You do not need to give contact details to see calculator results."],
     platzhalter: (n: string) =>
       `Details about the operator, the team and who is responsible for the content (names, qualifications) are still missing. We do not make them up. They will be added before the site goes live – based on how the company is really set up. “${n}” is a working title.`,
@@ -61,7 +57,7 @@ const T = {
   fr: {
     metaTitel: "À propos",
     metaText: (n: string) =>
-      `Ce que défend ${n} : l'épargne retraite expliquée simplement, avec des sources ouvertes. Et nous disons ouvertement comment nous gagnons de l'argent.`,
+      `Ce que défend ${n} : l'épargne retraite expliquée simplement, avec des sources ouvertes.`,
     eyebrow: "À propos",
     titel: "L'épargne retraite n'a pas besoin de sembler compliquée",
     heroText: (n: string) =>
@@ -78,8 +74,6 @@ const T = {
     belegt: ["Prouvé :", "ce que nous disons sur les lois a une source officielle et une date – voir "],
     belegtLink: "Sources et méthodes",
     ehrlich: ["Honnête quand quelque chose est incertain :", "une hypothèse, nous l'appelons hypothèse. Ce qui est encore ouvert, nous l'indiquons comme ouvert."],
-    geld: ["Ouvert sur l'argent :", "ce dont nous vivons est expliqué sous "],
-    geldLink: "Comment nous gagnons de l'argent",
     daten: ["Économe en données :", "pas de suivi sans ton accord. Tu n'as pas besoin de donner de coordonnées pour voir les résultats du simulateur."],
     platzhalter: (n: string) =>
       `Les informations sur l'exploitant, sur l'équipe et sur les personnes responsables des textes (noms, qualifications) manquent encore. Nous ne les inventons pas. Elles seront ajoutées avant la mise en ligne – telles que l'entreprise est réellement organisée. « ${n} » est un nom de travail.`,
@@ -127,10 +121,6 @@ export default async function UeberUnsSeite({ params }: LangParams) {
                 <Link href={pfad(lang, "/quellen-methodik")}>{t.belegtLink}</Link>.
               </li>
               <li><strong>{t.ehrlich[0]}</strong> {t.ehrlich[1]}</li>
-              <li>
-                <strong>{t.geld[0]}</strong> {t.geld[1]}
-                <Link href={pfad(lang, "/transparenz")}>{t.geldLink}</Link>.
-              </li>
               <li><strong>{t.daten[0]}</strong> {t.daten[1]}</li>
             </ul>
           </div>

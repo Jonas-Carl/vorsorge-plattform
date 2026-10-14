@@ -5,6 +5,13 @@ import { berechne } from "@/lib/rechner";
 import { EINFACHE_STARTWERTE } from "@/lib/startwerte";
 import { Icon, type IconName } from "./Icon";
 
+/**
+ * Beispiel für die Karte: 47 Jahre sparen (ab 20 bis 67), 150 € im Monat, 7 % Wachstum pro Jahr
+ * vor Kosten. Kosten und Zuschuss wie im Rechner (1 % Kosten, Zulagen eingerechnet). Die
+ * Annahmen stehen als Hinweis unter dem Diagramm.
+ */
+const BEISPIEL = { ...EINFACHE_STARTWERTE, alter: 20, sparrate: 150, rendite: 0.07 };
+
 /** Zahl der Balken im kleinen Diagramm. */
 const BALKEN = 7;
 const B = { breite: 400, hoehe: 146, boden: 138, balken: 32 };
@@ -63,13 +70,13 @@ function flussSchichten(): { d: string; anteil: number; breite: number }[] {
  * und daneben drei allgemeine Förderhinweise.
  *
  * Zahl und Balken sind nicht ausgedacht: Sie kommen aus derselben Rechenlogik
- * und denselben Startwerten wie der Rechner direkt darunter. Die Annahmen
- * stehen als Hinweis in der Karte. Die Förderhinweise nennen bewusst keine
- * Beträge – die stehen geprüft im Rechner und in den Artikeln.
+ * wie der Rechner darunter, mit den Annahmen aus `BEISPIEL`. Die Annahmen
+ * stehen als Hinweis in der Karte. Die Beträge der Förderhinweise kommen aus
+ * `config/foerderung.ts` (über `F` in den Texten), wie überall auf der Seite.
  */
 export function HeroKarte({ lang }: { lang: Lang }) {
   const h = texte(lang).hero2;
-  const e = EINFACHE_STARTWERTE;
+  const e = BEISPIEL;
   const { verlauf, endkapital } = berechne(e);
 
   const letzter = verlauf.length - 1;
@@ -136,7 +143,9 @@ export function HeroKarte({ lang }: { lang: Lang }) {
           ))}
           <path className="hk__fluss-glanz" d={FLUSS_MITTE} pathLength={1} fill="none" stroke="url(#hk-fluss-glanzfarbe)" strokeWidth="2" strokeLinecap="round" strokeDasharray="0.08 0.12" />
         </svg>
-        <ul className="hk__punkte">
+        <div className="hk__leiste">
+        <p className="hk__kopf" id="hk-foerderungen">{h.punkteTitel}</p>
+        <ul className="hk__punkte" aria-labelledby="hk-foerderungen">
           {h.punkte.map((p) => (
             <li key={p.titel}>
               <span className="hk__bild"><Icon name={p.bild as IconName} size={24} /></span>
@@ -147,6 +156,7 @@ export function HeroKarte({ lang }: { lang: Lang }) {
             </li>
           ))}
         </ul>
+        </div>
       </div>
     </div>
   );

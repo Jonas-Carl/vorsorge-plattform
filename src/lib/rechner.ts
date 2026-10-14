@@ -1,4 +1,4 @@
-import { grenzen, szenarien, type Szenario } from "@/config/szenarien";
+import { grenzen, KINDERGELD_JAHRE_GEPLANT, szenarien, type Szenario } from "@/config/szenarien";
 import { reform2027, type ReformRegelwerk } from "@/config/foerderung";
 import { berechneZulage } from "@/lib/foerderung";
 
@@ -36,7 +36,14 @@ export type RechnerEingabe = {
   dynamik: number;
   inflation: number;
   foerderung: FoerderEingabe;
+  /**
+   * Spätere Änderungen des monatlichen Sparbetrags: Ab `abAlter` gilt `sparrate`.
+   * Die jährliche Dynamik wirkt zusätzlich auf den jeweils gültigen Betrag.
+   */
+  erhoehungen?: Sparstufe[];
 };
+
+export type Sparstufe = { abAlter: number; sparrate: number };
 
 export type FoerderEingabe = {
   /** Zulagen in die Modellrechnung einbeziehen. */
@@ -44,6 +51,11 @@ export type FoerderEingabe = {
   kinder: number;
   /** Für wie viele Jahre noch Kindergeld erwartet wird (vereinfachend für alle Kinder). */
   kindergeldJahre: number;
+  /**
+   * Geplante Kinder: je Kind das eigene Alter bei der Geburt. Ab diesem Alter zählt das Kind
+   * für KINDERGELD_JAHRE_GEPLANT Beitragsjahre bei der Kinderzulage mit.
+   */
+  geplanteKinder?: number[];
 };
 
 export type Jahreswert = {
@@ -102,6 +114,10 @@ export function bereinigeEingabe(e: RechnerEingabe): RechnerEingabe {
   return {
     alter,
     rentenalter,
+    erhoehungen: (e.erhoehungen ?? []).slice(0, grenzen.erhoehungen.max).map((s) => ({
+      abAlter: Math.round(klemme(s.abAlter, grenzen.erhoehungen.abAlterMin, grenzen.erhoehungen.abAlterMax)),
+      sparrate: klemme(s.sparrate, 0, grenzen.sparrate.max),
+    })),
     sparrate: klemme(e.sparrate, 0, grenzen.sparrate.max),
     startkapital: klemme(e.startkapital, grenzen.startkapital.min, grenzen.startkapital.max),
     rendite: klemme(e.rendite, grenzen.rendite.min, grenzen.rendite.max),
@@ -114,6 +130,9 @@ export function bereinigeEingabe(e: RechnerEingabe): RechnerEingabe {
       kindergeldJahre: Math.round(
         klemme(e.foerderung.kindergeldJahre, grenzen.kindergeldJahre.min, grenzen.kindergeldJahre.max),
       ),
+      geplanteKinder: (e.foerderung.geplanteKinder ?? [])
+        .slice(0, grenzen.geplanteKinder.max)
+        .map((g) => Math.round(klemme(g, grenzen.geburtsalter.min, grenzen.geburtsalter.max))),
     },
   };
 }
@@ -136,7 +155,7 @@ export function berechne(roh: RechnerEingabe, regelwerk: ReformRegelwerk = refor
   ];
 
   for (let j = 0; j < jahre; j++) {
-    const rate = e.sparrate * Math.pow(1 + e.dynamik, j);
+    const rate = sparrateImAlter(e, e.alter + j) * Math.pow(1 + e.dynamik, j);
     let beitragImJahr = 0;
 
     for (let m = 0; m < 12; m++) {
@@ -156,7 +175,7 @@ export function berechne(roh: RechnerEingabe, regelwerk: ReformRegelwerk = refor
       const z = berechneZulage(
         {
           eigenbeitragJahr: beitragImJahr,
-          kinder: j < e.foerderung.kindergeldJahre ? e.foerderung.kinder : 0,
+          kinder: kinderMitKindergeld(e.foerderung, j, e.alter + j),
           // Einmalig im ersten Beitragsjahr, wenn zu dessen Beginn das 25. Lebensjahr
           // noch nicht vollendet ist.
           berufseinsteigerbonus: j === 0 && e.alter < regelwerk.berufseinsteigerbonus.vorVollendungLebensjahr,
@@ -192,6 +211,23 @@ export function berechne(roh: RechnerEingabe, regelwerk: ReformRegelwerk = refor
     zulageErstesJahr,
     verlauf,
   };
+}
+
+/** Monatlicher Grundbetrag in dem Jahr, das mit `alterImJahr` beginnt (ohne Dynamik). */
+export function sparrateImAlter(e: Pick<RechnerEingabe, "sparrate" | "erhoehungen">, alterImJahr: number): number {
+  const gueltig = (e.erhoehungen ?? []).filter((s) => s.abAlter <= alterImJahr).sort((a, b) => a.abAlter - b.abAlter);
+  return gueltig.length > 0 ? gueltig[gueltig.length - 1]!.sparrate : e.sparrate;
+}
+
+/**
+ * Kinder mit Kinderzulage im Beitragsjahr `j` (Alter zu Jahresbeginn: `alterImJahr`):
+ * vorhandene Kinder für die angegebenen Kindergeld-Jahre, geplante Kinder ab dem Jahr der Geburt
+ * für KINDERGELD_JAHRE_GEPLANT Jahre.
+ */
+export function kinderMitKindergeld(f: FoerderEingabe, j: number, alterImJahr: number): number {
+  const vorhanden = j < f.kindergeldJahre ? f.kinder : 0;
+  const geplant = (f.geplanteKinder ?? []).filter((g) => alterImJahr >= g && alterImJahr < g + KINDERGELD_JAHRE_GEPLANT).length;
+  return vorhanden + geplant;
 }
 
 /**

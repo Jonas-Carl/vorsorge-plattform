@@ -34,7 +34,7 @@ export function startseitenFaq(lang: Lang): { frage: string; antwort: string }[]
   if (lang === "en") {
     return [
       { frage: "Is this a website from the state?", antwort: "No. We are a private website, not a public authority. What we say about the law, we back up with official sources. You can find them under [Sources and methods](/quellen-methodik)." },
-      { frage: "Does this cost anything?", antwort: "No. The calculator and all texts are free. Later we will earn money when partners pay us for questions that you send voluntarily. We explain this under [How we earn money](/transparenz)." },
+      { frage: "Does this cost anything?", antwort: "No. The calculator and all texts are free." },
       { frage: "Do I have to give my name or email?", antwort: "No. The calculator runs only on your device. We do not receive your entries. You only need contact details if you want to send us a question yourself." },
       { frage: "Do the new rules already apply?", antwort: `Not yet. The law has been passed. The new rules apply from 1 January ${F.ab}. More under [New from ${F.ab}](/reform-2027).` },
       { frage: "Can I start before I am 18?", antwort: "Yes, if you are eligible. The law sets no minimum age. What counts is whether you pay into the state pension scheme, for example as an apprentice. Your parents must agree to the contract. School pupils without a job are usually not eligible." },
@@ -45,7 +45,7 @@ export function startseitenFaq(lang: Lang): { frage: string; antwort: string }[]
   }
   return [
     { frage: "Ist das eine Seite vom Staat?", antwort: "Nein. Wir sind eine private Seite und kein Amt. Was wir über das Gesetz sagen, belegen wir mit offiziellen Quellen. Du findest sie unter [Quellen und Rechenwege](/quellen-methodik)." },
-    { frage: "Kostet das etwas?", antwort: "Nein. Der Rechner und alle Texte sind kostenlos. Später verdienen wir Geld, wenn Partner uns für Fragen bezahlen, die du freiwillig abschickst. Das erklären wir unter [Wie wir Geld verdienen](/transparenz)." },
+    { frage: "Kostet das etwas?", antwort: "Nein. Der Rechner und alle Texte sind kostenlos." },
     { frage: "Muss ich meinen Namen oder meine E-Mail angeben?", antwort: "Nein. Der Rechner läuft nur auf deinem Gerät. Wir bekommen deine Angaben nicht. Kontaktdaten brauchst du nur, wenn du uns selbst eine Frage schicken willst." },
     { frage: "Gelten die neuen Regeln schon?", antwort: `Noch nicht. Das Gesetz ist beschlossen. Die neuen Regeln gelten ab dem 1. Januar ${F.ab}. Mehr unter [Neu ab ${F.ab}](/reform-2027).` },
     { frage: "Kann ich schon unter 18 anfangen?", antwort: "Ja, wenn du berechtigt bist. Im Gesetz steht kein Mindestalter. Es kommt darauf an, ob du in die Rentenversicherung einzahlst – zum Beispiel als Azubi. Deine Eltern müssen dem Vertrag zustimmen. Schüler ohne Job sind meist nicht berechtigt." },
@@ -124,11 +124,11 @@ export function landingpages(lang: Lang): Landingpage[] {
       kurz: en ? `From ${F.ab} there is up to ${F.kindMax} extra per child – even for small amounts.` : `Ab ${F.ab} gibt es bis zu ${F.kindMax} extra pro Kind – schon bei kleinen Beträgen.`,
       antwort: en
         ? [
-            `For each child you receive child benefit for, the state adds one euro for every euro you save – up to ${F.kindMax} per child and year. You reach the full amount by saving ${F.kindMaxMonat} a month.`,
+            `For each child you receive child benefit for, the state adds one euro for every euro you save – up to ${F.kindMax} per child and year. You reach the full amount by saving ${F.kindMaxMonat} a month – for each child.`,
             `The normal top-up comes on top. You must save at least ${F.mindest} a year and be eligible.`,
           ]
         : [
-            `Für jedes Kind, für das du Kindergeld bekommst, legt der Staat auf jeden gesparten Euro einen Euro dazu – bis ${F.kindMax} pro Kind und Jahr. Das volle Extra-Geld gibt es schon, wenn du ${F.kindMaxMonat} im Monat sparst.`,
+            `Für jedes Kind, für das du Kindergeld bekommst, legt der Staat auf jeden gesparten Euro einen Euro dazu – bis ${F.kindMax} pro Kind und Jahr. Das volle Extra-Geld gibt es schon, wenn du ${F.kindMaxMonat} im Monat sparst – und zwar für jedes Kind.`,
             `Dazu kommt der normale Zuschuss. Du musst mindestens ${F.mindest} im Jahr sparen und berechtigt sein.`,
           ],
       punkte: en

@@ -63,7 +63,6 @@ export default async function PartnerSeite({ params }: LangParams) {
           <div className="stack">
             <h2>{t.nichtTitel}</h2>
             <p>{t.nichtText}</p>
-            <p>{t.geldText} <Link href={pfad(lang, "/transparenz")}>{t.geldLink}</Link></p>
             <div className="btn-row">
               <Link href={pfad(lang, "/anfrage")} className="btn btn--primary">{t.frage}</Link>
               <Link href={pfad(lang, "/kontakt")} className="btn btn--ghost">{t.alsPartner}</Link>

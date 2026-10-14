@@ -14,7 +14,9 @@ export type Block =
   | { t: "ul"; items: string[] }
   | { t: "hinweis"; titel?: string; x: string; art?: "gold" }
   | { t: "beispiel"; titel: string; x: string[] }
-  | { t: "tabelle"; titel?: string; kopf: string[]; zeilen: string[][] };
+  | { t: "tabelle"; titel?: string; kopf: string[]; zeilen: string[][] }
+  /** Hervorgehobener Knopf, z. B. zur Beratung. `href` ist ein interner Pfad ohne Sprache. */
+  | { t: "knopf"; text: string; href: string };
 
 export type Kategorie =
   | "Grundlagen"

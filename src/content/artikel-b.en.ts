@@ -6,15 +6,6 @@ import { FE, STAND, type Artikel } from "./typen";
 const euro = (x: number) => euroL(x, "en");
 const prozent = (x: number) => prozentL(x, 2, "en");
 
-/** Worked example: €100 a month, 35 years, 5% return before costs. */
-const mitKosten = (kosten: number) =>
-  berechne({ ...standardEingabe, alter: 32, rentenalter: 67, sparrate: 100, rendite: 0.05, kosten, inflation: 0 });
-const k0 = mitKosten(0);
-const kostenZeile = (k: number) => {
-  const e = mitKosten(k);
-  return [prozent(k), euro(e.endkapital), euro(k0.endkapital - e.endkapital)];
-};
-
 const kaufkraft = (jahre: number, inflation: number) => euro(1000 / Math.pow(1 + inflation, jahre));
 
 const start = (alter: number) =>
@@ -30,15 +21,15 @@ export const artikelBEn: Artikel[] = [
   {
     slug: "kosten-und-gebuehren",
     titel: "Costs and fees",
-    einfach: "Whoever looks after your money takes a little bit of it every year for doing so. Over many years, that adds up to a lot.",
-    kurz: "Which costs come with retirement products, what effective costs mean and why one percentage point matters so much over decades.",
+    einfach: "Looking after your money comes with a small fee – as with anything where someone does work for you. An adviser can show you exactly how much it is for your offer.",
+    kurz: "Which costs come with retirement products, what effective costs are and how to compare offers calmly.",
     kategorie: "Geldanlage",
     lesezeitMin: 5,
     stand: STAND,
     quellen: ["bgbl-2026-156", "bundestag-kw13-2026"],
     verwandt: ["altersvorsorgedepot", "etfs-und-fonds", "annahmen-hinter-den-berechnungen"],
     bloecke: [
-      { t: "p", x: "Costs are the part of investing that you know for certain – unlike the return. They are charged year after year and also reduce compound growth. That is why even small differences have a big effect over long periods." },
+      { t: "p", x: "Whoever invests and looks after your money receives a fee for it. That is completely normal. The good news: you can compare costs in advance – so you can calmly find an offer that suits you." },
       { t: "h2", x: "What costs are there?" },
       { t: "ul", items: [
         "**Acquisition and distribution costs:** for arranging and setting up the contract.",
@@ -48,12 +39,10 @@ export const artikelBEn: Artikel[] = [
         "**Switching costs:** if you change provider.",
       ] },
       { t: "h2", x: "Effective costs: one number for everything" },
-      { t: "p", x: "Effective costs (Effektivkosten) tell you by how many percentage points all costs together reduce the yearly return until the payout begins. They are stated in the product information sheet (Produktinformationsblatt) and make offers comparable." },
-      { t: "beispiel", titel: `${euro(100)} a month, 35 years, 5% return before costs`, x: [
-        `Without costs, the model calculation would give ${euro(k0.endkapital)}.`,
-      ] },
-      { t: "tabelle", titel: "Effect of ongoing costs in the model calculation", kopf: ["Costs per year", "Final capital", "Less than without costs"], zeilen: [0.005, 0.01, 0.015, 0.02].map(kostenZeile) },
-      { t: "p", x: "The figures come from the same calculation logic as our [calculator](/rechner): a constant return, with costs as a yearly share of the assets. They are worked examples, not forecasts." },
+      { t: "p", x: "Effective costs (Effektivkosten) combine all costs in a single number. You will find them in the product information sheet, and they make offers easy to compare." },
+      { t: "h2", x: "How much does my offer cost?" },
+      { t: "p", x: "The exact figures depend on the provider and the product. An adviser can show you the costs for your offer and compare them with others – with no obligation." },
+      { t: "knopf", text: "Talk to an adviser", href: "/partner" },
       { t: "h2", x: `What the law regulates from ${FE.ab}` },
       { t: "ul", items: [
         `For the **standard account (Standarddepot)**, effective costs may be no more than ${FE.kostenMax}.`,
@@ -61,13 +50,13 @@ export const artikelBEn: Artikel[] = [
         `Changing provider costs no more than ${FE.wechselMax} in the first ${FE.wechselJahre} years and is free of charge after that.`,
         "You do not have to pay costs that were not disclosed.",
       ] },
-      { t: "hinweis", titel: "Important", x: "The cost cap applies to the standard account. Other retirement savings accounts (Altersvorsorgedepots) and guarantee products can be more expensive – it is always worth looking at the product information sheet." },
+      { t: "hinweis", titel: "Good to know", x: "The cost cap applies to the standard account. For other offers, advice helps you compare the costs." },
     ],
   },
   {
     slug: "risiken-von-kapitalmarktanlagen",
     titel: "Risks of capital market investments",
-    einfach: "Money in shares can grow, but it can also shrink. If you spread it across many companies and wait a long time, the risk gets smaller – but it never goes away completely.",
+    einfach: "Money in shares moves up and down from time to time – that is simply part of it. If you spread it over many companies and give it time, the journey becomes much calmer. Time and spreading are your best helpers.",
     kurz: "Price swings, risk of loss, timing of the payout: which risks share and fund investments carry and what limits them.",
     kategorie: "Geldanlage",
     lesezeitMin: 5,
@@ -126,7 +115,8 @@ export const artikelBEn: Artikel[] = [
         ["Costs", "Your contract is cheap and the acquisition costs have already been paid", "Your contract has high ongoing costs"],
         ["Contract details", "You have a high guaranteed interest rate or favourable annuity conversion factors (Rentenfaktoren)", "The contract offers no particular advantages"],
       ] },
-      { t: "p", x: "Which side weighs more depends on your contract. A blanket answer would not be responsible." },
+      { t: "p", x: "Which side weighs more depends on your contract. It is best to have an adviser look at your contract together with you." },
+      { t: "knopf", text: "Find a personal adviser here", href: "/partner" },
       { t: "h2", x: "Think about your spouse too" },
       { t: "p", x: "If the directly eligible person (unmittelbar berechtigt) switches to the new system, the legal position of the indirectly eligible spouse (mittelbar berechtigt) changes automatically with it. The other way round, the indirectly eligible partner cannot switch alone – the decision lies with the directly eligible person." },
       { t: "h2", x: "Where you can get reliable information" },
@@ -162,7 +152,8 @@ export const artikelBEn: Artikel[] = [
       { t: "p", x: "The amounts in the pension statement are nominal values. What you will be able to afford with them in 30 years depends on how prices develop. More on this under [Inflation and purchasing power](/wissen/inflation-und-kaufkraft)." },
       { t: "h2", x: "From what you need to what you save" },
       { t: "p", x: "Once you know your approximate gap, you can use the [calculator](/rechner) to try out what capital could be built up, in arithmetical terms, with what savings contribution. How much monthly pension this turns into depends on the form of payout – see [Payout phase and taxation](/wissen/auszahlungsphase-und-besteuerung)." },
-      { t: "hinweis", titel: "Free help", x: "The German Pension Insurance offers free talks on retirement provision. The federal government's digital pension overview (Digitale Rentenübersicht) also brings together entitlements from different sources." },
+      { t: "hinweis", titel: "Free help", x: "Talk to your personal adviser free of charge. They look at your situation and show you how you can close your gap – with no obligation." },
+      { t: "knopf", text: "Find a personal adviser here", href: "/partner" },
     ],
   },
   {
@@ -305,7 +296,7 @@ export const artikelBEn: Artikel[] = [
   {
     slug: "annahmen-hinter-den-berechnungen",
     titel: "What assumptions are behind our calculations?",
-    einfach: "Our calculator works according to fixed rules that we came up with. Here we show you all of them, so that you can check how it arrives at its result.",
+    einfach: "Our calculator combines two things: fixed rules from the law – for example how much the state adds – and assumptions such as the return, which nobody knows for certain. Here we show you everything so that you can check how it reaches its result.",
     kurz: "Formulas, payment timing, cost model, scenarios and allowances: the calculator's methodology disclosed in full.",
     kategorie: "Rechner & Methodik",
     lesezeitMin: 5,
@@ -337,6 +328,7 @@ export const artikelBEn: Artikel[] = [
         "As a simplification, allowances are credited at the end of the respective contribution year. In reality they are only paid after an application and a check.",
         "The rules are assumed to remain unchanged over the whole term.",
         "The child allowance (Kinderzulage) is applied for the stated number of years and equally for all children.",
+        "Planned children count for 18 years from the year in which you reach the age you entered. Child benefit is paid at least until 18, often longer – we calculate cautiously.",
         `The career starter bonus (Berufseinsteigerbonus) is taken into account once, in the first year, if the age entered is under ${FE.bonusAlter}.`,
         "Not calculated: special expenses deduction (Sonderausgabenabzug), indirect eligibility, taxation of the payouts.",
       ] },
