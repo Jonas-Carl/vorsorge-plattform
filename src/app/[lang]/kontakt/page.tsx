@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { PageHero, PlatzhalterHinweis } from "@/components/Bausteine";
+import { PageHero } from "@/components/Bausteine";
+import { site } from "@/config/site";
 import { alternativen, istSprache, pfad, type Lang, type LangParams } from "@/i18n";
 
 const T = {
@@ -21,8 +22,6 @@ const T = {
     fehlerText: "Du hast einen Fehler im Text gefunden oder eine Angabe ist veraltet? Wir prüfen jeden Hinweis.",
     koopTitel: "Zusammenarbeit und Presse",
     koopText: "Anbieter, Vermittler und Medien erreichen uns hier.",
-    platzhalter:
-      "Kontaktadressen (E-Mail, Postanschrift, vielleicht Telefon) sind noch nicht eingetragen. Die Platzhalter in eckigen Klammern müssen vor dem Livegang durch die echten Angaben des Betreibers ersetzt werden.",
     datenschutzVor: "Fragen zum Datenschutz (Auskunft, Löschung, Widerruf): siehe ",
     datenschutzLink: "Datenschutz",
   },
@@ -42,8 +41,6 @@ const T = {
     fehlerText: "Have you found a mistake in a text, or is something out of date? We check every tip.",
     koopTitel: "Working together and press",
     koopText: "Providers, brokers and the media can reach us here.",
-    platzhalter:
-      "Contact addresses (email, postal address, perhaps phone) have not been entered yet. The placeholders in square brackets must be replaced with the operator's real details before the site goes live.",
     datenschutzVor: "Privacy questions (access to your data, deletion, withdrawing consent): see ",
     datenschutzLink: "Privacy",
   },
@@ -63,8 +60,6 @@ const T = {
     fehlerText: "Tu as trouvé une erreur dans un texte, ou une information n'est plus à jour ? Nous vérifions chaque remarque.",
     koopTitel: "Collaboration et presse",
     koopText: "Les prestataires, les intermédiaires et les médias peuvent nous joindre ici.",
-    platzhalter:
-      "Les adresses de contact (e-mail, adresse postale, peut-être téléphone) ne sont pas encore indiquées. Les mentions entre crochets doivent être remplacées par les vraies données de l'exploitant avant la mise en ligne.",
     datenschutzVor: "Questions sur la protection des données (accès, suppression, retrait du consentement) : voir ",
     datenschutzLink: "Protection des données",
   },
@@ -105,15 +100,14 @@ export default async function KontaktSeite({ params }: LangParams) {
             <article className="card card--pad">
               <h2 style={{ fontSize: "var(--text-xl)" }}>{t.fehlerTitel}</h2>
               <p className="small">{t.fehlerText}</p>
-              <p className="small"><span className="ph">[KONTAKT_EMAIL_REDAKTION]</span></p>
+              <p className="small"><a href={`mailto:${site.betreiber.email}`}>{site.betreiber.email}</a></p>
             </article>
             <article className="card card--pad">
               <h2 style={{ fontSize: "var(--text-xl)" }}>{t.koopTitel}</h2>
               <p className="small">{t.koopText}</p>
-              <p className="small"><span className="ph">[KONTAKT_EMAIL_KOOPERATION]</span></p>
+              <p className="small"><a href={`mailto:${site.betreiber.email}`}>{site.betreiber.email}</a></p>
             </article>
           </div>
-          <PlatzhalterHinweis lang={lang}>{t.platzhalter}</PlatzhalterHinweis>
           <p className="small muted">
             {t.datenschutzVor}
             <Link href={pfad(lang, "/datenschutz")}>{t.datenschutzLink}</Link>.

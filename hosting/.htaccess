@@ -1,0 +1,39 @@
+# Hostinger (Apache): Regeln für die statische Fassung von RenteKannMehr.
+# Wird vom Workflow .github/workflows/hostinger.yml in den Ausgabeordner kopiert.
+
+Options -Indexes
+DirectoryIndex index.html
+
+RewriteEngine On
+
+# Immer HTTPS und ohne „www.“
+RewriteCond %{HTTPS} off [OR]
+RewriteCond %{HTTP_HOST} ^www\. [NC]
+RewriteRule ^ https://rentekannmehr.de%{REQUEST_URI} [L,R=301]
+
+# Startadresse ohne Sprache → deutsche Fassung
+RewriteRule ^$ /de/ [L,R=302]
+
+# Alte Adressen ohne Sprachpräfix → deutsche Fassung
+RewriteRule ^(rechner|reform-2027|wissen|themen|partner|anfrage|ueber-uns|kontakt|impressum|datenschutz|cookie-einstellungen|quellen-methodik|transparenz)(/.*)?$ /de/$1$2 [L,R=302]
+
+ErrorDocument 404 /404.html
+
+<IfModule mod_headers.c>
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set X-Frame-Options "DENY"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(), interest-cohort=()"
+  Header always set Strict-Transport-Security "max-age=63072000; includeSubDomains"
+</IfModule>
+
+# Dateien mit Hash im Namen dürfen lange zwischengespeichert werden
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType text/html "access plus 0 seconds"
+  ExpiresByType text/css "access plus 1 year"
+  ExpiresByType application/javascript "access plus 1 year"
+  ExpiresByType font/woff2 "access plus 1 year"
+  ExpiresByType image/svg+xml "access plus 1 month"
+  ExpiresByType image/png "access plus 1 month"
+</IfModule>

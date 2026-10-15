@@ -236,6 +236,17 @@ export function Calculator({ lang, kompakt = false }: { lang: Lang; kompakt?: bo
           </div>
           <p className="field__hint">{t.kinderHinweis}</p>
         </div>
+        {/* Direkt unter der Kinderfrage, sobald mindestens ein Kind angegeben ist */}
+        {e.foerderung.kinder > 0 && (
+          <div className="kinder-zusatz">
+            <NumberField
+              id={`kindergeldjahre-${kompakt ? "k" : "v"}`} lang={lang} label={t.kindergeldJahre} unit={t.alterEinheit} sliderLabel={t.regler}
+              value={roh.foerderung.kindergeldJahre} min={grenzen.kindergeldJahre.min} max={grenzen.kindergeldJahre.max} step={1}
+              info={t.info.kindergeldJahre} infoLabel={t.infoZeigen}
+              onChange={(kindergeldJahre) => setzeFoerderung({ kindergeldJahre })}
+            />
+          </div>
+        )}
 
       </form>
 
@@ -252,58 +263,66 @@ export function Calculator({ lang, kompakt = false }: { lang: Lang; kompakt?: bo
           </summary>
           <div className="disclosure__body mehr-grid">
               <div className="mehr-zusatz">
-              <div className="field field--gross">
-                <div className="field__top">
-                  <span className="field__label" id={`stufen-label-${kompakt ? "k" : "v"}`}>{t.mehrSparen}</span>
-                  <div className="stepper" role="group" aria-labelledby={`stufen-label-${kompakt ? "k" : "v"}`}>
-                    <button type="button" aria-label={t.weniger} disabled={stufen.length <= 0} onClick={() => setzeStufen(stufen.slice(0, -1))}>
-                      −
-                    </button>
-                    <output aria-live="polite">{stufen.length}</output>
-                    <button type="button" aria-label={t.mehr} disabled={stufen.length >= grenzen.erhoehungen.max} onClick={stufeDazu}>
-                      +
-                    </button>
+                {/* Gruppe 1: später mehr sparen – jede Erhöhung als eigene Zeile */}
+                <div className="plan" role="group" aria-labelledby={`stufen-label-${kompakt ? "k" : "v"}`}>
+                  <div className="plan__kopf">
+                    <span className="field__label" id={`stufen-label-${kompakt ? "k" : "v"}`}>{t.mehrSparen}</span>
+                    <div className="stepper" role="group" aria-labelledby={`stufen-label-${kompakt ? "k" : "v"}`}>
+                      <button type="button" aria-label={t.weniger} disabled={stufen.length <= 0} onClick={() => setzeStufen(stufen.slice(0, -1))}>−</button>
+                      <output aria-live="polite">{stufen.length}</output>
+                      <button type="button" aria-label={t.mehr} disabled={stufen.length >= grenzen.erhoehungen.max} onClick={stufeDazu}>+</button>
+                    </div>
                   </div>
+                  <p className="field__hint">{t.mehrSparenHinweis}</p>
+                  {stufen.length > 0 && (
+                    <ol className="plan__liste">
+                      {stufen.map((s, i) => (
+                        <li key={i} className="plan__zeile" role="group" aria-labelledby={`stufe-titel-${kompakt ? "k" : "v"}-${i}`}>
+                          <p className="plan__titel" id={`stufe-titel-${kompakt ? "k" : "v"}-${i}`}>{t.stufeTitel(i + 1)}</p>
+                          <div className="plan__felder">
+                            <NumberField
+                              id={`stufe-ab-${kompakt ? "k" : "v"}-${i}`} lang={lang} label={t.stufeAb} unit={t.alterEinheit} regler={false}
+                              value={s.abAlter} min={grenzen.erhoehungen.abAlterMin} max={grenzen.erhoehungen.abAlterMax} step={1}
+                              onChange={(abAlter) => setzeStufen(stufen.map((x, k) => (k === i ? { ...x, abAlter } : x)))}
+                            />
+                            <NumberField
+                              id={`stufe-rate-${kompakt ? "k" : "v"}-${i}`} lang={lang} label={t.stufeRate} unit="€" regler={false}
+                              value={s.sparrate} min={0} max={MAX_MONAT} step={grenzen.sparrate.schritt}
+                              onChange={(sparrate) => setzeStufen(stufen.map((x, k) => (k === i ? { ...x, sparrate } : x)))}
+                            />
+                          </div>
+                        </li>
+                      ))}
+                    </ol>
+                  )}
                 </div>
-                <p className="field__hint">{t.mehrSparenHinweis}</p>
-              </div>
-              {stufen.map((s, i) => (
-                <div key={i} className="stufe">
-                  <NumberField
-                    id={`stufe-ab-${kompakt ? "k" : "v"}-${i}`} lang={lang} label={t.stufeAb(i + 1)} unit={t.alterEinheit} sliderLabel={t.regler}
-                    value={s.abAlter} min={grenzen.erhoehungen.abAlterMin} max={grenzen.erhoehungen.abAlterMax} step={1}
-                    onChange={(abAlter) => setzeStufen(stufen.map((x, k) => (k === i ? { ...x, abAlter } : x)))}
-                  />
-                  <NumberField
-                    id={`stufe-rate-${kompakt ? "k" : "v"}-${i}`} lang={lang} label={t.stufeRate(i + 1)} unit="€" sliderLabel={t.regler}
-                    value={s.sparrate} min={0} max={MAX_MONAT} step={grenzen.sparrate.schritt}
-                    onChange={(sparrate) => setzeStufen(stufen.map((x, k) => (k === i ? { ...x, sparrate } : x)))}
-                  />
-                </div>
-              ))}
-              <div className="field field--gross">
-                <div className="field__top">
-                  <span className="field__label" id={`geplant-label-${kompakt ? "k" : "v"}`}>{t.geplant}</span>
-                  <div className="stepper" role="group" aria-labelledby={`geplant-label-${kompakt ? "k" : "v"}`}>
-                    <button type="button" aria-label={t.weniger} disabled={geplant.length <= 0} onClick={() => setzeGeplant(geplant.slice(0, -1))}>
-                      −
-                    </button>
-                    <output aria-live="polite">{geplant.length}</output>
-                    <button type="button" aria-label={t.mehr} disabled={geplant.length >= grenzen.geplanteKinder.max} onClick={geplantDazu}>
-                      +
-                    </button>
+
+                {/* Gruppe 2: Kinder in Zukunft – jedes Kind als eigene Zeile */}
+                <div className="plan" role="group" aria-labelledby={`geplant-label-${kompakt ? "k" : "v"}`}>
+                  <div className="plan__kopf">
+                    <span className="field__label" id={`geplant-label-${kompakt ? "k" : "v"}`}>{t.geplant}</span>
+                    <div className="stepper" role="group" aria-labelledby={`geplant-label-${kompakt ? "k" : "v"}`}>
+                      <button type="button" aria-label={t.weniger} disabled={geplant.length <= 0} onClick={() => setzeGeplant(geplant.slice(0, -1))}>−</button>
+                      <output aria-live="polite">{geplant.length}</output>
+                      <button type="button" aria-label={t.mehr} disabled={geplant.length >= grenzen.geplanteKinder.max} onClick={geplantDazu}>+</button>
+                    </div>
                   </div>
+                  <p className="field__hint">{t.geplantHinweis}</p>
+                  {geplant.length > 0 && (
+                    <ol className="plan__liste">
+                      {geplant.map((g, i) => (
+                        <li key={i} className="plan__zeile plan__zeile--eine" role="group" aria-labelledby={`kind-titel-${kompakt ? "k" : "v"}-${i}`}>
+                          <p className="plan__titel" id={`kind-titel-${kompakt ? "k" : "v"}-${i}`}>{t.kindTitel(i + 1)}</p>
+                          <NumberField
+                            id={`geplant-${kompakt ? "k" : "v"}-${i}`} lang={lang} label={t.kindAlter} unit={t.alterEinheit} regler={false}
+                            value={g} min={grenzen.geburtsalter.min} max={grenzen.geburtsalter.max} step={grenzen.geburtsalter.schritt}
+                            onChange={(alter) => setzeGeplant(geplant.map((x, k) => (k === i ? alter : x)))}
+                          />
+                        </li>
+                      ))}
+                    </ol>
+                  )}
                 </div>
-                <p className="field__hint">{t.geplantHinweis}</p>
-              </div>
-              {geplant.map((g, i) => (
-                <NumberField
-                  key={i}
-                  id={`geplant-${kompakt ? "k" : "v"}-${i}`} lang={lang} label={t.geplantKind(i + 1)} unit={t.alterEinheit} sliderLabel={t.regler}
-                  value={g} min={grenzen.geburtsalter.min} max={grenzen.geburtsalter.max} step={grenzen.geburtsalter.schritt}
-                  onChange={(alter) => setzeGeplant(geplant.map((x, k) => (k === i ? alter : x)))}
-                />
-              ))}
               </div>
             <NumberField
               id="rentenalter" lang={lang} label={t.rentenalter} unit={t.alterEinheit} sliderLabel={t.regler}
@@ -341,14 +360,6 @@ export function Calculator({ lang, kompakt = false }: { lang: Lang; kompakt?: bo
               info={t.info.inflation} infoLabel={t.infoZeigen}
               onChange={(inflation) => setze({ inflation })}
             />
-            {e.foerderung.kinder > 0 && (
-              <NumberField
-                id="kindergeldjahre" lang={lang} label={t.kindergeldJahre} unit={t.alterEinheit} sliderLabel={t.regler}
-                value={roh.foerderung.kindergeldJahre} min={grenzen.kindergeldJahre.min} max={grenzen.kindergeldJahre.max} step={1}
-                info={t.info.kindergeldJahre} infoLabel={t.infoZeigen}
-                onChange={(kindergeldJahre) => setzeFoerderung({ kindergeldJahre })}
-              />
-            )}
             <label className="switch">
               <input type="checkbox" role="switch" checked={roh.foerderung.aktiv} onChange={(ev) => setzeFoerderung({ aktiv: ev.target.checked })} />
               <span><strong>{t.zuschussAn}</strong><br />{t.zuschussText}</span>
@@ -427,23 +438,10 @@ export function Calculator({ lang, kompakt = false }: { lang: Lang; kompakt?: bo
             </div>
           )}
 
-          {/* Nächster Schritt: aus dem Beispiel einen Plan machen */}
-          <div className="umsetzen umsetzen--im-block" role="group" aria-labelledby={`umsetzen-${kompakt ? "k" : "v"}`}>
-            <p className="umsetzen__eyebrow">{b.ctaEyebrow}</p>
-            <h3 id={`umsetzen-${kompakt ? "k" : "v"}`}>{b.ctaTitel}</h3>
-            <p className="umsetzen__text">{b.ctaText(E(e.sparrate))}</p>
-            <ul className="umsetzen__liste">
-              {b.ctaPunkte.map((punkt) => <li key={punkt}><Icon name="check" size={18} /> {punkt}</li>)}
-            </ul>
-            <div className="umsetzen__aktion">
-              <Link href={pfad(lang, "/partner")} className="btn btn--umsetzen" onClick={() => track("anfrage_begonnen", { herkunft: "rechner-ergebnis" })}>
-                {b.ctaKnopf} <Icon name="arrow" size={18} />
-              </Link>
-            </div>
-            <p className="umsetzen__netz">{b.ctaKlein} {n.beratungKlein}</p>
-          </div>
         </section>
 
+        {/* Rechte Spalte: was feststeht, darunter ruhig der nächste Schritt */}
+        <div className="rechner__seite">
         {/* Das steht fest */}
         <section className="block block--fest" aria-labelledby={`fest-${kompakt ? "k" : "v"}`}>
           <div className="block__kopf">
@@ -490,6 +488,23 @@ export function Calculator({ lang, kompakt = false }: { lang: Lang; kompakt?: bo
             </details>
           )}
         </section>
+
+            {/* Nächster Schritt: aus dem Beispiel einen Plan machen */}
+            <div className="umsetzen umsetzen--seite" role="group" aria-labelledby={`umsetzen-${kompakt ? "k" : "v"}`}>
+              <p className="umsetzen__eyebrow">{b.ctaEyebrow}</p>
+              <h3 id={`umsetzen-${kompakt ? "k" : "v"}`}>{b.ctaTitel}</h3>
+              <p className="umsetzen__text">{b.ctaText(E(e.sparrate))}</p>
+              <ul className="umsetzen__liste">
+                {b.ctaPunkte.map((punkt) => <li key={punkt}><Icon name="check" size={18} /> {punkt}</li>)}
+              </ul>
+              <div className="umsetzen__aktion">
+                <Link href={pfad(lang, "/partner")} className="btn btn--umsetzen" onClick={() => track("anfrage_begonnen", { herkunft: "rechner-ergebnis" })}>
+                  {b.ctaKnopf} <Icon name="arrow" size={18} />
+                </Link>
+              </div>
+              <p className="umsetzen__netz">{b.ctaKlein} {n.beratungKlein}</p>
+            </div>
+        </div>
 
         {!kompakt && (
           <>

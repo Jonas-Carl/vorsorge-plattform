@@ -23,6 +23,8 @@ type Props = {
   lang?: Lang;
   /** Große Darstellung für die Hauptfragen. */
   gross?: boolean;
+  /** false: nur das Zahlenfeld, ohne Schieberegler (für kurze Zeilen wie „ab Alter“). */
+  regler?: boolean;
   sliderLabel?: string;
   onChange: (v: number) => void;
 };
@@ -33,7 +35,7 @@ type Props = {
  * (begrenzte) Wert angezeigt.
  */
 export function NumberField({
-  id, label, hint, info, infoLabel = "Erklärung", value, min, max, step, unit, scale = 1, decimals = 0, lang = "de", gross = false, sliderLabel, onChange,
+  id, label, hint, info, infoLabel = "Erklärung", value, min, max, step, unit, scale = 1, decimals = 0, lang = "de", gross = false, regler = true, sliderLabel, onChange,
 }: Props) {
   const [entwurf, setEntwurf] = useState<string | null>(null);
   const [infoOffen, setInfoOffen] = useState(false);
@@ -53,7 +55,7 @@ export function NumberField({
   }
 
   return (
-    <div className={`field ${gross ? "field--gross" : ""}`}>
+    <div className={`field ${gross ? "field--gross" : ""} ${regler ? "" : "field--ohne-regler"}`}>
       <div className="field__top">
         <label htmlFor={id}>{label}</label>
         {info && (
@@ -83,7 +85,7 @@ export function NumberField({
           <span aria-hidden="true">{unit}</span>
         </span>
       </div>
-      <input
+      {regler && <input
         type="range"
         min={min}
         max={max}
@@ -96,7 +98,7 @@ export function NumberField({
           setEntwurf(null);
           onChange(Number(e.target.value));
         }}
-      />
+      />}
       {info && <p id={`${id}-info`} className="field__info" hidden={!infoOffen}>{info}</p>}
       {hint && <p id={`${id}-hint`} className="field__hint">{hint}</p>}
     </div>

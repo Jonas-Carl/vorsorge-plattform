@@ -17,6 +17,17 @@ export const site = {
   sprache: "de-DE",
   /** Redaktioneller Stand der fachlichen Inhalte (ISO-Datum). */
   inhaltsstand: "2026-10-11",
+  /** Betreiber – Grundlage für Impressum und Datenschutz. */
+  betreiber: {
+    firma: "RenteKannMehr GbR",
+    vertreten: "Carl Buermeyer und Jonas Scheinert",
+    strasse: "Rheinold-Tiling-Weg 49",
+    ort: "49088 Osnabrück",
+    email: "info@rentekannmehr.de",
+    telefon: "+49 178 2971395",
+  },
+  /** Hosting-Anbieter (Auftragsverarbeiter nach Art. 28 DSGVO). Anschrift vor dem Livegang mit dem AV-Vertrag abgleichen. */
+  hosting: { name: "Hostinger", firma: "Hostinger International Ltd.", anschrift: "61 Lordou Vironos Street, 6023 Larnaka, Zypern" },
   /** Solange false, zeigen Impressum & Co. gut sichtbare Platzhalter-Hinweise. */
-  betreiberdatenVollstaendig: false,
+  betreiberdatenVollstaendig: true,
 } as const;

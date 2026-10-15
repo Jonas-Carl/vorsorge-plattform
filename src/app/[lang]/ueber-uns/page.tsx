@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { CtaRechner, PageHero, PlatzhalterHinweis } from "@/components/Bausteine";
+import { CtaRechner, PageHero } from "@/components/Bausteine";
 import { site } from "@/config/site";
 import { alternativen, istSprache, pfad, type Lang, type LangParams } from "@/i18n";
 
@@ -27,8 +27,9 @@ const T = {
     belegtLink: "Quellen und Rechenwege",
     ehrlich: ["Ehrlich, wenn etwas unsicher ist:", "Eine Annahme nennen wir Annahme. Was noch offen ist, kennzeichnen wir als offen."],
     daten: ["Sparsam mit Daten:", "kein Tracking ohne deine Einwilligung. Für Rechenergebnisse brauchst du keine Kontaktdaten."],
-    platzhalter: (n: string) =>
-      `Angaben zum Betreiber, zum Team und dazu, wer für die Texte verantwortlich ist (Namen, Qualifikationen), fehlen noch. Wir erfinden sie nicht. Sie werden vor dem Livegang ergänzt – so, wie das Unternehmen wirklich aufgebaut ist. „${n}“ ist ein Arbeitstitel.`,
+    werTitel: "Wer dahintersteht",
+    wer: (n: string) =>
+      `${n} ist ein Angebot der RenteKannMehr GbR aus Osnabrück. Gegründet und betrieben wird die Seite von Carl Buermeyer und Jonas Scheinert.`,
   },
   en: {
     metaTitel: "About us",
@@ -51,8 +52,9 @@ const T = {
     belegtLink: "Sources and methods",
     ehrlich: ["Honest when something is uncertain:", "We call an assumption an assumption. What is still open is marked as open."],
     daten: ["Careful with data:", "no tracking without your consent. You do not need to give contact details to see calculator results."],
-    platzhalter: (n: string) =>
-      `Details about the operator, the team and who is responsible for the content (names, qualifications) are still missing. We do not make them up. They will be added before the site goes live – based on how the company is really set up. “${n}” is a working title.`,
+    werTitel: "Who is behind it",
+    wer: (n: string) =>
+      `${n} is run by RenteKannMehr GbR from Osnabrück, Germany. The site was founded and is run by Carl Buermeyer and Jonas Scheinert.`,
   },
   fr: {
     metaTitel: "À propos",
@@ -75,8 +77,9 @@ const T = {
     belegtLink: "Sources et méthodes",
     ehrlich: ["Honnête quand quelque chose est incertain :", "une hypothèse, nous l'appelons hypothèse. Ce qui est encore ouvert, nous l'indiquons comme ouvert."],
     daten: ["Économe en données :", "pas de suivi sans ton accord. Tu n'as pas besoin de donner de coordonnées pour voir les résultats du simulateur."],
-    platzhalter: (n: string) =>
-      `Les informations sur l'exploitant, sur l'équipe et sur les personnes responsables des textes (noms, qualifications) manquent encore. Nous ne les inventons pas. Elles seront ajoutées avant la mise en ligne – telles que l'entreprise est réellement organisée. « ${n} » est un nom de travail.`,
+    werTitel: "Qui est derrière",
+    wer: (n: string) =>
+      `${n} est une offre de la RenteKannMehr GbR, basée à Osnabrück (Allemagne). Le site a été créé et est géré par Carl Buermeyer et Jonas Scheinert.`,
   },
 } satisfies Record<Lang, unknown>;
 
@@ -125,8 +128,9 @@ export default async function UeberUnsSeite({ params }: LangParams) {
             </ul>
           </div>
         </div>
-        <div className="wrap" style={{ marginTop: "var(--s-7)" }}>
-          <PlatzhalterHinweis lang={lang}>{t.platzhalter(site.name)}</PlatzhalterHinweis>
+        <div className="wrap stack" style={{ marginTop: "var(--s-7)", maxWidth: "48rem" }}>
+          <h2>{t.werTitel}</h2>
+          <p>{t.wer(site.name)}</p>
         </div>
       </section>
       <CtaRechner lang={lang} />

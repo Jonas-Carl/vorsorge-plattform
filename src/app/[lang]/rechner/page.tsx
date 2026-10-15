@@ -45,7 +45,6 @@ export default async function RechnerSeite({ params }: LangParams) {
 
       <section className="section section--rechner" aria-label={t.nav.rechner} style={{ paddingTop: "var(--s-7)" }}>
         <div className="wrap stack-lg">
-          <p className="note">{r.hinweis}</p>
           <Calculator lang={lang} />
           <BeratungCta lang={lang} />
         </div>

@@ -17,8 +17,8 @@ const T = {
     stand: (n: string) => `Es gibt noch keine Partner. ${n} bekommt im Moment kein Geld von Anbietern oder Vermittlern.`,
     modellTitel: "Wie die Zusammenarbeit funktioniert",
     modell: (n: string) =>
-      `${n} ist ein kommerzielles Angebot. Wenn du über unser Formular freiwillig eine Anfrage an einen Partner schickst, kann dieser Partner uns dafür bezahlen – zum Beispiel für die Anfrage, für einen vereinbarten Termin oder als Provision bei einem Vertrag. Für dich ist das kostenlos.`,
-    nennenVor: "Welche Art gilt, steht bei jedem Partner auf der ",
+      `${n} ist ein kommerzielles Angebot. Wenn du über unser Formular freiwillig eine Anfrage an einen Partner schickst, kann dieser Partner uns für die weitergegebene Anfrage bezahlen. Wir vermitteln keine Verträge und bekommen kein Geld dafür, ob du einen Vertrag abschließt. Für dich ist das kostenlos.`,
+    nennenVor: "Was ein Partner zahlt, steht bei jedem Partner auf der ",
     nennenLink: "Partnerseite",
     nennenNach: " und im Anfrageformular.",
     inhalteTitel: "Was davon unabhängig bleibt",
@@ -42,8 +42,8 @@ const T = {
     stand: (n: string) => `There are no partners yet. At the moment ${n} gets no money from providers or brokers.`,
     modellTitel: "How working with partners works",
     modell: (n: string) =>
-      `${n} is a commercial service. If you choose to send a request to a partner through our form, that partner may pay us for it – for example for the request, for an agreed appointment or as a commission on a contract. It costs you nothing.`,
-    nennenVor: "Which type applies is shown for each partner on the ",
+      `${n} is a commercial service. If you choose to send a request to a partner through our form, that partner may pay us for the request we pass on. We do not arrange contracts and receive no money depending on whether you sign a contract. It costs you nothing.`,
+    nennenVor: "What a partner pays is shown for each partner on the ",
     nennenLink: "partner page",
     nennenNach: " and in the request form.",
     inhalteTitel: "What stays independent",
@@ -67,8 +67,8 @@ const T = {
     stand: (n: string) => `Il n'y a pas encore de partenaires. Pour l'instant, ${n} ne reçoit pas d'argent de prestataires ou d'intermédiaires.`,
     modellTitel: "Comment fonctionne la collaboration",
     modell: (n: string) =>
-      `${n} est une offre commerciale. Si tu envoies de ton plein gré une demande à un partenaire par notre formulaire, ce partenaire peut nous payer pour cela – par exemple pour la demande, pour un rendez-vous convenu ou sous forme de commission sur un contrat. Pour toi, c'est gratuit.`,
-    nennenVor: "Le type qui s'applique est indiqué pour chaque partenaire sur la ",
+      `${n} est une offre commerciale. Si tu envoies de ton plein gré une demande à un partenaire par notre formulaire, ce partenaire peut nous payer pour la demande transmise. Nous ne vendons pas de contrats et ne recevons pas d'argent selon que tu signes un contrat ou non. Pour toi, c'est gratuit.`,
+    nennenVor: "Ce que paie un partenaire est indiqué pour chaque partenaire sur la ",
     nennenLink: "page des partenaires",
     nennenNach: " et dans le formulaire de demande.",
     inhalteTitel: "Ce qui reste indépendant",

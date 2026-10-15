@@ -25,12 +25,18 @@ type Zustand =
   | { art: "bereit" }
   | { art: "sendet" }
   | { art: "erfolg"; antwort: Extract<LeadAntwort, { ok: true }> }
-  | { art: "fehler"; meldung: string };
+  | { art: "fehler"; meldung: string }
+  | { art: "email" };
 
 const jetzt = () => Date.now();
 
 /** Statische Vorschau (GitHub Pages): Es gibt keinen Server, der Fragen annehmen könnte. */
 const VORSCHAU = process.env.NEXT_PUBLIC_DEMO === "1";
+/**
+ * Statische Fassung ohne Server (z. B. einfaches Webhosting): Die Anfrage wird als fertig
+ * ausgefüllte E-Mail an die Betreiber-Adresse geöffnet, statt an /api/leads geschickt.
+ */
+const PER_EMAIL = process.env.NEXT_PUBLIC_ANFRAGE_PER_EMAIL === "1";
 const VORSCHAU_TEXT = {
   de: "Das ist nur eine Vorschau der Seite. Hier kann noch nichts abgeschickt werden. Deine Angaben wurden nicht gespeichert und nicht übertragen.",
   en: "This is only a preview of the site. Nothing can be sent here yet. Your details were not saved and not transmitted.",
@@ -127,6 +133,26 @@ export function LeadForm({ lang }: { lang: Lang }) {
       return;
     }
 
+    if (PER_EMAIL) {
+      const m = t.perEmail;
+      const zeilen = [
+        `${m.felder.name}: ${f.vorname} ${f.nachname}`,
+        `${m.felder.email}: ${f.email}`,
+        `${m.felder.weg}: ${f.kontaktweg === "telefon" ? t.perTelefon : t.perMail}`,
+        ...(f.telefon ? [`${m.felder.telefon}: ${f.telefon}`] : []),
+        ...(f.kontaktweg === "telefon" ? [`${m.felder.zeit}: ${t.zeiten[f.kontaktzeit]}`] : []),
+        `${m.felder.thema}: ${t.themen[f.anliegen]}`,
+        ...(f.nachricht ? ["", `${m.felder.nachricht}:`, f.nachricht] : []),
+        "",
+        einwilligungstext(f.empfaengerId, lang),
+      ];
+      const betreff = `${m.betreff} – ${t.themen[f.anliegen]}`;
+      track("anfrage_abgeschickt", { partner: false, weg: "email" });
+      window.location.assign(`mailto:${site.betreiber.email}?subject=${encodeURIComponent(betreff)}&body=${encodeURIComponent(zeilen.join("\n"))}`);
+      setZustand({ art: "email" });
+      return;
+    }
+
     setZustand({ art: "sendet" });
     try {
       const res = await fetch("/api/leads", {
@@ -162,6 +188,24 @@ export function LeadForm({ lang }: { lang: Lang }) {
     if (erstes) {
       requestAnimationFrame(() => formRef.current?.querySelector<HTMLElement>(`[name="${erstes}"]`)?.focus());
     }
+  }
+
+  if (zustand.art === "email") {
+    const m = t.perEmail;
+    return (
+      <div className="card card--pad stack" role="status">
+        <span className="tag tag--mint">{m.tag}</span>
+        <h2 style={{ fontSize: "var(--text-2xl)" }}>{m.titel}</h2>
+        <p>{m.text(site.betreiber.email)}</p>
+        <p className="small muted">
+          {m.ohne(site.betreiber.email)} <a href={`mailto:${site.betreiber.email}`}>{site.betreiber.email}</a>
+        </p>
+        <div className="btn-row">
+          <Link href={pfad(lang, "/wissen")} className="btn btn--primary">{t.weiterWissen}</Link>
+          <Link href={pfad(lang, "/rechner")} className="btn btn--ghost">{texte(lang).allgemein.zumRechner}</Link>
+        </div>
+      </div>
+    );
   }
 
   if (zustand.art === "erfolg") {

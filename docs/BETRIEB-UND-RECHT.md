@@ -68,11 +68,27 @@ später ggf. Werbekonten (Meta, Google Ads) und ein einwilligungsbasiertes Analy
    einzuordnen ist (§§ 34d, 34f GewO, ggf. KWG/WpIG). Maßgeblich sind der tatsächliche Ablauf,
    die Inhalte der Anfrage und die Vergütung – insbesondere Abschlussprovisionen. Die
    Bezeichnung „Finanzbildung“ entscheidet das nicht.
+   **Stand 15.10.2026 (Entscheidung der Betreiber):** Tippgeber-Modell. Es werden nur Anfragen
+   (Leads) an den jeweiligen Träger weitergegeben, Vergütung nur je weitergegebener Anfrage,
+   keine abschlussabhängige Provision, keine Produktberatung. Deshalb steht im Impressum keine
+   Aufsichtsbehörde. **Vor dem Livegang von der IHK Osnabrück-Emsland-Grafschaft Bentheim oder
+   einer Fachanwältin/einem Fachanwalt bestätigen lassen.**
 2. **Datenschutz.** Rechtsgrundlagen für Anfrage und Weitergabe, Einwilligungstext,
    Auftragsverarbeitungsverträge (Hosting, Datenbank, E-Mail), ggf. gemeinsame Verantwortlichkeit
    oder Übermittlungsvereinbarung mit Partnern, Löschkonzept (180 Tage sind ein Vorschlag im Code),
    Verzeichnis von Verarbeitungstätigkeiten, ggf. Datenschutz-Folgenabschätzung,
    vollständige Datenschutzerklärung.
+   **Stand 15.10.2026:** Datenschutzerklärung ausgefüllt (Verantwortlicher RenteKannMehr GbR, Hosting bei
+   Hostinger, E-Mail-Kontakt, Löschfrist 180 Tage, kein Datenschutzbeauftragter, Aufsicht LfD Niedersachsen).
+   Noch zu klären: Anschrift von Hostinger mit dem AV-Vertrag abgleichen und den AV-Vertrag im
+   Hostinger-Konto abschließen/ablegen (gilt auch für das E-Mail-Postfach, ebenfalls Hostinger); prüfen, ob das
+   Anfrageformular auf dem gewählten Hostinger-Tarif überhaupt läuft (braucht Node.js).
+   **Lead-Weitergabe an Partner (vor dem ersten Partner erledigen):** schriftlicher Vertrag mit jedem
+   Partner (nur Nutzung für die Kontaktaufnahme, keine Weitergabe/Weiterverkauf, eigene Information der
+   Person nach Art. 14 DSGVO, Löschung, Umgang mit Widerruf, Telefonkontakt nur bei gewähltem Kontaktweg);
+   Einwilligungsnachweis wird je Anfrage gespeichert (Wortlaut, Version, Zeitpunkt). Abrechnungsunterlagen
+   gegenüber Partnern unterliegen eigenen Aufbewahrungsfristen (§ 147 AO) – dafür reichen Vorgangsnummer
+   und Datum, nicht die vollständigen Kontaktdaten.
 3. **Telefonische Kontaktaufnahme (§ 7 UWG).** Anforderungen an die Einwilligung in
    Werbeanrufe und deren Dokumentation, auch für Anrufe durch Partner.
 4. **Werbung und Transparenz (UWG, MStV).** Die Hinweise zur Vergütung sind bewusst knapp gehalten:

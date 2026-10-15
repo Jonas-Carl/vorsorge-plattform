@@ -1,0 +1,54 @@
+name: Live-Seite auf Hostinger
+
+# Baut die statische Fassung für https://rentekannmehr.de und lädt sie per FTP zu Hostinger hoch.
+# Einmalig in GitHub unter Settings → Secrets and variables → Actions anlegen:
+#   FTP_SERVER   (z. B. ftp.rentekannmehr.de oder die IP aus dem Hostinger-Panel)
+#   FTP_USERNAME
+#   FTP_PASSWORD
+# Ohne diese Secrets wird nur gebaut und nichts hochgeladen.
+
+# Läuft nur, wenn man ihn in GitHub unter Actions → „Live-Seite auf Hostinger“ → „Run workflow“ startet.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: hostinger
+  cancel-in-progress: true
+
+jobs:
+  build-und-upload:
+    runs-on: ubuntu-latest
+    env:
+      HAT_FTP: ${{ secrets.FTP_SERVER != '' && secrets.FTP_USERNAME != '' && secrets.FTP_PASSWORD != '' }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run test
+      # Webhosting ohne Node.js: keine Lead-API, Anfragen gehen als fertige E-Mail an info@.
+      - run: rm -rf src/app/api
+      - run: npm run build
+        env:
+          GITHUB_PAGES: "true"
+          PAGES_BASE_PATH: ""
+          NEXT_PUBLIC_SITE_URL: https://rentekannmehr.de
+          NEXT_PUBLIC_ANFRAGE_PER_EMAIL: "1"
+      - run: cp hosting/.htaccess out/.htaccess
+      - name: Hinweis, falls FTP-Zugang fehlt
+        if: env.HAT_FTP != 'true'
+        run: echo "::notice::FTP-Secrets fehlen – die Seite wurde gebaut, aber nicht zu Hostinger hochgeladen."
+      - name: Zu Hostinger hochladen
+        if: env.HAT_FTP == 'true'
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./out/
+          server-dir: ./public_html/

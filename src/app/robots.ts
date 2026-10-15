@@ -4,8 +4,9 @@ import { site } from "@/config/site";
 export const dynamic = "force-static";
 
 export default function robots(): MetadataRoute.Robots {
-  // Solange Betreiberangaben fehlen, darf die Website nicht indexiert werden.
-  if (!site.betreiberdatenVollstaendig) {
+  // Nicht indexieren, solange Betreiberangaben fehlen – und nie die Vorschau auf GitHub Pages,
+  // damit Google sie nicht als Doppel der echten Seite (rentekannmehr.de) findet.
+  if (!site.betreiberdatenVollstaendig || process.env.NEXT_PUBLIC_DEMO === "1") {
     return { rules: [{ userAgent: "*", disallow: "/" }] };
   }
   return {

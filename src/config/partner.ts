@@ -20,11 +20,14 @@ export type PartnerIntegration =
   /** Manuelle Übergabe durch berechtigte Mitarbeitende über ein internes Werkzeug (noch nicht gebaut). */
   | { art: "manuell" };
 
+/**
+ * Vergütung nur je weitergegebener Anfrage (Tippgeber-Modell). Abschlussabhängige Provisionen
+ * sind bewusst nicht vorgesehen – sie könnten eine Erlaubnispflicht nach §§ 34d/34f GewO auslösen.
+ * Siehe docs/BETRIEB-UND-RECHT.md, Abschnitt 5.
+ */
 export type Verguetungsmodell =
   | "offen"
-  | "je-qualifiziertem-lead"
-  | "je-erfolgreicher-vermittlung"
-  | "provision-bei-vertragsabschluss";
+  | "je-qualifiziertem-lead";
 
 export type Partner = {
   id: string;
