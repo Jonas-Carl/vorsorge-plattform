@@ -486,29 +486,22 @@ export function Calculator({ lang, kompakt = false }: { lang: Lang; kompakt?: bo
             </div>
           )}
 
-          <p className="block__text">{t.erklaerung}</p>
-          <p className="block__klein">
-            {t.kosten(P(e.kosten))}
-            {Math.abs(e.kosten - r.produkt.effektivkostenStandarddepotMax) < 1e-9 && <> {t.kostenGesetz}</>}
-            {mitInflation && <> {t.kaufkraft(E(ergebnis.endkapitalReal), P(e.inflation))}</>}
-          </p>
-        </section>
-
-        {/* Nächster Schritt: aus dem Beispiel einen Plan machen */}
-        <section className="umsetzen" aria-labelledby={`umsetzen-${kompakt ? "k" : "v"}`}>
-          <p className="umsetzen__eyebrow">{b.ctaEyebrow}</p>
-          <h3 id={`umsetzen-${kompakt ? "k" : "v"}`}>{b.ctaTitel}</h3>
-          <p className="umsetzen__text">{b.ctaText(E(e.sparrate))}</p>
-          <ul className="umsetzen__liste">
-            {b.ctaPunkte.map((punkt) => <li key={punkt}><Icon name="check" size={18} /> {punkt}</li>)}
-          </ul>
-          <div className="umsetzen__aktion">
-            <Link href={pfad(lang, "/partner")} className="btn btn--umsetzen" onClick={() => track("anfrage_begonnen", { herkunft: "rechner-ergebnis" })}>
-              {b.ctaKnopf} <Icon name="arrow" size={18} />
-            </Link>
-            <span className="umsetzen__klein">{b.ctaKlein}</span>
+          {/* Nächster Schritt: aus dem Beispiel einen Plan machen */}
+          <div className="umsetzen umsetzen--im-block" role="group" aria-labelledby={`umsetzen-${kompakt ? "k" : "v"}`}>
+            <p className="umsetzen__eyebrow">{b.ctaEyebrow}</p>
+            <h3 id={`umsetzen-${kompakt ? "k" : "v"}`}>{b.ctaTitel}</h3>
+            <p className="umsetzen__text">{b.ctaText(E(e.sparrate))}</p>
+            <ul className="umsetzen__liste">
+              {b.ctaPunkte.map((punkt) => <li key={punkt}><Icon name="check" size={18} /> {punkt}</li>)}
+            </ul>
+            <div className="umsetzen__aktion">
+              <Link href={pfad(lang, "/partner")} className="btn btn--umsetzen" onClick={() => track("anfrage_begonnen", { herkunft: "rechner-ergebnis" })}>
+                {b.ctaKnopf} <Icon name="arrow" size={18} />
+              </Link>
+              <span className="umsetzen__klein">{b.ctaKlein}</span>
+            </div>
+            <p className="umsetzen__netz">{n.beratungKlein}</p>
           </div>
-          <p className="umsetzen__netz">{n.beratungKlein}</p>
         </section>
 
         {!kompakt && (
