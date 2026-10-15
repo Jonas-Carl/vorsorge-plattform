@@ -187,7 +187,7 @@ export function Calculator({ lang, kompakt = false }: { lang: Lang; kompakt?: bo
             onChange={(sparrate) => setze({ sparrate })}
           />
           <div className="chips" role="group" aria-label={t.sparrate}>
-            {SCHNELLWAHL.filter((s) => !(kompakt && s.marke === "max")).map(({ betrag, marke }) => (
+            {SCHNELLWAHL.filter((s) => s.marke !== "min" && s.marke !== "max").map(({ betrag, marke }) => (
               <button
                 key={betrag}
                 type="button"
@@ -205,35 +205,6 @@ export function Calculator({ lang, kompakt = false }: { lang: Lang; kompakt?: bo
           </div>
         </div>
 
-        <div className="field field--gross">
-          <div className="field__top">
-            <span className="field__label" id={`stufen-label-${kompakt ? "k" : "v"}`}>{t.mehrSparen}</span>
-            <div className="stepper" role="group" aria-labelledby={`stufen-label-${kompakt ? "k" : "v"}`}>
-              <button type="button" aria-label={t.weniger} disabled={stufen.length <= 0} onClick={() => setzeStufen(stufen.slice(0, -1))}>
-                −
-              </button>
-              <output aria-live="polite">{stufen.length}</output>
-              <button type="button" aria-label={t.mehr} disabled={stufen.length >= grenzen.erhoehungen.max} onClick={stufeDazu}>
-                +
-              </button>
-            </div>
-          </div>
-          <p className="field__hint">{t.mehrSparenHinweis}</p>
-        </div>
-        {stufen.map((s, i) => (
-          <div key={i} className="stufe">
-            <NumberField
-              id={`stufe-ab-${kompakt ? "k" : "v"}-${i}`} lang={lang} label={t.stufeAb(i + 1)} unit={t.alterEinheit} sliderLabel={t.regler}
-              value={s.abAlter} min={grenzen.erhoehungen.abAlterMin} max={grenzen.erhoehungen.abAlterMax} step={1}
-              onChange={(abAlter) => setzeStufen(stufen.map((x, k) => (k === i ? { ...x, abAlter } : x)))}
-            />
-            <NumberField
-              id={`stufe-rate-${kompakt ? "k" : "v"}-${i}`} lang={lang} label={t.stufeRate(i + 1)} unit="€" sliderLabel={t.regler}
-              value={s.sparrate} min={0} max={MAX_MONAT} step={grenzen.sparrate.schritt}
-              onChange={(sparrate) => setzeStufen(stufen.map((x, k) => (k === i ? { ...x, sparrate } : x)))}
-            />
-          </div>
-        ))}
 
         <div className="field field--gross">
           <div className="field__top">
@@ -261,29 +232,6 @@ export function Calculator({ lang, kompakt = false }: { lang: Lang; kompakt?: bo
           <p className="field__hint">{t.kinderHinweis}</p>
         </div>
 
-        <div className="field field--gross">
-          <div className="field__top">
-            <span className="field__label" id={`geplant-label-${kompakt ? "k" : "v"}`}>{t.geplant}</span>
-            <div className="stepper" role="group" aria-labelledby={`geplant-label-${kompakt ? "k" : "v"}`}>
-              <button type="button" aria-label={t.weniger} disabled={geplant.length <= 0} onClick={() => setzeGeplant(geplant.slice(0, -1))}>
-                −
-              </button>
-              <output aria-live="polite">{geplant.length}</output>
-              <button type="button" aria-label={t.mehr} disabled={geplant.length >= grenzen.geplanteKinder.max} onClick={geplantDazu}>
-                +
-              </button>
-            </div>
-          </div>
-          <p className="field__hint">{t.geplantHinweis}</p>
-        </div>
-        {geplant.map((g, i) => (
-          <NumberField
-            key={i}
-            id={`geplant-${kompakt ? "k" : "v"}-${i}`} lang={lang} label={t.geplantKind(i + 1)} unit={t.alterEinheit} sliderLabel={t.regler}
-            value={g} min={grenzen.geburtsalter.min} max={grenzen.geburtsalter.max} step={grenzen.geburtsalter.schritt}
-            onChange={(alter) => setzeGeplant(geplant.map((x, k) => (k === i ? alter : x)))}
-          />
-        ))}
         <div className="berechnen">
           <button type="button" className="btn btn--primary btn--berechnen" onClick={berechnenStarten} disabled={phase === "rechnet"}>
             {phase === "fertig" ? b.neu : b.knopf} <Icon name="arrow" size={20} />
@@ -309,6 +257,60 @@ export function Calculator({ lang, kompakt = false }: { lang: Lang; kompakt?: bo
             </span>
           </summary>
           <div className="disclosure__body mehr-grid">
+              <div className="mehr-zusatz">
+              <div className="field field--gross">
+                <div className="field__top">
+                  <span className="field__label" id={`stufen-label-${kompakt ? "k" : "v"}`}>{t.mehrSparen}</span>
+                  <div className="stepper" role="group" aria-labelledby={`stufen-label-${kompakt ? "k" : "v"}`}>
+                    <button type="button" aria-label={t.weniger} disabled={stufen.length <= 0} onClick={() => setzeStufen(stufen.slice(0, -1))}>
+                      −
+                    </button>
+                    <output aria-live="polite">{stufen.length}</output>
+                    <button type="button" aria-label={t.mehr} disabled={stufen.length >= grenzen.erhoehungen.max} onClick={stufeDazu}>
+                      +
+                    </button>
+                  </div>
+                </div>
+                <p className="field__hint">{t.mehrSparenHinweis}</p>
+              </div>
+              {stufen.map((s, i) => (
+                <div key={i} className="stufe">
+                  <NumberField
+                    id={`stufe-ab-${kompakt ? "k" : "v"}-${i}`} lang={lang} label={t.stufeAb(i + 1)} unit={t.alterEinheit} sliderLabel={t.regler}
+                    value={s.abAlter} min={grenzen.erhoehungen.abAlterMin} max={grenzen.erhoehungen.abAlterMax} step={1}
+                    onChange={(abAlter) => setzeStufen(stufen.map((x, k) => (k === i ? { ...x, abAlter } : x)))}
+                  />
+                  <NumberField
+                    id={`stufe-rate-${kompakt ? "k" : "v"}-${i}`} lang={lang} label={t.stufeRate(i + 1)} unit="€" sliderLabel={t.regler}
+                    value={s.sparrate} min={0} max={MAX_MONAT} step={grenzen.sparrate.schritt}
+                    onChange={(sparrate) => setzeStufen(stufen.map((x, k) => (k === i ? { ...x, sparrate } : x)))}
+                  />
+                </div>
+              ))}
+              <div className="field field--gross">
+                <div className="field__top">
+                  <span className="field__label" id={`geplant-label-${kompakt ? "k" : "v"}`}>{t.geplant}</span>
+                  <div className="stepper" role="group" aria-labelledby={`geplant-label-${kompakt ? "k" : "v"}`}>
+                    <button type="button" aria-label={t.weniger} disabled={geplant.length <= 0} onClick={() => setzeGeplant(geplant.slice(0, -1))}>
+                      −
+                    </button>
+                    <output aria-live="polite">{geplant.length}</output>
+                    <button type="button" aria-label={t.mehr} disabled={geplant.length >= grenzen.geplanteKinder.max} onClick={geplantDazu}>
+                      +
+                    </button>
+                  </div>
+                </div>
+                <p className="field__hint">{t.geplantHinweis}</p>
+              </div>
+              {geplant.map((g, i) => (
+                <NumberField
+                  key={i}
+                  id={`geplant-${kompakt ? "k" : "v"}-${i}`} lang={lang} label={t.geplantKind(i + 1)} unit={t.alterEinheit} sliderLabel={t.regler}
+                  value={g} min={grenzen.geburtsalter.min} max={grenzen.geburtsalter.max} step={grenzen.geburtsalter.schritt}
+                  onChange={(alter) => setzeGeplant(geplant.map((x, k) => (k === i ? alter : x)))}
+                />
+              ))}
+              </div>
             <NumberField
               id="rentenalter" lang={lang} label={t.rentenalter} unit={t.alterEinheit} sliderLabel={t.regler}
               value={e.rentenalter} min={grenzen.rentenalter.min} max={grenzen.rentenalter.max} step={1}
@@ -394,6 +396,63 @@ export function Calculator({ lang, kompakt = false }: { lang: Lang; kompakt?: bo
           </section>
         ) : (
         <>
+        {/* Voraussichtlich (Beispiel, hängt vom Wachstum ab) */}
+        <section className="block block--offen" aria-labelledby={`offen-${kompakt ? "k" : "v"}`}>
+          <div className="block__kopf">
+            <h3 id={`offen-${kompakt ? "k" : "v"}`}><Icon name="trend" size={20} /> {t.offenTitel}</h3>
+            <span className="tag tag--hell">{t.offenTag}</span>
+          </div>
+
+          <p className="block__frage" id={`stufe-${kompakt ? "k" : "v"}`}>{t.wieStark}</p>
+          <div className="stufen" role="group" aria-labelledby={`stufe-${kompakt ? "k" : "v"}`}>
+            {szenarien.map((s) => (
+              <button key={s.id} type="button" aria-pressed={stufe === s.id} onClick={() => setze({ rendite: s.renditePa })}>
+                <b>{t.stufen[s.id]}</b>
+                <span>{P(s.renditePa)} {t.proJahr}</span>
+              </button>
+            ))}
+          </div>
+
+          <p className="block__label">{t.ergebnis(e.rentenalter)}</p>
+          <p className="block__zahl">{E(ergebnis.endkapital)}</p>
+          <p className="block__risiko">{b.risiko}</p>
+
+          <div className="balken balken--gross" aria-hidden="true">
+            <span style={{ width: anteil(eigenGesamt), background: "#8fb0de" }} />
+            <span style={{ width: anteil(ergebnis.zulagen), background: FARBEN.zulage }} />
+            <span style={{ width: anteil(wachstum), background: FARBEN.zuwachs }} />
+          </div>
+          <ul className="werte werte--hell">
+            <li><i style={{ background: "#8fb0de" }} />{t.vonDir} <b>{E(eigenGesamt)}</b></li>
+            {mitZulagen && <li><i style={{ background: FARBEN.zulage }} />{t.vomStaat} <b>{E(ergebnis.zulagen)}</b></li>}
+            <li><i style={{ background: FARBEN.zuwachs }} />{t.wachstum} <b>{E(ergebnis.wertzuwachs)}</b></li>
+          </ul>
+
+          {auszahlung > 0 && e.rentenalter < PLAN_BIS && (
+            <div className="auszahlung">
+              <p className="auszahlung__label">{t.auszahlung.label}</p>
+              <p className="auszahlung__zahl">{E(auszahlung)} <span>{t.auszahlung.proMonat}</span></p>
+              <p className="block__klein">{t.auszahlung.text(e.rentenalter, PLAN_BIS)}</p>
+            </div>
+          )}
+
+          {/* Nächster Schritt: aus dem Beispiel einen Plan machen */}
+          <div className="umsetzen umsetzen--im-block" role="group" aria-labelledby={`umsetzen-${kompakt ? "k" : "v"}`}>
+            <p className="umsetzen__eyebrow">{b.ctaEyebrow}</p>
+            <h3 id={`umsetzen-${kompakt ? "k" : "v"}`}>{b.ctaTitel}</h3>
+            <p className="umsetzen__text">{b.ctaText(E(e.sparrate))}</p>
+            <ul className="umsetzen__liste">
+              {b.ctaPunkte.map((punkt) => <li key={punkt}><Icon name="check" size={18} /> {punkt}</li>)}
+            </ul>
+            <div className="umsetzen__aktion">
+              <Link href={pfad(lang, "/partner")} className="btn btn--umsetzen" onClick={() => track("anfrage_begonnen", { herkunft: "rechner-ergebnis" })}>
+                {b.ctaKnopf} <Icon name="arrow" size={18} />
+              </Link>
+            </div>
+            <p className="umsetzen__netz">{b.ctaKlein} {n.beratungKlein}</p>
+          </div>
+        </section>
+
         {/* Das steht fest */}
         <section className="block block--fest" aria-labelledby={`fest-${kompakt ? "k" : "v"}`}>
           <div className="block__kopf">
@@ -433,75 +492,12 @@ export function Calculator({ lang, kompakt = false }: { lang: Lang; kompakt?: bo
           )}
           {eigenJahr > r.einzahlungsgrenzeJahr && <p className="note note--gold" role="status">{t.ueberGrenze}</p>}
 
-          <div className="bis">
-            <p className="bis__titel">{t.bisRente(e.rentenalter)}</p>
-            <div className="balken" aria-hidden="true">
-              <span style={{ width: `${(eigenGesamt / Math.max(eigenGesamt + ergebnis.zulagen, 1)) * 100}%`, background: FARBEN.einzahlung }} />
-              <span style={{ width: `${(ergebnis.zulagen / Math.max(eigenGesamt + ergebnis.zulagen, 1)) * 100}%`, background: FARBEN.zulage }} />
-            </div>
-            <ul className="werte">
-              <li><i style={{ background: FARBEN.einzahlung }} />{t.vonDir} <b>{E(eigenGesamt)}</b></li>
-              {mitZulagen && <li><i style={{ background: FARBEN.zulage }} />{t.vomStaat} <b>{E(ergebnis.zulagen)}</b></li>}
-            </ul>
-          </div>
-          {e.foerderung.aktiv && <p className="block__klein">{t.festHinweis}</p>}
-        </section>
-
-        {/* Voraussichtlich (Beispiel, hängt vom Wachstum ab) */}
-        <section className="block block--offen" aria-labelledby={`offen-${kompakt ? "k" : "v"}`}>
-          <div className="block__kopf">
-            <h3 id={`offen-${kompakt ? "k" : "v"}`}><Icon name="trend" size={20} /> {t.offenTitel}</h3>
-            <span className="tag tag--hell">{t.offenTag}</span>
-          </div>
-
-          <p className="block__frage" id={`stufe-${kompakt ? "k" : "v"}`}>{t.wieStark}</p>
-          <div className="stufen" role="group" aria-labelledby={`stufe-${kompakt ? "k" : "v"}`}>
-            {szenarien.map((s) => (
-              <button key={s.id} type="button" aria-pressed={stufe === s.id} onClick={() => setze({ rendite: s.renditePa })}>
-                <b>{t.stufen[s.id]}</b>
-                <span>{P(s.renditePa)} {t.proJahr}</span>
-              </button>
-            ))}
-          </div>
-
-          <p className="block__label">{t.ergebnis(e.rentenalter)}</p>
-          <p className="block__zahl">{E(ergebnis.endkapital)}</p>
-
-          <div className="balken balken--gross" aria-hidden="true">
-            <span style={{ width: anteil(eigenGesamt), background: "#8fb0de" }} />
-            <span style={{ width: anteil(ergebnis.zulagen), background: FARBEN.zulage }} />
-            <span style={{ width: anteil(wachstum), background: FARBEN.zuwachs }} />
-          </div>
-          <ul className="werte werte--hell">
-            <li><i style={{ background: "#8fb0de" }} />{t.vonDir} <b>{E(eigenGesamt)}</b></li>
-            {mitZulagen && <li><i style={{ background: FARBEN.zulage }} />{t.vomStaat} <b>{E(ergebnis.zulagen)}</b></li>}
-            <li><i style={{ background: FARBEN.zuwachs }} />{t.wachstum} <b>{E(ergebnis.wertzuwachs)}</b></li>
-          </ul>
-
-          {auszahlung > 0 && e.rentenalter < PLAN_BIS && (
-            <div className="auszahlung">
-              <p className="auszahlung__label">{t.auszahlung.label}</p>
-              <p className="auszahlung__zahl">{E(auszahlung)} <span>{t.auszahlung.proMonat}</span></p>
-              <p className="block__klein">{t.auszahlung.text(e.rentenalter, PLAN_BIS)}</p>
-            </div>
+          {e.foerderung.aktiv && (
+            <details className="mini-info">
+              <summary>{b.festKurz}</summary>
+              <p className="block__klein">{t.festHinweis}</p>
+            </details>
           )}
-
-          {/* Nächster Schritt: aus dem Beispiel einen Plan machen */}
-          <div className="umsetzen umsetzen--im-block" role="group" aria-labelledby={`umsetzen-${kompakt ? "k" : "v"}`}>
-            <p className="umsetzen__eyebrow">{b.ctaEyebrow}</p>
-            <h3 id={`umsetzen-${kompakt ? "k" : "v"}`}>{b.ctaTitel}</h3>
-            <p className="umsetzen__text">{b.ctaText(E(e.sparrate))}</p>
-            <ul className="umsetzen__liste">
-              {b.ctaPunkte.map((punkt) => <li key={punkt}><Icon name="check" size={18} /> {punkt}</li>)}
-            </ul>
-            <div className="umsetzen__aktion">
-              <Link href={pfad(lang, "/partner")} className="btn btn--umsetzen" onClick={() => track("anfrage_begonnen", { herkunft: "rechner-ergebnis" })}>
-                {b.ctaKnopf} <Icon name="arrow" size={18} />
-              </Link>
-              <span className="umsetzen__klein">{b.ctaKlein}</span>
-            </div>
-            <p className="umsetzen__netz">{n.beratungKlein}</p>
-          </div>
         </section>
 
         {!kompakt && (

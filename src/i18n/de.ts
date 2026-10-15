@@ -518,6 +518,8 @@ export const de = {
     ],
   },
   berechnen: {
+    risiko: "Beispiel, keine Zusage – angelegtes Geld kann auch weniger werden.",
+    festKurz: "Gilt, wenn du berechtigt bist – mehr dazu",
     knopf: "Jetzt berechnen",
     neu: "Neu berechnen",
     knopfHinweis: "Kostenlos und ohne Anmeldung. Deine Angaben bleiben auf deinem Gerät.",

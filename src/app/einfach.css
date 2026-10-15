@@ -63,7 +63,7 @@
 /* Rechner ---------------------------------------------------------------- */
 .rechner { display: grid; gap: var(--s-5); }
 @media (min-width: 900px) {
-  .rechner { grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr); align-items: start; gap: var(--s-6); }
+  .rechner { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: start; gap: var(--s-6); }
 }
 .rechner__fragen {
   display: grid; gap: var(--s-6); background: var(--white); border: 1px solid var(--sand-200);
@@ -368,7 +368,7 @@
 .btn--berechnen { width: 100%; min-height: 3.6rem; font-size: var(--text-lg); }
 .btn--berechnen[disabled] { opacity: 0.75; }
 .berechnung {
-  display: grid; gap: var(--s-3); justify-items: center; align-content: center; text-align: center; min-height: 20rem;
+  display: grid; gap: var(--s-3); justify-items: center; align-content: center; text-align: center; min-height: 14rem;
   background: var(--white); border: 2px dashed var(--sand-300); border-radius: var(--r-lg); padding: clamp(1.5rem, 1rem + 3vw, 3rem);
 }
 .berechnung h3 { font-size: var(--text-xl); }
@@ -419,3 +419,15 @@
   background: linear-gradient(135deg, var(--petrol-800) 0%, #0d5a63 100%);
 }
 .umsetzen--im-block h3 { font-size: var(--text-xl); }
+
+/* Kürzerer Rechner: Zusatzfragen, Risiko-Zeile, aufklappbarer Hinweis */
+.mehr-zusatz { grid-column: 1 / -1; display: grid; gap: var(--s-5); padding-bottom: var(--s-5); border-bottom: 1px solid var(--sand-200); }
+.block__risiko { font-size: var(--text-sm); color: inherit; opacity: 0.85; margin-top: calc(var(--s-2) * -1); }
+.mini-info > summary { cursor: pointer; font-size: var(--text-sm); font-weight: 600; color: var(--petrol-700); list-style: none; }
+.mini-info > summary::-webkit-details-marker { display: none; }
+.mini-info > summary::after { content: " +"; }
+.mini-info[open] > summary::after { content: " –"; }
+.mini-info > p { margin-top: var(--s-2); }
+.umsetzen--im-block .umsetzen__liste { display: flex; flex-wrap: wrap; gap: 0.4rem 1.25rem; }
+.umsetzen--im-block .umsetzen__text { font-size: var(--text-base); }
+

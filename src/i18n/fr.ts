@@ -513,6 +513,8 @@ export const fr: Texte = {
     ],
   },
   berechnen: {
+    risiko: "Un exemple, pas une promesse – l'argent placé peut aussi diminuer.",
+    festKurz: "Valable si tu y as droit – en savoir plus",
     knopf: "Calculer maintenant",
     neu: "Recalculer",
     knopfHinweis: "Gratuit et sans inscription. Tes données restent sur ton appareil.",

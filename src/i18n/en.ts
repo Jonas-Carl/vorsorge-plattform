@@ -513,6 +513,8 @@ export const en: Texte = {
     ],
   },
   berechnen: {
+    risiko: "An example, not a promise – invested money can also shrink.",
+    festKurz: "Applies if you are eligible – more",
     knopf: "Calculate now",
     neu: "Calculate again",
     knopfHinweis: "Free and without sign-up. Your entries stay on your device.",
