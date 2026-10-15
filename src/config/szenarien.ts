@@ -40,7 +40,7 @@ export const grenzen = {
   // Rentenversicherung einzahlt, ist auch unter 18 förderberechtigt.
   alter: { min: 15, max: 66, start: 32, schritt: 1 },
   rentenalter: { min: 60, max: 70, start: 67, schritt: 1 },
-  sparrate: { min: 5, max: 1000, start: 100, schritt: 5 },
+  sparrate: { min: 10, max: 1000, start: 100, schritt: 5 },
   startkapital: { min: 0, max: 500_000, start: 0, schritt: 500 },
   rendite: { min: 0, max: 0.1, start: 0.06, schritt: 0.0025 },
   kosten: { min: 0, max: 0.03, start: 0.01, schritt: 0.001 },

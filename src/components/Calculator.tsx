@@ -248,6 +248,33 @@ export function Calculator({ lang, kompakt = false }: { lang: Lang; kompakt?: bo
           </div>
         )}
 
+        {/* Geplante Kinder – direkt unter der Kinderfrage, jedes Kind als eigene Zeile */}
+        <div className="plan plan--links" role="group" aria-labelledby={`geplant-label-${kompakt ? "k" : "v"}`}>
+          <div className="plan__kopf">
+            <span className="field__label" id={`geplant-label-${kompakt ? "k" : "v"}`}>{t.geplant}</span>
+            <div className="stepper" role="group" aria-labelledby={`geplant-label-${kompakt ? "k" : "v"}`}>
+              <button type="button" aria-label={t.weniger} disabled={geplant.length <= 0} onClick={() => setzeGeplant(geplant.slice(0, -1))}>−</button>
+              <output aria-live="polite">{geplant.length}</output>
+              <button type="button" aria-label={t.mehr} disabled={geplant.length >= grenzen.geplanteKinder.max} onClick={geplantDazu}>+</button>
+            </div>
+          </div>
+          <p className="field__hint">{t.geplantHinweis}</p>
+          {geplant.length > 0 && (
+            <ol className="plan__liste">
+              {geplant.map((g, i) => (
+                <li key={i} className="plan__zeile plan__zeile--eine" role="group" aria-labelledby={`kind-titel-${kompakt ? "k" : "v"}-${i}`}>
+                  <p className="plan__titel" id={`kind-titel-${kompakt ? "k" : "v"}-${i}`}>{t.kindTitel(i + 1)}</p>
+                  <NumberField
+                    id={`geplant-${kompakt ? "k" : "v"}-${i}`} lang={lang} label={t.kindAlter} unit={t.alterEinheit} regler={false}
+                    value={g} min={grenzen.geburtsalter.min} max={grenzen.geburtsalter.max} step={grenzen.geburtsalter.schritt}
+                    onChange={(alter) => setzeGeplant(geplant.map((x, k) => (k === i ? alter : x)))}
+                  />
+                </li>
+              ))}
+            </ol>
+          )}
+        </div>
+
       </form>
 
         <details
@@ -297,32 +324,6 @@ export function Calculator({ lang, kompakt = false }: { lang: Lang; kompakt?: bo
                   )}
                 </div>
 
-                {/* Gruppe 2: Kinder in Zukunft – jedes Kind als eigene Zeile */}
-                <div className="plan" role="group" aria-labelledby={`geplant-label-${kompakt ? "k" : "v"}`}>
-                  <div className="plan__kopf">
-                    <span className="field__label" id={`geplant-label-${kompakt ? "k" : "v"}`}>{t.geplant}</span>
-                    <div className="stepper" role="group" aria-labelledby={`geplant-label-${kompakt ? "k" : "v"}`}>
-                      <button type="button" aria-label={t.weniger} disabled={geplant.length <= 0} onClick={() => setzeGeplant(geplant.slice(0, -1))}>−</button>
-                      <output aria-live="polite">{geplant.length}</output>
-                      <button type="button" aria-label={t.mehr} disabled={geplant.length >= grenzen.geplanteKinder.max} onClick={geplantDazu}>+</button>
-                    </div>
-                  </div>
-                  <p className="field__hint">{t.geplantHinweis}</p>
-                  {geplant.length > 0 && (
-                    <ol className="plan__liste">
-                      {geplant.map((g, i) => (
-                        <li key={i} className="plan__zeile plan__zeile--eine" role="group" aria-labelledby={`kind-titel-${kompakt ? "k" : "v"}-${i}`}>
-                          <p className="plan__titel" id={`kind-titel-${kompakt ? "k" : "v"}-${i}`}>{t.kindTitel(i + 1)}</p>
-                          <NumberField
-                            id={`geplant-${kompakt ? "k" : "v"}-${i}`} lang={lang} label={t.kindAlter} unit={t.alterEinheit} regler={false}
-                            value={g} min={grenzen.geburtsalter.min} max={grenzen.geburtsalter.max} step={grenzen.geburtsalter.schritt}
-                            onChange={(alter) => setzeGeplant(geplant.map((x, k) => (k === i ? alter : x)))}
-                          />
-                        </li>
-                      ))}
-                    </ol>
-                  )}
-                </div>
               </div>
             <NumberField
               id="rentenalter" lang={lang} label={t.rentenalter} unit={t.alterEinheit} sliderLabel={t.regler}
