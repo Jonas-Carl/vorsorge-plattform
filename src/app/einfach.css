@@ -431,3 +431,41 @@
 .umsetzen--im-block .umsetzen__liste { display: flex; flex-wrap: wrap; gap: 0.4rem 1.25rem; }
 .umsetzen--im-block .umsetzen__text { font-size: var(--text-base); }
 
+/* Rechner-Aufbau: Fragen | Einstellungen, darunter Knopf und Ergebnis über die ganze Breite */
+.rechner__knopfzeile, .rechner__ergebnis { grid-column: 1 / -1; }
+.rechner__knopfzeile { justify-items: center; text-align: center; }
+.rechner__knopfzeile .btn--berechnen { max-width: 32rem; }
+.rechner__einstellungen { margin: 0; align-self: stretch; }
+.rechner__einstellungen .mehr-grid { grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 900px) {
+  .rechner__ergebnis { grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); align-items: start; }
+  .rechner__ergebnis > .chart-card, .rechner__ergebnis > .berechnung { grid-column: 1 / -1; }
+}
+
+
+/* Einstellungs-Kasten neben den Fragen: kompakt, damit er nicht höher wird als die Fragen */
+.rechner__einstellungen .disclosure__body { gap: var(--s-4); margin-top: var(--s-4); }
+.rechner__einstellungen .mehr-zusatz { gap: var(--s-4); padding-bottom: var(--s-4); }
+.rechner__einstellungen .field--gross > .field__top > label,
+.rechner__einstellungen .field--gross .field__label { font-size: 1.05rem; }
+.rechner__einstellungen .field--gross .stepper button { width: 2.5rem; height: 2.5rem; font-size: 1.3rem; }
+.rechner__einstellungen .field--gross .stepper output { font-size: 1.3rem; min-width: 1.6rem; }
+.rechner__einstellungen .field__hint { font-size: var(--text-xs); }
+.rechner__einstellungen .switch { grid-column: 1 / -1; }
+.rechner__einstellungen .btn-row { margin-top: var(--s-4) !important; }
+@media (min-width: 1100px) {
+  .rechner__einstellungen .mehr-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s-4) var(--s-5); }
+  .rechner__einstellungen .mehr-zusatz { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (min-width: 1100px) {
+  .rechner { grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.18fr); }
+  .rechner__einstellungen .field__top > label { font-size: var(--text-xs); line-height: 1.3; }
+  .rechner__einstellungen .numbox input { width: 3.6rem; }
+  .rechner__einstellungen input[type="range"] { height: 1.4rem; }
+  .rechner__einstellungen .field { gap: 0.3rem; }
+}
+@media (min-width: 900px) {
+  .rechner__fragen { align-self: stretch; align-content: start; }
+  .rechner__einstellungen .btn-row .btn { min-height: 2.3rem; padding: 0.3rem 1rem; font-size: var(--text-sm); }
+  .rechner__einstellungen .disclosure__body ~ p.small { font-size: var(--text-xs); }
+}

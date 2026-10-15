@@ -10,7 +10,7 @@ import { track } from "@/lib/analytics";
 import { berechneZulage } from "@/lib/foerderung";
 import { euro, euroGenau, prozent } from "@/lib/format";
 import { berechne, bereinigeEingabe, monatlicheAuszahlung, type RechnerEingabe } from "@/lib/rechner";
-import { holeEingabe, merkeEingabe } from "@/lib/rechnerUebergabe";
+import { holeEingabe } from "@/lib/rechnerUebergabe";
 import { EINFACHE_STARTWERTE } from "@/lib/startwerte";
 import { FARBEN, GrowthChart } from "./GrowthChart";
 import { Icon } from "./Icon";
@@ -61,6 +61,12 @@ export function Calculator({ lang, kompakt = false }: { lang: Lang; kompakt?: bo
   const [schritt, setSchritt] = useState(0);
   const uhren = useRef<number[]>([]);
   const ergebnisRef = useRef<HTMLDivElement>(null);
+  // Einstellungen: am großen Bildschirm offen (rechts neben den Fragen), am Handy eingeklappt.
+  const [mehrOffen, setMehrOffen] = useState(true);
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    if (window.matchMedia("(max-width: 899px)").matches) setMehrOffen(false);
+  }, []);
   useEffect(() => () => uhren.current.forEach((u) => window.clearTimeout(u)), []);
   const gestartet = useRef(false);
   // Bleibt an, damit der Regler beim Zurückziehen vom Maximum nicht springt.
@@ -152,7 +158,6 @@ export function Calculator({ lang, kompakt = false }: { lang: Lang; kompakt?: bo
   return (
     <div className={`rechner ${kompakt ? "rechner--kompakt" : ""}`}>
       {/* ------------------------------ Drei Fragen ------------------------------ */}
-      <div className="rechner__links">
       <form className="rechner__fragen" onSubmit={(ev) => ev.preventDefault()} noValidate>
         {kompakt && (
           <div className="beispiele">
@@ -232,24 +237,13 @@ export function Calculator({ lang, kompakt = false }: { lang: Lang; kompakt?: bo
           <p className="field__hint">{t.kinderHinweis}</p>
         </div>
 
-        <div className="berechnen">
-          <button type="button" className="btn btn--primary btn--berechnen" onClick={berechnenStarten} disabled={phase === "rechnet"}>
-            {phase === "fertig" ? b.neu : b.knopf} <Icon name="arrow" size={20} />
-          </button>
-          <p className="field__hint">{b.knopfHinweis}</p>
-        </div>
       </form>
 
-        {kompakt ? (
-        <Link
-          href={pfad(lang, "/rechner")}
-          className="btn btn--ghost rechner__mehr"
-          onClick={() => merkeEingabe({ alter: e.alter, sparrate: e.sparrate, rendite: e.rendite, foerderung: e.foerderung, erhoehungen: e.erhoehungen })}
+        <details
+          className="card card--pad disclosure disclosure--karte rechner__einstellungen"
+          open={mehrOffen}
+          onToggle={(ev) => setMehrOffen(ev.currentTarget.open)}
         >
-          {t.vollerRechner} <Icon name="arrow" size={18} />
-        </Link>
-        ) : (
-        <details className="card card--pad disclosure disclosure--karte">
           <summary>
             <span>
               <b>{t.mehrTitel}</b>
@@ -326,7 +320,7 @@ export function Calculator({ lang, kompakt = false }: { lang: Lang; kompakt?: bo
             <NumberField
               id="rendite" lang={lang} label={t.rendite} unit="%" scale={100} decimals={2} sliderLabel={t.regler}
               value={roh.rendite} min={grenzen.rendite.min} max={grenzen.rendite.max} step={grenzen.rendite.schritt}
-              hint={t.renditeHinweis}
+              info={t.renditeHinweis} infoLabel={t.infoZeigen}
               onChange={(rendite) => setze({ rendite })}
             />
             <NumberField
@@ -367,21 +361,19 @@ export function Calculator({ lang, kompakt = false }: { lang: Lang; kompakt?: bo
             {t.nichtDrin} <Link href={pfad(lang, "/quellen-methodik")}>{t.methodik}</Link>
           </p>
         </details>
-        )}
+
+      <div className="berechnen rechner__knopfzeile">
+        <button type="button" className="btn btn--primary btn--berechnen" onClick={berechnenStarten} disabled={phase === "rechnet"}>
+          {phase === "fertig" ? b.neu : b.knopf} <Icon name="arrow" size={20} />
+        </button>
+        <p className="field__hint">{b.knopfHinweis}</p>
       </div>
 
       {/* ------------------------------ Ergebnis ------------------------------ */}
       <div className="rechner__ergebnis" aria-live="polite" ref={ergebnisRef}>
-        {phase !== "fertig" ? (
-          <section className={`berechnung ${phase === "rechnet" ? "berechnung--laeuft" : ""}`}>
-            {phase === "eingabe" ? (
-              <>
-                <span className="berechnung__bild"><Icon name="chart" size={34} /></span>
-                <h3>{b.wartetTitel}</h3>
-                <p>{b.wartetText}</p>
-              </>
-            ) : (
-              <>
+        {phase === "eingabe" ? null : phase === "rechnet" ? (
+          <section className="berechnung berechnung--laeuft">
+            <>
                 <h3>{b.laeuftTitel}</h3>
                 <div className="berechnung__balken" aria-hidden="true">
                   <span style={{ width: `${(schritt / b.schritte.length) * 100}%` }} />
@@ -392,7 +384,6 @@ export function Calculator({ lang, kompakt = false }: { lang: Lang; kompakt?: bo
                   ))}
                 </ol>
               </>
-            )}
           </section>
         ) : (
         <>
