@@ -1,7 +1,8 @@
 import type { Lang } from "@/lib/format";
 
 export type { Lang };
-export const sprachen: Lang[] = ["de", "en", "fr"];
+/** Freigeschaltete Sprachen. Die französischen Texte bleiben im Code; zum Wieder-Einschalten "fr" ergänzen. */
+export const sprachen: Lang[] = ["de", "en"];
 export const STANDARDSPRACHE: Lang = "de";
 
 export function istSprache(x: string): x is Lang {
@@ -24,7 +25,7 @@ export function wechslePfad(aktuell: string, ziel: Lang): string {
 export function alternativen(lang: Lang, p: string) {
   return {
     canonical: pfad(lang, p),
-    languages: { de: pfad("de", p), en: pfad("en", p), fr: pfad("fr", p), "x-default": pfad("de", p) },
+    languages: { ...Object.fromEntries(sprachen.map((s) => [s, pfad(s, p)])), "x-default": pfad("de", p) },
   };
 }
 

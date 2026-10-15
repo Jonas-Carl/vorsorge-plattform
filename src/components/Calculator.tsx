@@ -188,7 +188,7 @@ export function Calculator({ lang, kompakt = false }: { lang: Lang; kompakt?: bo
           <NumberField
             id="sparrate" gross lang={lang} label={t.sparrate} unit="€" sliderLabel={t.regler}
             value={roh.sparrate} min={grenzen.sparrate.min} max={reglerMax} step={grenzen.sparrate.schritt}
-            info={t.info.sparrate} infoLabel={t.infoZeigen}
+            hint={t.sparrateHinweis} info={t.info.sparrate} infoLabel={t.infoZeigen}
             onChange={(sparrate) => setze({ sparrate })}
           />
           <div className="chips" role="group" aria-label={t.sparrate}>
@@ -358,7 +358,7 @@ export function Calculator({ lang, kompakt = false }: { lang: Lang; kompakt?: bo
             <NumberField
               id="inflation" lang={lang} label={t.inflation} unit="%" scale={100} decimals={2} sliderLabel={t.regler}
               value={roh.inflation} min={grenzen.inflation.min} max={grenzen.inflation.max} step={grenzen.inflation.schritt}
-              info={t.info.inflation} infoLabel={t.infoZeigen}
+              hint={t.inflationHinweis} info={t.info.inflation} infoLabel={t.infoZeigen}
               onChange={(inflation) => setze({ inflation })}
             />
             <label className="switch">

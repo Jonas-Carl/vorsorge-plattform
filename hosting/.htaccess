@@ -14,6 +14,9 @@ RewriteRule ^ https://rentekannmehr.de%{REQUEST_URI} [L,R=301]
 # Startadresse ohne Sprache → deutsche Fassung
 RewriteRule ^$ /de/ [L,R=302]
 
+# Französische Fassung ist abgeschaltet → deutsche Fassung
+RewriteRule ^fr(/.*)?$ /de$1 [L,R=301]
+
 # Alte Adressen ohne Sprachpräfix → deutsche Fassung
 RewriteRule ^(rechner|reform-2027|wissen|themen|partner|anfrage|ueber-uns|kontakt|impressum|datenschutz|cookie-einstellungen|quellen-methodik|transparenz)(/.*)?$ /de/$1$2 [L,R=302]
 
