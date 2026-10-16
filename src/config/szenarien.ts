@@ -1,3 +1,5 @@
+import { reform2027 } from "@/config/foerderung";
+
 /**
  * Konfigurierbare Rechenannahmen des Rechners.
  *
@@ -39,7 +41,8 @@ export const grenzen = {
   // Ab 15: Das Gesetz kennt kein Mindestalter; wer z. B. als Azubi in die
   // Rentenversicherung einzahlt, ist auch unter 18 förderberechtigt.
   alter: { min: 15, max: 66, start: 32, schritt: 1 },
-  rentenalter: { min: 60, max: 70, start: 67, schritt: 1 },
+  // Ab 65: Früher zahlt der geförderte Vertrag nach dem Gesetz nicht aus (siehe config/foerderung.ts).
+  rentenalter: { min: reform2027.produkt.auszahlungFruehestensAlter, max: 70, start: 67, schritt: 1 },
   sparrate: { min: 10, max: 1000, start: 100, schritt: 5 },
   startkapital: { min: 0, max: 500_000, start: 0, schritt: 500 },
   rendite: { min: 0, max: 0.1, start: 0.06, schritt: 0.0025 },

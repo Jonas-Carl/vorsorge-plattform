@@ -131,6 +131,10 @@ describe("Rechner – Eingabegrenzen und ungültige Werte", () => {
     expect(berechne({ ...basis, alter: 66, rentenalter: 60 }).jahre).toBe(1);
   });
 
+  it("Rentenalter frühestens ab dem gesetzlichen Auszahlungsalter", () => {
+    expect(bereinigeEingabe({ ...basis, alter: 30, rentenalter: 60 }).rentenalter).toBe(reform2027.produkt.auszahlungFruehestensAlter);
+  });
+
   it("liefert für ungültige Eingaben endliche Ergebnisse", () => {
     const r = berechne({ ...basis, sparrate: Number.NaN, startkapital: Number.NaN, rendite: Number.NaN });
     expect(Number.isFinite(r.endkapital)).toBe(true);
@@ -261,12 +265,12 @@ describe("Zulagen nach Altersvorsorgereformgesetz (§§ 84–86 EStG n. F.)", ()
     const r = berechne({
       ...basis,
       alter: 24,
-      rentenalter: 60,
+      rentenalter: 65,
       sparrate: 30, // 360 Euro im Jahr
       foerderung: { aktiv: true, kinder: 2, kindergeldJahre: 10 },
     });
     expect(r.zulageErstesJahr).toBe(180 + 600 + 200);
-    expect(r.zulagen).toBeCloseTo(36 * 180 + 10 * 600 + 200, 6);
+    expect(r.zulagen).toBeCloseTo(41 * 180 + 10 * 600 + 200, 6);
     const ohneBonus = berechne({ ...basis, alter: 25, sparrate: 30, foerderung: { aktiv: true, kinder: 0, kindergeldJahre: 0 } });
     expect(ohneBonus.zulageErstesJahr).toBe(180);
   });
