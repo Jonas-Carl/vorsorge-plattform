@@ -4,7 +4,7 @@ import { ArtikelKarte, BeratungCta, CtaRechner, Faq, JsonLd, organisation, Partn
 import { Calculator } from "@/components/Calculator";
 import { HeroKarte } from "@/components/HeroKarte";
 import { Icon, type IconName } from "@/components/Icon";
-import { partner } from "@/config/partner";
+import { sichtbarePartner } from "@/config/partner";
 import { site } from "@/config/site";
 import { findeArtikel, startseitenFaq } from "@/content";
 import { istSprache, pfad, type LangParams } from "@/i18n";
@@ -207,9 +207,16 @@ export default async function Startseite({ params }: LangParams) {
         </div>
       </section>
 
-      {/* Partner – eingeklappt, solange es nur Platzhalter gibt */}
+      {/* Partner – Platzhalter werden nicht gezeigt; ohne echte Partner nur ein kurzer Hinweis */}
       <section className="section section--klapp" aria-labelledby="partner-titel">
         <div className="wrap">
+          {sichtbarePartner().length === 0 ? (
+            <div>
+              <p className="eyebrow">{t.partnerEyebrow}</p>
+              <h2 className="klapp__titel" id="partner-titel">{t.partnerTitel}</h2>
+              <p className="lead" style={{ marginTop: "var(--s-3)" }}>{t.partnerSub}</p>
+            </div>
+          ) : (
           <details className="klapp">
             <summary>
               <span>
@@ -220,9 +227,10 @@ export default async function Startseite({ params }: LangParams) {
             </summary>
             <p className="lead" style={{ marginBottom: "var(--s-5)" }}>{t.partnerSub}</p>
             <div className="grid grid--4">
-              {partner.map((p, i) => <PartnerKarte key={p.id} p={p} nr={i + 1} lang={lang} />)}
+              {sichtbarePartner().map((p, i) => <PartnerKarte key={p.id} p={p} nr={i + 1} lang={lang} />)}
             </div>
           </details>
+          )}
           <p style={{ marginTop: "1.5rem" }}>
             <Link href={pfad(lang, "/partner")} className="link-arrow">{t.partnerLink} <Icon name="arrow" size={16} /></Link>
           </p>

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { PageHero, PartnerKarte } from "@/components/Bausteine";
-import { partner } from "@/config/partner";
+import { sichtbarePartner } from "@/config/partner";
 import { alternativen, istSprache, pfad, type LangParams } from "@/i18n";
 import { texte } from "@/i18n/texte";
 
@@ -29,9 +29,11 @@ export default async function PartnerSeite({ params }: LangParams) {
             <h4 id="status-titel">{t.standKeine}</h4>
             <p>{t.standText}</p>
           </div>
-          <div className="grid grid--4">
-            {partner.map((p, i) => <PartnerKarte key={p.id} p={p} nr={i + 1} lang={lang} auswahl />)}
-          </div>
+          {sichtbarePartner().length > 0 && (
+            <div className="grid grid--4">
+              {sichtbarePartner().map((p, i) => <PartnerKarte key={p.id} p={p} nr={i + 1} lang={lang} auswahl />)}
+            </div>
+          )}
           <aside className="cta-quiet" aria-labelledby="fallback-titel">
             <div className="stack">
               <h2 id="fallback-titel" style={{ fontSize: "var(--text-xl)" }}>{n.fallbackTitel}</h2>
