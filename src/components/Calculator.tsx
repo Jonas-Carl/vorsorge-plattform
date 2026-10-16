@@ -187,7 +187,7 @@ export function Calculator({ lang, kompakt = false }: { lang: Lang; kompakt?: bo
         <div>
           <NumberField
             id="sparrate" gross lang={lang} label={t.sparrate} unit="€" sliderLabel={t.regler}
-            value={roh.sparrate} min={grenzen.sparrate.min} max={reglerMax} step={grenzen.sparrate.schritt}
+            value={roh.sparrate} min={grenzen.sparrate.min} max={MAX_MONAT} reglerMax={reglerMax} step={grenzen.sparrate.schritt}
             hint={t.sparrateHinweis} info={t.info.sparrate} infoLabel={t.infoZeigen}
             onChange={(sparrate) => setze({ sparrate })}
           />
