@@ -40,7 +40,7 @@ export function startseitenFaq(lang: Lang): { frage: string; antwort: string }[]
       { frage: "Can I start before I am 18?", antwort: "Yes, if you are eligible. The law sets no minimum age. What counts is whether you pay into the state pension scheme, for example as an apprentice. Your parents must agree to the contract. School pupils without a job are usually not eligible." },
       { frage: "Is the result of the calculator certain?", antwort: "Part of it. What you pay in and what the state adds by law is fixed. How strongly the money grows is something nobody knows. That is why the calculator only shows examples. Money that is invested can also shrink." },
       { frage: "Will I get personal advice here?", antwort: "No. We explain in general. If you want personal advice, you can send a question. Before sending, you see who receives it." },
-      { frage: "Who gets my data?", antwort: "Only the recipient you choose in the form yourself. Right now there are no partners. So everything stays with us. More under [Partners](/partner)." },
+      { frage: "Who gets my data?", antwort: "Us and – if you agree in the form – a suitable adviser near you from our partner list. We tell you by email who it is. More under [Advice](/partner)." },
     ];
   }
   return [
@@ -51,7 +51,7 @@ export function startseitenFaq(lang: Lang): { frage: string; antwort: string }[]
     { frage: "Kann ich schon unter 18 anfangen?", antwort: "Ja, wenn du berechtigt bist. Im Gesetz steht kein Mindestalter. Es kommt darauf an, ob du in die Rentenversicherung einzahlst – zum Beispiel als Azubi. Deine Eltern müssen dem Vertrag zustimmen. Schüler ohne Job sind meist nicht berechtigt." },
     { frage: "Ist das Ergebnis vom Rechner sicher?", antwort: "Ein Teil ja. Was du einzahlst und was der Staat laut Gesetz dazulegt, steht fest. Wie stark das Geld wächst, weiß niemand. Darum zeigt der Rechner hier nur Beispiele. Angelegtes Geld kann auch weniger werden." },
     { frage: "Bekomme ich hier eine persönliche Beratung?", antwort: "Nein. Wir erklären allgemein. Wenn du eine persönliche Beratung möchtest, kannst du eine Frage schicken. Vor dem Abschicken siehst du, wer sie bekommt." },
-    { frage: "Wer bekommt meine Daten?", antwort: "Nur der Empfänger, den du im Formular selbst auswählst. Im Moment gibt es noch keine Partner. Darum bleibt alles bei uns. Mehr unter [Partner](/partner)." },
+    { frage: "Wer bekommt meine Daten?", antwort: "Wir und – wenn du im Formular zustimmst – ein passender Berater aus unserer Partnerliste in deiner Nähe. Per E-Mail sagen wir dir, wer es ist. Mehr unter [Beratung](/partner)." },
   ];
 }
 

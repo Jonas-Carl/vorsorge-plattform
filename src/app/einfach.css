@@ -269,10 +269,14 @@
 @media (min-width: 700px) { .hero__zahlen { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 
 /* Beispiele im Rechner --------------------------------------------------- */
-.beispiele { display: grid; gap: var(--s-2); padding-bottom: var(--s-5); border-bottom: 1px solid var(--sand-200); }
-.beispiele__label { font-weight: 650; color: var(--ink-900); font-size: var(--text-sm); }
-.beispiele .chips { margin-top: 0; }
-.chip--beispiel { font-size: var(--text-sm); background: var(--sand-50); }
+/* Beispiele: eine ruhige Leiste über dem ganzen Rechner, kleine Knöpfe, darunter eine feine Linie */
+.beispiele {
+  grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-2) var(--s-3);
+  padding-bottom: var(--s-4); border-bottom: 1px solid var(--sand-200);
+}
+.beispiele__label { font-weight: 600; color: var(--ink-700); font-size: var(--text-xs); letter-spacing: 0.02em; }
+.beispiele .chips { margin-top: 0; gap: var(--s-2); }
+.chip--beispiel { font-size: var(--text-xs); font-weight: 600; min-height: 2rem; padding: 0 0.85rem; border-width: 1px; background: transparent; }
 
 /* Persönliche Beratung --------------------------------------------------- */
 .beratung {
@@ -444,7 +448,7 @@
 
 
 /* Einstellungs-Kasten neben den Fragen: kompakt, damit er nicht höher wird als die Fragen */
-.rechner__einstellungen .disclosure__body { gap: var(--s-4); margin-top: var(--s-4); }
+.rechner__einstellungen .disclosure__body { gap: var(--s-4); margin-top: 0; }
 .rechner__einstellungen .mehr-zusatz { gap: var(--s-4); padding-bottom: var(--s-4); }
 .rechner__einstellungen .field--gross > .field__top > label,
 .rechner__einstellungen .field--gross .field__label { font-size: 1.05rem; }
@@ -513,3 +517,303 @@
 .rechner .umsetzen--seite .btn--umsetzen:hover { background: var(--petrol-800); color: #fff; transform: none; }
 .umsetzen--seite .umsetzen__netz { color: var(--ink-500); }
 .umsetzen--seite :focus-visible { box-shadow: 0 0 0 3px var(--white), 0 0 0 6px var(--petrol-700); }
+
+/* Ja/Nein-Schalter (z. B. „Willst du später mehr sparen?“) */
+.janein { display: inline-flex; flex: none; padding: 3px; border-radius: var(--r-pill); background: var(--white); border: 1.5px solid var(--sand-300); }
+.janein button {
+  min-width: 3.6rem; min-height: 2.5rem; padding: 0 1rem; border: 0; border-radius: var(--r-pill);
+  background: transparent; color: var(--ink-700); font: inherit; font-weight: 650; cursor: pointer;
+}
+.janein button[aria-pressed="true"] { background: var(--petrol-700); color: var(--white); }
+.janein button:focus-visible { outline: none; box-shadow: var(--focus); }
+.plan__aktionen { display: flex; flex-wrap: wrap; gap: var(--s-2) var(--s-4); }
+.plan__knopf { border: 0; background: none; padding: 0.25rem 0; font: inherit; font-size: var(--text-sm); font-weight: 650; color: var(--petrol-700); cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
+.plan__knopf--leise { color: var(--ink-500); font-weight: 500; }
+
+/* Kinder heute und geplant oben in „Mehr einstellen“ – über die ganze Breite */
+.kinder-block { grid-column: 1 / -1; display: grid; gap: var(--s-4); padding-bottom: var(--s-4); border-bottom: 1px solid var(--sand-200); }
+.kinder-block .kinder-zusatz { margin-top: 0; }
+.plan--links .field--ohne-regler .field__top > label { white-space: nowrap; }
+
+/* Geschätzter Steuervorteil unter „Das steht fest“ – bewusst als eigener, leiser Kasten */
+.steuer-info { display: grid; gap: 0.3rem; margin-top: var(--s-4); padding: var(--s-4); border-radius: var(--r-md); background: var(--sand-50); border: 1px dashed var(--sand-300); font-size: var(--text-sm); }
+.steuer-info__klein { font-size: var(--text-xs); color: var(--ink-500); }
+
+/* Steuervorteil in der Statistik: gestreift, weil er nicht im Vertrag liegt, sondern direkt zu dir kommt */
+.balken__steuer, .werte__steuer {
+  background: repeating-linear-gradient(135deg, var(--petrol-700) 0 4px, #4f8a96 4px 8px);
+}
+.balken .balken__steuer { margin-left: 3px; border-radius: 0 var(--r-pill) var(--r-pill) 0; }
+.summen { display: grid; gap: 0; margin: var(--s-4) 0 0; font-size: var(--text-sm); }
+.summen > div { display: flex; justify-content: space-between; gap: var(--s-3); padding: 0.45rem 0; border-bottom: 1px solid rgba(15, 76, 92, 0.12); }
+.summen dt { color: var(--ink-700); }
+.summen dd { margin: 0; font-weight: 650; font-variant-numeric: tabular-nums; color: var(--ink-900); white-space: nowrap; }
+.summen .summen__gesamt { border-bottom: 0; border-top: 2px solid var(--ink-900); margin-top: -1px; padding-top: 0.6rem; }
+.summen .summen__gesamt dt, .summen .summen__gesamt dd { font-weight: 750; color: var(--ink-900); font-size: var(--text-base); }
+
+/* Ergebnis und Diagramm in einem Block: Zahl oben etwas ruhiger, darunter der Verlauf */
+.block--offen .block__zahl { font-size: clamp(2.2rem, 1.6rem + 2.4vw, 3.4rem); }
+.block__diagramm-titel { margin-top: var(--s-4); font-size: var(--text-sm); font-weight: 650; color: var(--ink-900); }
+.block--offen .chart { display: block; width: 100%; height: auto; }
+.chart .chart__endwert { font-size: 15px; font-weight: 750; fill: #12604f; paint-order: stroke; stroke: #fff; stroke-width: 4px; stroke-linejoin: round; }
+.block--offen .werte { margin-top: var(--s-2); }
+.werte i.werte__linie { height: 0; width: 1rem; border-top: 2px dashed var(--gold-600); border-radius: 0; background: none; }
+.block--offen .disclosure { margin-top: var(--s-3); }
+
+/* Ergebnis kompakt: alles auf einen Blick, ohne Scrollen */
+.kennzahlen { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: var(--s-2) var(--s-6); }
+.kennzahlen .block__label { margin-bottom: 0.35rem; }
+.kennzahlen .block__zahl { margin-top: 0; }
+.kennzahlen__monat { text-align: right; }
+.kennzahlen__monat .auszahlung__zahl { font-family: var(--font-display); font-size: clamp(1.5rem, 1.2rem + 1vw, 2rem); line-height: 1; }
+.kennzahlen__monat .auszahlung__zahl span { font-family: var(--font-body); font-size: var(--text-sm); font-weight: 600; }
+.stufen-zeile { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--s-2) var(--s-3); }
+.stufen-zeile .block__frage { margin: 0; font-size: var(--text-sm); }
+.stufen--klein { display: inline-grid; grid-template-columns: repeat(3, auto); gap: 0.35rem; }
+.stufen--klein button { display: inline-flex; align-items: baseline; gap: 0.35rem; border-width: 1.5px; padding: 0.4rem 0.75rem; min-height: 0; border-radius: var(--r-pill); }
+.stufen--klein button b { font-size: var(--text-sm); }
+.stufen--klein button span { font-size: var(--text-xs); }
+.block--offen { gap: var(--s-3); }
+.block--offen .werte { gap: 0.35rem var(--s-4); font-size: var(--text-sm); }
+.block--offen figcaption p { min-height: 0 !important; font-size: var(--text-xs); }
+.block--offen .summen { margin-top: 0; font-size: var(--text-xs); }
+.block--offen .summen .summen__gesamt dt, .block--offen .summen .summen__gesamt dd { font-size: var(--text-sm); }
+@media (min-width: 900px) {
+  .block--fest, .block--offen { padding: var(--s-5); }
+  .block--fest { gap: var(--s-3); }
+  .block--fest .block__text { font-size: var(--text-sm); }
+  .umsetzen--seite { padding: var(--s-5); }
+}
+@media (min-width: 900px) {
+  .umsetzen--seite { gap: var(--s-2); }
+  .rechner .umsetzen--seite h3 { font-size: var(--text-xl); }
+  .umsetzen--seite .umsetzen__text { font-size: var(--text-sm); line-height: 1.5; }
+  .umsetzen--seite .umsetzen__liste { gap: 0.25rem; font-size: var(--text-sm); }
+  .umsetzen--seite .btn--umsetzen { min-height: 2.8rem; font-size: var(--text-base); padding-inline: 1.25rem; }
+  .rechner__seite { gap: var(--s-4); }
+  .block--fest .gleichung__teil b { font-size: clamp(1.15rem, 0.9rem + 0.9vw, 1.5rem); }
+}
+/* Beim Springen zum Ergebnis nicht unter der festen Kopfzeile verschwinden */
+.rechner__ergebnis { scroll-margin-top: -0.75rem; }
+/* Noch kompakter, damit das ganze Ergebnis samt Rand auf einen Laptop-Bildschirm passt */
+.block--offen figcaption { margin-top: 0.25rem !important; }
+.block--offen figcaption p { min-height: 1.3em !important; margin: 0; }
+.block--offen .disclosure summary { padding-block: 0.4rem; font-size: var(--text-sm); }
+@media (min-width: 900px) {
+  .block--offen, .block--fest { padding: var(--s-4) var(--s-5); }
+  .block--offen .block__kopf h3, .block--fest .block__kopf h3 { font-size: var(--text-lg); }
+  .block--offen .block__zahl { font-size: clamp(2rem, 1.5rem + 1.8vw, 2.9rem); }
+  .rechner__seite .umsetzen__liste { display: none; }
+  .umsetzen--seite { padding: var(--s-4) var(--s-5); }
+  .rechner .umsetzen--seite h3 { font-size: var(--text-lg); }
+  .block--fest .gleichung__teil { padding-block: 0.5rem; }
+}
+@media (min-width: 900px) {
+  .block--offen { gap: 0.6rem; }
+  .block--offen .werte { gap: 0.25rem var(--s-3); font-size: var(--text-xs); }
+  .block--offen .werte b { font-size: var(--text-sm); }
+  .block--offen .disclosure { margin-top: 0; padding-top: 0.2rem; }
+  .block--offen .disclosure summary { padding-block: 0.2rem; }
+  .block--offen .block__risiko { margin-top: -0.2rem; }
+}
+.rechner__ergebnis > * { min-width: 0; }
+@media (max-width: 640px) { .kennzahlen__monat { text-align: left; } }
+
+/* „Jetzt in die Realität umsetzen“: dunkle Karte mit Neon-Türkis wie im Startbild – fällt auf, bleibt seriös */
+.rechner .umsetzen.umsetzen--seite {
+  position: relative; overflow: hidden; isolation: isolate; gap: var(--s-3);
+  padding: clamp(1.25rem, 1rem + 1.2vw, 1.9rem); border: 0; border-radius: var(--r-lg);
+  background: #05121a; color: #c3ced9;
+  box-shadow: 0 24px 48px -28px rgba(5, 18, 26, 0.75), 0 0 0 1px rgba(69, 226, 196, 0.25);
+}
+.rechner .umsetzen.umsetzen--seite::before {
+  content: ""; position: absolute; z-index: -1; right: -20%; top: -45%; width: 80%; height: 120%;
+  background: radial-gradient(closest-side, rgba(69, 226, 196, 0.22), transparent);
+}
+.rechner .umsetzen--seite .umsetzen__eyebrow { color: #45e2c4; }
+.rechner .umsetzen.umsetzen--seite h3 { color: #fff; font-size: clamp(1.45rem, 1.1rem + 1vw, 1.9rem); line-height: 1.15; }
+.rechner .umsetzen--seite .umsetzen__text { color: #c3ced9; font-size: var(--text-base); }
+.rechner .umsetzen--seite .umsetzen__liste li { color: #fff; }
+.rechner .umsetzen--seite .umsetzen__liste svg { color: #45e2c4; }
+.rechner .umsetzen.umsetzen--seite .btn--umsetzen {
+  background: #45e2c4; color: #05121a; min-height: 3.25rem; padding-inline: 1.6rem; font-size: var(--text-lg); font-weight: 700;
+  box-shadow: 0 12px 30px -12px rgba(69, 226, 196, 0.75);
+}
+.rechner .umsetzen.umsetzen--seite .btn--umsetzen:hover { background: #6eebd3; color: #05121a; transform: translateY(-2px); }
+.rechner .umsetzen--seite .umsetzen__netz { color: #93a8bb; font-size: var(--text-sm); }
+.rechner .umsetzen--seite :focus-visible { box-shadow: 0 0 0 3px #05121a, 0 0 0 6px #45e2c4; }
+
+/* Eingaben kompakt am Computer: der ganze Rechner samt „Jetzt berechnen“ passt auf einen Laptop-Bildschirm */
+@media (min-width: 900px) {
+  .rechner__fragen { gap: var(--s-4); padding: var(--s-5) var(--s-5) var(--s-4); }
+  .rechner__fragen .field--gross > .field__top > label,
+  .rechner__fragen .field--gross .field__label { font-size: clamp(1.2rem, 0.9rem + 0.8vw, 1.5rem); line-height: 1.15; }
+  .rechner__fragen .field--gross .numbox input { font-size: 1.25rem; width: 3.8rem; padding-block: 0.2rem; }
+  .rechner__fragen .field--gross input[type="range"] { height: 1.8rem; }
+  .rechner__fragen .field { gap: 0.3rem; }
+  .rechner__fragen .field__hint { font-size: var(--text-xs); }
+  .rechner__fragen .chips { gap: 0.4rem; margin-top: 0.4rem; }
+  .rechner__fragen .chip { min-height: 2.2rem; padding: 0 0.8rem; font-size: var(--text-sm); }
+  .rechner__fragen .chip small { font-size: 0.68rem; }
+  .rechner__fragen .plan { padding: var(--s-3) var(--s-4); gap: var(--s-2); }
+  .rechner__fragen .janein button { min-height: 2.1rem; }
+
+  .rechner__einstellungen.card--pad { padding: var(--s-5); }
+  .rechner__einstellungen .disclosure__body { gap: var(--s-3); }
+  .kinder-block { gap: var(--s-3); padding-bottom: var(--s-3); }
+  .rechner__einstellungen .plan { padding: var(--s-3) var(--s-4); }
+  .rechner__einstellungen .stepper button { width: 2.2rem; height: 2.2rem; }
+  .rechner__einstellungen .field__hint { line-height: 1.35; }
+  .rechner__einstellungen .switch { font-size: var(--text-sm); }
+  .rechner__einstellungen .btn-row { margin-top: 0 !important; }
+  .rechner__einstellungen p.small, .rechner__einstellungen .disclosure__body ~ p { font-size: var(--text-xs); line-height: 1.45; }
+}
+.schalter-zeile { grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--s-3); }
+.schalter-zeile .switch { flex: 1 1 16rem; }
+.btn--klein { min-height: 2.3rem; padding: 0.25rem 1rem; font-size: var(--text-sm); }
+.rechner__notiz { max-width: 52rem; margin: 0 auto; text-align: center; font-size: var(--text-sm); line-height: 1.5; color: var(--ink-500); }
+@media (min-width: 900px) {
+  .rechner { row-gap: var(--s-4); }
+  .rechner__knopfzeile { gap: 0.3rem; }
+  .rechner__knopfzeile .btn--berechnen { min-height: 3.1rem; }
+}
+/* etwas größer als die kompakteste Fassung */
+@media (min-width: 900px) {
+  .rechner__fragen { gap: 1.15rem; padding: 1.6rem 1.6rem 1.4rem; }
+  .rechner__fragen .field--gross > .field__top > label,
+  .rechner__fragen .field--gross .field__label { font-size: clamp(1.3rem, 0.95rem + 0.9vw, 1.65rem); }
+  .rechner__fragen .field--gross .numbox input { font-size: 1.4rem; width: 4rem; padding-block: 0.3rem; }
+  .rechner__fragen .field--gross input[type="range"] { height: 2rem; }
+  .rechner__fragen .field__hint { font-size: var(--text-sm); }
+  .rechner__fragen .chip { min-height: 2.45rem; padding: 0 0.95rem; font-size: var(--text-base); }
+  .rechner__fragen .janein button { min-height: 2.35rem; }
+  .rechner__einstellungen.card--pad { padding: 1.6rem; }
+  .rechner__einstellungen .disclosure__body { gap: 1rem; }
+  .rechner__einstellungen .field__top > label { font-size: var(--text-sm); }
+  .rechner__einstellungen .numbox input { width: 3.9rem; }
+  .rechner__knopfzeile .btn--berechnen { min-height: 3.4rem; }
+}
+/* Während der Rechen-Anzeige lenkt nichts ab: die Berater-Box darunter blendet sich aus */
+body:has(.berechnung--laeuft) .beratung { display: none; }
+
+/* Ergebnis sauber halten: nichts ragt über den Rand, alles lesbar – im dunklen (Rechner-Seite) wie im hellen Block (Startseite) */
+.block--offen { min-width: 0; }
+.block--offen > * { min-width: 0; max-width: 100%; }
+.block--offen .werte { flex-wrap: wrap; }
+.block--offen .werte li { white-space: nowrap; }
+.kennzahlen > div { min-width: 0; }
+.block--offen .chart .chart__endwert { fill: #6fd3bd; stroke: var(--navy-900); }
+.block--offen .chart text { fill: #9fb2c6; }
+.block--offen .summen > div { border-bottom-color: rgba(255, 255, 255, 0.14); }
+.block--offen .summen dt { color: #c9d5e3; }
+.block--offen .summen dd { color: #fff; }
+.block--offen .summen .summen__gesamt { border-top-color: rgba(255, 255, 255, 0.6); }
+.block--offen .summen .summen__gesamt dt, .block--offen .summen .summen__gesamt dd { color: #fff; }
+.block--offen .disclosure { border-top-color: rgba(255, 255, 255, 0.14); }
+.block--offen .disclosure summary { color: #6fd3bd; }
+.block--offen figcaption p { color: #a9b9cb; }
+.block--offen .werte i { box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.35); }
+.start .block--offen .werte i { box-shadow: none; }
+
+/* Vergleich mit einem normalen ETF-Depot im Ergebnis */
+.etf-vergleich { display: grid; gap: var(--s-2); justify-items: start; }
+.etf-vergleich__knopf { min-height: 2.3rem; font-size: var(--text-sm); white-space: normal; text-align: left; background: rgba(255, 255, 255, 0.08); color: #fff; border-color: rgba(255, 255, 255, 0.35); }
+.etf-vergleich__knopf[aria-pressed="true"] { background: var(--mint-400); border-color: var(--mint-400); color: var(--navy-900); }
+.etf-vergleich__ergebnis { display: grid; gap: 0.25rem; font-size: var(--text-sm); }
+.etf-vergleich__ergebnis p { margin: 0; }
+.etf-vergleich__ergebnis .werte__linie { display: inline-block; width: 1rem; height: 0; border-top: 2px dashed #f0c463; vertical-align: middle; margin-right: 0.25rem; }
+.chart .chart__vergleich { stroke: #f0c463; }
+.start .etf-vergleich__knopf { background: #fff; color: var(--text); border-color: var(--linie); }
+.start .etf-vergleich__knopf[aria-pressed="true"] { background: var(--text); border-color: var(--text); color: #fff; }
+.start .etf-vergleich__ergebnis .werte__linie { border-top-color: #b4532a; }
+.start .chart .chart__vergleich { stroke: #b4532a; }
+/* Auch auf sehr schmalen Bildschirmen nichts abschneiden */
+.stufen--klein { display: flex; flex-wrap: wrap; }
+.etf-vergleich, .etf-vergleich__knopf { max-width: 100%; }
+
+/* Berater-Knopf direkt unter dem Ergebnis – nur auf dem Handy und Tablet; am Computer steht rechts die große Karte */
+.ergebnis-cta { display: none; }
+@media (max-width: 899px) {
+  .ergebnis-cta { display: grid; gap: 0.35rem; justify-items: stretch; text-align: center; }
+  .ergebnis-cta p { margin: 0; font-size: var(--text-xs); color: #a9b9cb; }
+  .start .ergebnis-cta p { color: var(--text-2); }
+  .ergebnis-cta .btn--umsetzen { width: 100%; justify-content: center; background: #45e2c4; color: #05121a; min-height: 3.1rem; padding-inline: 1rem; font-size: var(--text-base); font-weight: 700; white-space: nowrap; box-shadow: 0 10px 24px -12px rgba(23, 112, 95, 0.9); }
+  .rechner .ergebnis-cta .btn--umsetzen { color: #05121a; }
+  .rechner .umsetzen--seite { display: none; }
+}
+
+/* Handy: alles etwas kleiner und dichter – Haupteinstieg der meisten Besucher */
+@media (max-width: 640px) {
+  html { font-size: 93.75%; }
+  :root { --section: 2.25rem; --text-3xl: 1.6rem; --text-4xl: 2rem; --text-2xl: 1.4rem; --text-xl: 1.2rem; }
+  /* iOS zoomt bei Eingabefeldern unter 16 px automatisch hinein – deshalb hier festhalten */
+  input, select, textarea { font-size: 16px; }
+  .section-head { margin-bottom: var(--s-5); }
+
+  /* Rechner: Eingaben */
+  .rechner { gap: var(--s-3); row-gap: var(--s-3); }
+  .rechner__fragen { gap: var(--s-3); padding: var(--s-4); }
+  .rechner__fragen .field--gross > .field__top > label,
+  .rechner__fragen .field--gross .field__label { font-size: 1.1rem; line-height: 1.2; }
+  .rechner__fragen .field--gross .numbox input { font-size: 16px; width: 3.4rem; padding-block: 0.25rem; }
+  .field--gross input[type="range"] { height: 1.7rem; }
+  .rechner__fragen .chip { min-height: 2.1rem; padding: 0 0.7rem; font-size: var(--text-sm); }
+  .rechner__fragen .chip small { font-size: 0.65rem; }
+  .rechner__fragen .plan { padding: var(--s-3); gap: var(--s-2); }
+  .rechner__einstellungen.card--pad { padding: var(--s-4); }
+  .rechner__einstellungen .disclosure__body { gap: var(--s-3); }
+  /* Feineinstellungen: nur das Zahlenfeld, ohne Schieberegler */
+  .rechner__einstellungen .mehr-grid > .field input[type="range"] { display: none; }
+  .rechner__einstellungen .mehr-grid > .field .field__hint { margin: 0; }
+  .schalter-zeile { gap: var(--s-2); }
+  .schalter-zeile .btn--klein { width: 100%; }
+  .btn--berechnen { min-height: 3rem; }
+
+  /* Rechner: Ergebnis */
+  .block { padding: var(--s-4); gap: var(--s-3); }
+  .block--offen .block__zahl { font-size: 2.3rem; }
+  .kennzahlen { gap: 0.2rem var(--s-4); }
+  .kennzahlen__monat .auszahlung__zahl { font-size: 1.35rem; }
+  .stufen--klein button { padding: 0.3rem 0.6rem; }
+  .gleichung { grid-template-columns: 1fr auto 1fr auto 1fr; gap: 0.25rem; }
+  .gleichung__teil { display: grid; grid-template-columns: 1fr; padding: 0.4rem 0.45rem; border-left: 0; border-top: 3px solid var(--farbe, var(--sand-300)); }
+  .gleichung__teil--summe { border-left: 0; border-top-color: var(--mint-700); }
+  .gleichung__teil span { font-size: 0.68rem; line-height: 1.2; }
+  .gleichung__teil b { font-size: 1rem; }
+  .gleichung__zeichen { font-size: 1rem; line-height: 1; }
+  .etf-vergleich__knopf { width: 100%; justify-content: center; text-align: center; }
+}
+
+/* Handy: Karten der Startseite als kompakte Zeilen statt großer Kästen */
+@media (max-width: 640px) {
+  .wer { gap: var(--s-2); }
+  .start .wer__karte {
+    display: grid; grid-template-columns: 2.6rem minmax(0, 1fr) auto; column-gap: var(--s-3); align-items: center;
+    padding: var(--s-3);
+  }
+  .start .wer__bild { width: 2.6rem; height: 2.6rem; border-radius: 12px; margin: 0; grid-row: 1 / span 2; }
+  .start .wer__bild svg { width: 1.3rem; height: 1.3rem; }
+  .start .wer__karte h3 { font-size: 1rem; line-height: 1.25; grid-column: 2; }
+  .start .wer__karte p { font-size: var(--text-xs); line-height: 1.35; grid-column: 2; margin: 0; }
+  /* Ganze Karte ist der Link – nur der Pfeil bleibt als Hinweis */
+  .start .wer__mehr { grid-column: 3; grid-row: 1 / span 2; margin: 0; font-size: 0; gap: 0; }
+
+  .kacheln { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s-2); }
+  .start .kachel { padding: var(--s-3); }
+  .kachel__zahl { font-size: 1.35rem; }
+  .kachel__titel { font-size: var(--text-sm); }
+  .kachel__text { font-size: var(--text-xs); line-height: 1.35; }
+
+  .start .weg li { padding: var(--s-3) var(--s-4); }
+  .start a.card { padding: var(--s-3) var(--s-4); }
+  .start a.card p { font-size: var(--text-sm); }
+}
+@media (max-width: 640px) {
+  /* Legende in einer Zeile statt untereinander, kein Leerraum unter dem Diagramm */
+  .block--offen .werte { display: flex; flex-direction: row; flex-wrap: wrap; gap: 0.2rem 0.8rem; margin-top: 0; font-size: var(--text-xs); }
+  .block--offen .werte li { display: inline-flex; align-items: center; gap: 0.3rem; }
+  .block--offen .werte b { font-size: var(--text-xs); }
+  .block--offen figure figcaption { margin-top: 0 !important; }
+  .block--offen figcaption p:empty, .block--offen figcaption .small:empty { display: none; }
+  .block--offen figcaption p { min-height: 0 !important; }
+}

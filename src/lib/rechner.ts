@@ -1,6 +1,7 @@
-import { grenzen, KINDERGELD_JAHRE_GEPLANT, szenarien, type Szenario } from "@/config/szenarien";
+import { ETF_VERGLEICH_KOSTEN, grenzen, KINDERGELD_JAHRE_GEPLANT, szenarien, type Szenario } from "@/config/szenarien";
 import { reform2027, type ReformRegelwerk } from "@/config/foerderung";
 import { berechneZulage } from "@/lib/foerderung";
+import { steuervorteilJahr } from "@/lib/steuer";
 
 /**
  * Berechnungslogik des Altersvorsorgerechners.
@@ -17,7 +18,9 @@ import { berechneZulage } from "@/lib/foerderung";
  *  5. Zulagen (falls aktiviert) werden vereinfachend am ENDE des jeweiligen
  *     Beitragsjahres gutgeschrieben; die Regeln gelten als über die Laufzeit konstant.
  *  6. Kaufkraft: nominales Endkapital / (1 + Inflation)^Jahre.
- *  7. Steuern und die Auszahlungsphase werden nicht modelliert.
+ *  7. Steuern und die Auszahlungsphase werden nicht modelliert. Ausnahme: Mit Einkommensangabe
+ *     wird der zusätzliche Steuervorteil grob geschätzt (lib/steuer.ts). Er fließt NICHT ins
+ *     Kapital, weil das Finanzamt ihn dir auszahlt und nicht dem Vertrag gutschreibt.
  *
  * Ergebnisse sind Modellrechnungen – keine Prognosen und keine Zusagen.
  */
@@ -41,6 +44,8 @@ export type RechnerEingabe = {
    * Die jährliche Dynamik wirkt zusätzlich auf den jeweils gültigen Betrag.
    */
   erhoehungen?: Sparstufe[];
+  /** Brutto-Jahreseinkommen für die Steuerschätzung; 0 oder leer = keine Angabe. */
+  einkommen?: number;
 };
 
 export type Sparstufe = { abAlter: number; sparrate: number };
@@ -51,6 +56,11 @@ export type FoerderEingabe = {
   kinder: number;
   /** Für wie viele Jahre noch Kindergeld erwartet wird (vereinfachend für alle Kinder). */
   kindergeldJahre: number;
+  /**
+   * Je vorhandenem Kind: wie viele Jahre es noch Kindergeld gibt. Fehlt ein Eintrag,
+   * gilt `kindergeldJahre`.
+   */
+  kindergeldJahreJeKind?: number[];
   /**
    * Geplante Kinder: je Kind das eigene Alter bei der Geburt. Ab diesem Alter zählt das Kind
    * für KINDERGELD_JAHRE_GEPLANT Beitragsjahre bei der Kinderzulage mit.
@@ -87,6 +97,9 @@ export type RechnerErgebnis = {
   endkapitalReal: number;
   /** Zulagen im ersten Beitragsjahr (Orientierungswert). */
   zulageErstesJahr: number;
+  /** Geschätzter zusätzlicher Steuervorteil über die Laufzeit (nicht im Kapital enthalten). */
+  steuervorteil: number;
+  steuervorteilErstesJahr: number;
   verlauf: Jahreswert[];
 };
 
@@ -119,6 +132,7 @@ export function bereinigeEingabe(e: RechnerEingabe): RechnerEingabe {
       sparrate: klemme(s.sparrate, 0, grenzen.sparrate.max),
     })),
     sparrate: klemme(e.sparrate, 0, grenzen.sparrate.max),
+    einkommen: klemme(e.einkommen ?? 0, grenzen.einkommen.min, grenzen.einkommen.max),
     startkapital: klemme(e.startkapital, grenzen.startkapital.min, grenzen.startkapital.max),
     rendite: klemme(e.rendite, grenzen.rendite.min, grenzen.rendite.max),
     kosten: klemme(e.kosten, grenzen.kosten.min, grenzen.kosten.max),
@@ -130,6 +144,9 @@ export function bereinigeEingabe(e: RechnerEingabe): RechnerEingabe {
       kindergeldJahre: Math.round(
         klemme(e.foerderung.kindergeldJahre, grenzen.kindergeldJahre.min, grenzen.kindergeldJahre.max),
       ),
+      kindergeldJahreJeKind: (e.foerderung.kindergeldJahreJeKind ?? [])
+        .slice(0, grenzen.kinder.max)
+        .map((j) => Math.round(klemme(j, grenzen.kindergeldJahre.min, grenzen.kindergeldJahre.max))),
       geplanteKinder: (e.foerderung.geplanteKinder ?? [])
         .slice(0, grenzen.geplanteKinder.max)
         .map((g) => Math.round(klemme(g, grenzen.geburtsalter.min, grenzen.geburtsalter.max))),
@@ -149,6 +166,8 @@ export function berechne(roh: RechnerEingabe, regelwerk: ReformRegelwerk = refor
   let einzahlungen = 0;
   let zulagen = 0;
   let zulageErstesJahr = 0;
+  let steuervorteil = 0;
+  let steuervorteilErstesJahr = 0;
 
   const verlauf: Jahreswert[] = [
     { jahr: 0, alter: e.alter, eingezahlt: e.startkapital, zulagen: 0, wert, wertReal: wert },
@@ -186,6 +205,9 @@ export function berechne(roh: RechnerEingabe, regelwerk: ReformRegelwerk = refor
       wertOhneKosten += z;
       zulagen += z;
       if (j === 0) zulageErstesJahr = z;
+      const sv = steuervorteilJahr(e.einkommen ?? 0, beitragImJahr, z, regelwerk);
+      steuervorteil += sv;
+      if (j === 0) steuervorteilErstesJahr = sv;
     }
 
     verlauf.push({
@@ -209,6 +231,8 @@ export function berechne(roh: RechnerEingabe, regelwerk: ReformRegelwerk = refor
     endkapitalOhneKosten: wertOhneKosten,
     endkapitalReal: wert / Math.pow(1 + e.inflation, jahre),
     zulageErstesJahr,
+    steuervorteil,
+    steuervorteilErstesJahr,
     verlauf,
   };
 }
@@ -224,8 +248,14 @@ export function sparrateImAlter(e: Pick<RechnerEingabe, "sparrate" | "erhoehunge
  * vorhandene Kinder für die angegebenen Kindergeld-Jahre, geplante Kinder ab dem Jahr der Geburt
  * für KINDERGELD_JAHRE_GEPLANT Jahre.
  */
+/** Kindergeld-Jahre für das i-te vorhandene Kind (mit Rückfall auf den gemeinsamen Wert). */
+export function kindergeldJahreVonKind(f: FoerderEingabe, i: number): number {
+  return f.kindergeldJahreJeKind?.[i] ?? f.kindergeldJahre;
+}
+
 export function kinderMitKindergeld(f: FoerderEingabe, j: number, alterImJahr: number): number {
-  const vorhanden = j < f.kindergeldJahre ? f.kinder : 0;
+  let vorhanden = 0;
+  for (let i = 0; i < f.kinder; i++) if (j < kindergeldJahreVonKind(f, i)) vorhanden++;
   const geplant = (f.geplanteKinder ?? []).filter((g) => alterImJahr >= g && alterImJahr < g + KINDERGELD_JAHRE_GEPLANT).length;
   return vorhanden + geplant;
 }
@@ -250,4 +280,18 @@ export function berechneSzenarien(e: RechnerEingabe, liste: Szenario[] = szenari
     szenario,
     ergebnis: berechne({ ...e, rendite: szenario.renditePa }),
   }));
+}
+
+/**
+ * Dieselben Einzahlungen und dieselbe Rendite in einem normalen Aktien-/ETF-Depot:
+ * ohne Zuschuss vom Staat und mit den niedrigeren Kosten eines ETF. Wie der Rest des Rechners
+ * vor Steuern – die fallen bei beiden Wegen an, nur zu unterschiedlichen Zeitpunkten.
+ */
+export function berechneEtfVergleich(e: RechnerEingabe): RechnerErgebnis {
+  return berechne({
+    ...e,
+    kosten: ETF_VERGLEICH_KOSTEN,
+    einkommen: 0,
+    foerderung: { ...e.foerderung, aktiv: false },
+  });
 }

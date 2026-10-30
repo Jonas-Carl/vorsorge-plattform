@@ -10,6 +10,8 @@ const nextConfig = {
     ? { output: "export", basePath: process.env.PAGES_BASE_PATH ?? "", trailingSlash: true, images: { unoptimized: true } }
     : {}),
   reactStrictMode: true,
+  // Nur für die lokale Vorschau: Testen auf dem Handy im selben WLAN (wirkt nicht auf die Live-Seite).
+  allowedDevOrigins: ["172.16.47.58", "*.local"],
   poweredByHeader: false,
   // Projektverzeichnis für serverseitige Dateipfade (Lead-Speicher in der Entwicklung).
   env: { PROJEKT_VERZEICHNIS: import.meta.dirname },

@@ -152,3 +152,36 @@ Beim Redesign der Startseite wurde keine dieser Aussagen inhaltlich verändert.
 | Rechner, „Voraussichtlich“ | grobe monatliche Auszahlung: Endkapital gleichmäßig bis 85 verteilt, ohne Wachstum, vor Steuern | eigene Vereinfachung; 85 = frühestes Ende eines Auszahlungsplans (AltZertG n. F.) | fachlich zu prüfen |
 | Rechner, Schnellwahl | 10 € Minimum, 150 € voller Zuschuss, 570 € Maximum im Monat | § 86, § 84 EStG n. F., Einzahlungsgrenze 6.840 € im Jahr – jeweils durch 12 | fachlich zu prüfen |
 | Häufige Fragen | unter 18 möglich, Eltern müssen zustimmen | kein Mindestalter im Reformgesetz; Zustimmung nach allgemeinem Vertragsrecht | fachlich zu prüfen |
+
+## Berufsangabe auf „Über uns“ (Stand 20.10.2026)
+
+Unter den Gründern steht nur „Gründer“. „Finanzberater“ wurde bewusst weggelassen: Beide haben keine eigene Erlaubnis nach § 34d/§ 34f GewO, und die Seite sagt „Wir beraten dich nicht persönlich“. Vor einer späteren Ergänzung mit IHK oder Anwalt klären.
+
+## Höhe der Partner-Vergütung (Stand 20.10.2026)
+
+Entscheidung: Die Höhe der Vergütung pro Anfrage wird **nicht** veröffentlicht. Offen gelegt bleibt nur, *dass* ein Partner für eine weitergegebene Anfrage bezahlen kann (Transparenzseite, Datenschutz, Einwilligungstext). Der Hinweis je Partner (`transparenzhinweis` in `src/config/partner.ts`) nennt deshalb keinen Betrag.
+
+## Anfrage-Ablauf: zuerst an uns, Weitergabe nur nach zweitem Ja (Stand 28.10.2026)
+
+Entscheidung: Keine Partner-Auswahl mehr auf der Seite. Das Formular auf „Beratung“ (`/partner`) und „Anfrage“ (`/anfrage`) geht immer zuerst an RenteKannMehr (info@).
+
+So läuft es (bitte genau so einhalten – darauf beruhen Einwilligungstext und Datenschutzerklärung):
+1. Anfrage kommt per E-Mail bei uns an (Felder: Vorname, E-Mail, Kontaktweg, Thema; freiwillig: Nachname, PLZ, Telefon, Zeit, Nachricht).
+2. Wir melden uns – auf der Seite steht „meist innerhalb von zwei Werktagen“ – und klären kurz den Bedarf.
+3. Wir schlagen **einen konkreten Berater mit Namen** vor.
+4. **Erst nach ausdrücklichem Ja der Person für genau diesen Berater** geben wir Kontaktdaten und Thema weiter. Das Ja schriftlich festhalten (E-Mail-Antwort aufbewahren, mit Datum).
+5. Ohne Ja: keine Weitergabe; Anfrage nach spätestens 180 Tagen löschen.
+
+Tippgeber-Grenze: Wir empfehlen einen Berater, aber keine Produkte und beraten nicht selbst. Diesen Ablauf bei der IHK-Anfrage mit angeben.
+Einwilligungstext-Version: 2026-10-28.1 (`src/lib/leads/validation.ts`).
+
+## Änderung 29.10.2026: Direkte Weitergabe an einen Berater (ersetzt das „zweite Ja“)
+
+Die Einwilligung im Formular (Version 2026-10-29.1) erlaubt jetzt die **direkte Weitergabe** an einen passenden Berater **aus der veröffentlichten Partnerliste** (Seite „Beratung“, Abschnitt `#partnerliste`) und dessen Kontakt per Telefon oder E-Mail. Telefonnummer ist Pflicht.
+
+Damit das trägt (DSGVO: bestimmte, informierte Einwilligung; UWG § 7: Werbeanrufe nur mit Einwilligung gegenüber dem konkreten Unternehmen):
+1. **Nur an Berater weitergeben, die in der Partnerliste stehen** (`src/config/partner.ts`, Status „aktiv“). Solange die Liste leer ist: nichts weitergeben, selbst antworten.
+2. **Der Person per E-Mail mitteilen, an wen** die Anfrage gegangen ist (Name, Kontakt) – möglichst vor oder spätestens mit der Weitergabe.
+3. Partnerliste klein und aktuell halten; jeder Berater muss die Person selbst nach Art. 14 DSGVO informieren (in den Partnervertrag schreiben).
+4. Widerruf ernst nehmen: kommt einer, sofort an den Berater weitergeben und dort löschen lassen.
+5. **Vor dem Start von einem Anwalt prüfen lassen**, ob Partnerliste + Einwilligungstext für Telefonanrufe der Berater ausreichen.

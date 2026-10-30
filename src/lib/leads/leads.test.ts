@@ -27,6 +27,9 @@ const gueltig = (): LeadAnfrage => ({
   kontaktzeit: "egal",
   anliegen: "allgemein",
   empfaengerId: "plattform",
+  plz: "49088",
+  telefon: "0541 123456",
+  qualifikation: { ziel: "starten", alter: 34, beruf: "angestellt", sparbetrag: "50bis150", start: "dreiMonate", vorsorge: ["riester"] },
   einwilligung: true,
   idempotenzSchluessel: "3f2b8c1e-5a4d-4e6f-9a1b-2c3d4e5f6a7b",
   ausfuelldauerMs: 9000,
@@ -43,7 +46,7 @@ describe("Validierung der Kontaktanfrage", () => {
     expect(r.ok).toBe(false);
     if (!r.ok) {
       expect(Object.keys(r.fehler).sort()).toEqual(
-        ["anliegen", "einwilligung", "email", "empfaengerId", "kontaktweg", "kontaktzeit", "nachname", "vorname"].sort(),
+        ["anliegen", "beruf", "einwilligung", "email", "empfaengerId", "kontaktweg", "kontaktzeit", "plz", "telefon", "vorname", "ziel"].sort(),
       );
     }
   });
@@ -65,10 +68,12 @@ describe("Validierung der Kontaktanfrage", () => {
     }
   });
 
-  it("Telefon ist nur beim Kontaktweg Telefon Pflicht", () => {
-    const r = pruefeAnfrage({ ...gueltig(), kontaktweg: "telefon" });
-    expect(r.ok).toBe(false);
-    if (!r.ok) expect(r.fehler.telefon).toBeTruthy();
+  it("Telefonnummer ist immer Pflicht – auch wenn per E-Mail geantwortet werden soll", () => {
+    for (const kontaktweg of ["telefon", "email"] as const) {
+      const r = pruefeAnfrage({ ...gueltig(), kontaktweg, telefon: "" });
+      expect(r.ok).toBe(false);
+      if (!r.ok) expect(r.fehler.telefon).toBeTruthy();
+    }
     expect(pruefeAnfrage({ ...gueltig(), kontaktweg: "telefon", telefon: "+49 541 000000" }).ok).toBe(true);
   });
 
@@ -99,7 +104,7 @@ describe("Verarbeitung der Kontaktanfrage", () => {
     const lead = repo.leads[0]!;
     expect(lead.status).toBe("in_bearbeitung");
     expect(lead.einwilligungen[0]).toMatchObject({ empfaenger: "plattform", zweck: "kontaktaufnahme_und_weitergabe" });
-    expect(lead.einwilligungen[0]!.wortlaut).toContain("nicht an andere weitergegeben");
+    expect(lead.einwilligungen[0]!.wortlaut).toContain("an einen passenden Berater aus seiner Partnerliste");
     expect(lead.sprache).toBe("de");
     expect(new Date(lead.loeschenBis).getTime()).toBeGreaterThan(Date.now());
     // Datenminimierung: keine technischen Fingerabdrücke im Datensatz
@@ -112,7 +117,7 @@ describe("Verarbeitung der Kontaktanfrage", () => {
     expect(!fehler.ok && fehler.fehler.email).toBe("Please enter your email address.");
     await verarbeiteAnfrage({ ...gueltig(), sprache: "en" }, { repo });
     expect(repo.leads[0]!.sprache).toBe("en");
-    expect(repo.leads[0]!.einwilligungen[0]!.wortlaut).toContain("not passed on to anyone else");
+    expect(repo.leads[0]!.einwilligungen[0]!.wortlaut).toContain("a suitable adviser near me from its partner list");
     const ohne = await verarbeiteAnfrage({ ...gueltig(), sprache: "en" }, { repo: null });
     expect(ohne.antwort).toMatchObject({ ok: false, meldung: expect.stringContaining("not saved") });
   });
@@ -123,7 +128,7 @@ describe("Verarbeitung der Kontaktanfrage", () => {
     expect(!fehler.ok && fehler.fehler.email).toBe("Indique ton adresse e-mail, s'il te plaît.");
     await verarbeiteAnfrage({ ...gueltig(), sprache: "fr" }, { repo });
     expect(repo.leads[0]!.sprache).toBe("fr");
-    expect(repo.leads[0]!.einwilligungen[0]!.wortlaut).toContain("ne sont transmises à personne d'autre");
+    expect(repo.leads[0]!.einwilligungen[0]!.wortlaut).toContain("figurant sur sa liste de partenaires");
     const ohne = await verarbeiteAnfrage({ ...gueltig(), sprache: "fr" }, { repo: null });
     expect(ohne.antwort).toMatchObject({ ok: false, meldung: expect.stringContaining("ni enregistrées ni transmises") });
   });
@@ -183,5 +188,57 @@ describe("Verarbeitung der Kontaktanfrage", () => {
     // Übergeben ≠ qualifiziert ≠ Vertrag
     expect(repo.leads[0]!.wertschoepfung.qualifiziertAm).toBeUndefined();
     expect(repo.leads[0]!.wertschoepfung.vertragBestaetigtAm).toBeUndefined();
+  });
+});
+
+describe("Postleitzahl und freiwilliger Nachname", () => {
+  it("akzeptiert eine fünfstellige Postleitzahl und speichert sie", () => {
+    const r = pruefeAnfrage({ ...gueltig(), plz: "49088" });
+    expect(r.ok && r.daten.plz).toBe("49088");
+  });
+  it("verlangt eine Postleitzahl, damit ein Berater in der Nähe gefunden werden kann", () => {
+    const r = pruefeAnfrage({ ...gueltig(), plz: "" });
+    expect(!r.ok && r.fehler.plz).toBeTruthy();
+  });
+  it("übernimmt die Angaben zur Situation bereinigt", () => {
+    const r = pruefeAnfrage({ ...gueltig(), qualifikation: { ziel: "pruefen", alter: 34, beruf: "angestellt", sparbetrag: "50bis150", start: "sofort", vorsorge: ["depot", "nichts", "quatsch"], einkommen: "50bis80" } });
+    expect(r.ok && r.daten.qualifikation).toMatchObject({ alter: 34, vorsorge: ["nichts"], einkommen: "50bis80" });
+  });
+  it("weist eine unvollständige Postleitzahl freundlich zurück", () => {
+    const r = pruefeAnfrage({ ...gueltig(), plz: "4908" });
+    expect(!r.ok && r.fehler.plz).toBeTruthy();
+  });
+  it("braucht keinen Nachnamen", () => {
+    expect(pruefeAnfrage({ ...gueltig(), nachname: "" }).ok).toBe(true);
+  });
+});
+
+describe("Werte aus dem Rechner", () => {
+  it("werden nur mit plausiblen Zahlen übernommen", () => {
+    const gut = { alter: 32, sparrate: 100, kinder: 2, rentenalter: 67, zuschussJahr: 390, endkapital: 144680 };
+    const r = pruefeAnfrage({ ...gueltig(), rechner: gut });
+    expect(r.ok && r.daten.rechner).toEqual(gut);
+    const schlecht = pruefeAnfrage({ ...gueltig(), rechner: { ...gut, alter: 300 } });
+    expect(schlecht.ok && schlecht.daten.rechner).toBeUndefined();
+  });
+});
+
+describe("Pflichtfragen der Beratungsanfrage", () => {
+  it("verlangt nur Anliegen und Beruf – Alter, Sparbetrag und Start klärt der Berater", () => {
+    const nurZwei = pruefeAnfrage({ ...gueltig(), qualifikation: { ziel: "starten", beruf: "angestellt", vorsorge: [] } });
+    expect(nurZwei.ok).toBe(true);
+    const ohne = pruefeAnfrage({ ...gueltig(), qualifikation: { vorsorge: [] } });
+    expect(!ohne.ok && ohne.fehler.ziel && ohne.fehler.beruf).toBeTruthy();
+  });
+});
+
+describe("Sonstige Fragen", () => {
+  const sonstig = { ziel: "sonstiges", beruf: "angestellt", vorsorge: [] };
+  it("braucht einen eigenen Text", () => {
+    const r = pruefeAnfrage({ ...gueltig(), qualifikation: sonstig, nachricht: "" });
+    expect(!r.ok && r.fehler.nachricht).toBeTruthy();
+  });
+  it("wird mit Text angenommen", () => {
+    expect(pruefeAnfrage({ ...gueltig(), qualifikation: sonstig, nachricht: "Wie funktioniert die Auszahlung?" }).ok).toBe(true);
   });
 });

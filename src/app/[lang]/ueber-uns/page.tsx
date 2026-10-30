@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
+import carlBild from "../../../../public/team/carl.jpg";
+import jonasBild from "../../../../public/team/jonas.jpg";
 import { notFound } from "next/navigation";
 import { CtaRechner, PageHero } from "@/components/Bausteine";
 import { site } from "@/config/site";
@@ -17,7 +20,8 @@ const T = {
     krume: "Über uns",
     sindTitel: "Was wir sind",
     sind:
-      "Eine private Info-Seite zum Sparen fürs Alter in Deutschland. Wir wollen damit Geld verdienen (kommerzielles Angebot). Wir erklären. Wir rechnen Beispiele. Und wenn du es möchtest, stellen wir einen Kontakt zu Partnern her.",
+      "Eine Informationsplattform zur privaten Altersvorsorge in Deutschland. Wir erklären die Regeln verständlich, rechnen transparente Beispiele und bringen dich auf Wunsch mit ausgewählten Partnern in Kontakt. Wie wir uns finanzieren, legen wir offen unter",
+    sindLink: "Unabhängigkeit & Partner",
     nichtTitel: "Was wir nicht sind",
     nicht:
       "Wir sind kein Amt. Wir sind kein Träger der gesetzlichen Rentenversicherung. Und wir sind kein offizielles Vergleichsportal. Wir beraten dich nicht persönlich. Wir vermitteln selbst auch keine Verträge.",
@@ -30,6 +34,7 @@ const T = {
     werTitel: "Wer dahintersteht",
     wer: (n: string) =>
       `${n} ist ein Angebot der RenteKannMehr GbR aus Osnabrück. Gegründet und betrieben wird die Seite von Carl Buermeyer und Jonas Scheinert.`,
+    rolle: "Gründer",
   },
   en: {
     metaTitel: "About us",
@@ -42,7 +47,8 @@ const T = {
     krume: "About us",
     sindTitel: "What we are",
     sind:
-      "A private information site about saving for old age in Germany. We want to earn money with it (a commercial service). We explain. We work through examples. And if you want, we put you in touch with partners.",
+      "An information platform on private pension saving in Germany. We explain the rules clearly, work through transparent examples and, if you wish, put you in touch with selected partners. How we are funded is set out openly under",
+    sindLink: "Independence & partners",
     nichtTitel: "What we are not",
     nicht:
       "We are not a public authority. We are not a provider of the statutory pension insurance. And we are not an official comparison portal. We do not give you personal advice. We also do not arrange contracts ourselves.",
@@ -55,6 +61,7 @@ const T = {
     werTitel: "Who is behind it",
     wer: (n: string) =>
       `${n} is run by RenteKannMehr GbR from Osnabrück, Germany. The site was founded and is run by Carl Buermeyer and Jonas Scheinert.`,
+    rolle: "Founder",
   },
   fr: {
     metaTitel: "À propos",
@@ -67,7 +74,8 @@ const T = {
     krume: "À propos",
     sindTitel: "Ce que nous sommes",
     sind:
-      "Un site d'information privé sur l'épargne retraite en Allemagne. Nous voulons gagner de l'argent avec (offre commerciale). Nous expliquons. Nous calculons des exemples. Et si tu le veux, nous te mettons en contact avec des partenaires.",
+      "Une plateforme d'information sur l'épargne retraite privée en Allemagne. Nous expliquons les règles clairement, calculons des exemples transparents et, si tu le souhaites, te mettons en contact avec des partenaires sélectionnés. Notre financement est présenté ouvertement sous",
+    sindLink: "Indépendance & partenaires",
     nichtTitel: "Ce que nous ne sommes pas",
     nicht:
       "Nous ne sommes pas une administration. Nous ne sommes pas un organisme de l'assurance retraite légale. Et nous ne sommes pas un comparateur officiel. Nous ne te donnons pas de conseil personnel. Nous ne vendons pas non plus de contrats nous-mêmes.",
@@ -80,6 +88,7 @@ const T = {
     werTitel: "Qui est derrière",
     wer: (n: string) =>
       `${n} est une offre de la RenteKannMehr GbR, basée à Osnabrück (Allemagne). Le site a été créé et est géré par Carl Buermeyer et Jonas Scheinert.`,
+    rolle: "Fondateur",
   },
 } satisfies Record<Lang, unknown>;
 
@@ -111,7 +120,7 @@ export default async function UeberUnsSeite({ params }: LangParams) {
         <div className="wrap grid grid--2" style={{ gap: "clamp(2rem, 5vw, 5rem)" }}>
           <div className="stack">
             <h2>{t.sindTitel}</h2>
-            <p>{t.sind}</p>
+            <p>{t.sind} <Link href={pfad(lang, "/transparenz")}>{t.sindLink}</Link>.</p>
             <h2>{t.nichtTitel}</h2>
             <p>{t.nicht}</p>
           </div>
@@ -131,6 +140,18 @@ export default async function UeberUnsSeite({ params }: LangParams) {
         <div className="wrap stack" style={{ marginTop: "var(--s-7)", maxWidth: "48rem" }}>
           <h2>{t.werTitel}</h2>
           <p>{t.wer(site.name)}</p>
+          <ul className="team">
+            {[
+              { name: "Carl Buermeyer", bild: carlBild },
+              { name: "Jonas Scheinert", bild: jonasBild },
+            ].map((p) => (
+              <li key={p.name} className="team__person">
+                <Image src={p.bild} alt={p.name} className="team__bild" sizes="(max-width: 640px) 90vw, 22rem" placeholder="blur" />
+                <p className="team__name">{p.name}</p>
+                <p className="team__rolle">{t.rolle}</p>
+              </li>
+            ))}
+          </ul>
         </div>
       </section>
       <CtaRechner lang={lang} />

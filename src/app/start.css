@@ -376,3 +376,56 @@
 .start .block--offen .auszahlung { border-top-color: var(--linie); }
 .start .block--offen .auszahlung__zahl { color: var(--text); }
 .start .block--offen .auszahlung__label { color: var(--text-2); }
+
+/* Überschrift oben im Rechner: ruhig und seriös – Serifenschrift, darunter eine feine Linie mit Türkis-Akzent */
+.start .rechner-kopf {
+  position: relative; margin: 0 0 clamp(1.25rem, 0.8rem + 1.5vw, 2rem); padding: 0.25rem 0.25rem 1rem;
+  font-family: var(--font-display, Georgia, serif); font-size: clamp(1.35rem, 1.05rem + 1.1vw, 1.9rem);
+  font-weight: 600; line-height: 1.2; letter-spacing: -0.01em; color: var(--ink-900);
+  border-bottom: 1px solid var(--linie);
+}
+.start .rechner-kopf::after {
+  content: ""; position: absolute; left: 0.25rem; bottom: -1px; width: 3rem; height: 2px; border-radius: 2px; background: var(--mint);
+}
+
+/* Heller Ergebnisblock auf der Startseite: Gegenstücke zu den dunklen Farben in einfach.css */
+.start .block--offen .chart .chart__endwert { fill: #12604f; stroke: #eef0fb; }
+.start .block--offen .chart text { fill: var(--text-2); }
+.start .block--offen .summen > div { border-bottom-color: rgba(15, 76, 92, 0.12); }
+.start .block--offen .summen dt { color: var(--text-2); }
+.start .block--offen .summen dd, .start .block--offen .summen .summen__gesamt dt, .start .block--offen .summen .summen__gesamt dd { color: var(--text); }
+.start .block--offen .summen .summen__gesamt { border-top-color: var(--text); }
+.start .block--offen .disclosure { border-top-color: var(--linie); }
+.start .block--offen .disclosure summary { color: var(--mint-tief); }
+.start .block--offen figcaption p { color: var(--text-2); }
+.start .block--offen .werte i { box-shadow: none; }
+
+/* Handy: Startbild und Abschnitte deutlich kürzer – die meisten Besucher kommen über das Telefon */
+@media (max-width: 640px) {
+  .held__in { gap: 1.25rem; padding-block: 1.25rem 1.75rem; }
+  .held__eyebrow { font-size: 0.68rem; letter-spacing: 0.2em; }
+  .start .held h1 { margin-top: 0.6rem; font-size: 2.15rem; padding-bottom: 0.15em; }
+  .held__sub { font-size: 0.95rem; line-height: 1.5; }
+  .held__aktion { margin-top: 1rem; }
+  /* Vorteile als eine Zeile statt drei */
+  .held__chips { flex-direction: row; flex-wrap: wrap; gap: 0.35rem 0.8rem; margin-top: 0.9rem; padding-top: 0.9rem; font-size: 0.8rem; }
+  .held__chips li { gap: 0.3rem; }
+  .held__chips svg { width: 0.95rem; height: 0.95rem; }
+  /* Die Beispiel-Grafik ist am Computer schön, kostet auf dem Handy aber eine ganze Bildschirmhöhe */
+  .hk__karte { display: none; }
+  .hk { gap: 0.75rem; }
+
+  /* Rechner: nur eine Überschrift */
+  .start .rechner-kopf { display: none; }
+  .section--rechner .section-head .lead { display: none; }
+  .section--rechner .section-head { margin-bottom: var(--s-4); }
+  .start .section--rechner h2 { font-size: 1.5rem; }
+
+  /* So funktioniert es: Zeilen statt Kästen */
+  .start .weg { gap: var(--s-2); }
+  .start .weg li { display: grid; grid-template-columns: 2.6rem minmax(0, 1fr); column-gap: var(--s-3); row-gap: 0.1rem; align-items: start; text-align: left; }
+  .start .weg__bild { width: 2.6rem; height: 2.6rem; grid-row: 1 / span 2; margin: 0; }
+  .start .weg__bild svg { width: 1.3rem; height: 1.3rem; }
+  .start .weg li h3 { font-size: 1rem; }
+  .start .weg li p { font-size: var(--text-xs); line-height: 1.4; }
+}

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { berechne, berechneSzenarien, bereinigeEingabe, kinderMitKindergeld, monatlicheAuszahlung, sparrateImAlter, standardEingabe, type RechnerEingabe } from "./rechner";
+import { berechne, berechneEtfVergleich, berechneSzenarien, bereinigeEingabe, kinderMitKindergeld, monatlicheAuszahlung, sparrateImAlter, standardEingabe, type RechnerEingabe } from "./rechner";
 import { berechneZulage } from "./foerderung";
 import { euro, prozent } from "./format";
 import { maxGrundzulage, reform2027, regelwerkFuerBeitragsjahr } from "@/config/foerderung";
@@ -277,5 +277,39 @@ describe("Formatierung", () => {
     expect(euro(1234567.4).replace(/\s/g, " ")).toBe("1.234.567 €");
     expect(euro(-0.2).replace(/\s/g, " ")).toBe("0 €");
     expect(prozent(0.0125).replace(/\s/g, " ")).toBe("1,25 %");
+  });
+});
+
+describe("Kindergeld-Jahre je Kind", () => {
+  it("zählt jedes Kind nur so lange, wie es Kindergeld gibt", () => {
+    const f = { aktiv: true, kinder: 3, kindergeldJahre: 10, kindergeldJahreJeKind: [2, 5, 20] };
+    expect(kinderMitKindergeld(f, 0, 30)).toBe(3);
+    expect(kinderMitKindergeld(f, 3, 33)).toBe(2);
+    expect(kinderMitKindergeld(f, 6, 36)).toBe(1);
+    expect(kinderMitKindergeld(f, 20, 50)).toBe(0);
+  });
+  it("nimmt ohne Einzelangabe den gemeinsamen Wert", () => {
+    expect(kinderMitKindergeld({ aktiv: true, kinder: 2, kindergeldJahre: 4 }, 3, 30)).toBe(2);
+    expect(kinderMitKindergeld({ aktiv: true, kinder: 2, kindergeldJahre: 4 }, 4, 30)).toBe(0);
+  });
+});
+
+describe("Vergleich mit einem normalen ETF-Depot", () => {
+  const eingabe = { ...basis, alter: 32, rentenalter: 67, sparrate: 100, rendite: 0.06, kosten: 0.01, foerderung: { aktiv: true, kinder: 0, kindergeldJahre: 0 } };
+  it("rechnet dieselben Einzahlungen ohne Zuschuss und mit niedrigeren Kosten", () => {
+    const etf = berechneEtfVergleich(eingabe);
+    const av = berechne(eingabe);
+    expect(etf.einzahlungen).toBeCloseTo(av.einzahlungen, 5);
+    expect(etf.zulagen).toBe(0);
+    expect(av.zulagen).toBeGreaterThan(0);
+    // Ohne Kosten wäre das Ergebnis höher – die 0,2 % sind also eingerechnet.
+    expect(etf.endkapital).toBeLessThan(etf.endkapitalOhneKosten);
+  });
+  it("kann je nach Eingabe für beide Seiten ausgehen – es wird nichts geschönt", () => {
+    // Viel Einzahlung: Der Zuschuss ist gedeckelt, die höheren Kosten wiegen schwerer.
+    const hoch = { ...eingabe, sparrate: 570, rendite: 0.1 };
+    expect(berechneEtfVergleich(hoch).endkapital).toBeGreaterThan(berechne(hoch).endkapital);
+    // Kleiner Betrag mit hoher Förderquote: Der Zuschuss überwiegt.
+    expect(berechneEtfVergleich(eingabe).endkapital).toBeLessThan(berechne(eingabe).endkapital);
   });
 });

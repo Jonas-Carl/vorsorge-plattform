@@ -1,10 +1,9 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArtikelKarte, BeratungCta, CtaRechner, Faq, JsonLd, organisation, PartnerKarte } from "@/components/Bausteine";
+import { ArtikelKarte, CtaRechner, Faq, JsonLd, organisation } from "@/components/Bausteine";
 import { Calculator } from "@/components/Calculator";
 import { HeroKarte } from "@/components/HeroKarte";
 import { Icon, type IconName } from "@/components/Icon";
-import { partner } from "@/config/partner";
 import { site } from "@/config/site";
 import { findeArtikel, startseitenFaq } from "@/content";
 import { istSprache, pfad, type LangParams } from "@/i18n";
@@ -74,15 +73,15 @@ export default async function Startseite({ params }: LangParams) {
       <section className="section section--rechner" id="rechner" aria-labelledby="rechner-titel">
         <div className="wrap">
           <div className="section-head section-head--mitte">
-            <p className="eyebrow">{t.rechnerEyebrow}</p>
             <h2 id="rechner-titel">{t.rechnerTitel}</h2>
             <p className="lead">{t.rechnerSub}</p>
           </div>
           <div className="rechner-buehne">
+            {/* Ruhige Überschrift oben im Rechner */}
+            <p className="rechner-kopf">{t.rechnerEyebrow}</p>
             <Calculator lang={lang} kompakt />
           </div>
           <p className="beispiel-hinweis"><Icon name="info" size={18} /> {h.beispielHinweis}</p>
-          <BeratungCta lang={lang} />
         </div>
       </section>
 
@@ -203,28 +202,6 @@ export default async function Startseite({ params }: LangParams) {
           </div>
           <p style={{ marginTop: "2rem", textAlign: "center" }}>
             <Link href={pfad(lang, "/wissen")} className="link-arrow">{t.wissenAlle} <Icon name="arrow" size={16} /></Link>
-          </p>
-        </div>
-      </section>
-
-      {/* Partner – eingeklappt, solange es nur Platzhalter gibt */}
-      <section className="section section--klapp" aria-labelledby="partner-titel">
-        <div className="wrap">
-          <details className="klapp">
-            <summary>
-              <span>
-                <span className="eyebrow">{t.partnerEyebrow}</span>
-                <span className="klapp__titel" id="partner-titel" role="heading" aria-level={2}>{t.partnerTitel}</span>
-              </span>
-              <span className="klapp__knopf" aria-hidden="true" />
-            </summary>
-            <p className="lead" style={{ marginBottom: "var(--s-5)" }}>{t.partnerSub}</p>
-            <div className="grid grid--4">
-              {partner.map((p, i) => <PartnerKarte key={p.id} p={p} nr={i + 1} lang={lang} />)}
-            </div>
-          </details>
-          <p style={{ marginTop: "1.5rem" }}>
-            <Link href={pfad(lang, "/partner")} className="link-arrow">{t.partnerLink} <Icon name="arrow" size={16} /></Link>
           </p>
         </div>
       </section>

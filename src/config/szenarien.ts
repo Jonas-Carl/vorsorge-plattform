@@ -35,6 +35,12 @@ export const szenarien: Szenario[] = [
 ];
 
 /** Zulässige Eingabebereiche und Startwerte des Rechners. */
+/**
+ * Vergleich mit einem normalen Aktien-/ETF-Depot ohne Förderung. Annahme: Laufende Kosten eines
+ * breit gestreuten ETF (TER) von 0,2 % im Jahr; Rendite vor Kosten wie im Rechner eingestellt.
+ */
+export const ETF_VERGLEICH_KOSTEN = 0.002;
+
 export const grenzen = {
   // Ab 15: Das Gesetz kennt kein Mindestalter; wer z. B. als Azubi in die
   // Rentenversicherung einzahlt, ist auch unter 18 förderberechtigt.
@@ -46,6 +52,8 @@ export const grenzen = {
   kosten: { min: 0, max: 0.03, start: 0.01, schritt: 0.001 },
   dynamik: { min: 0, max: 0.05, start: 0, schritt: 0.005 },
   inflation: { min: 0, max: 0.05, start: 0.02, schritt: 0.0025 },
+  /** Brutto-Jahreseinkommen für die Schätzung des Steuervorteils; 0 = keine Angabe. */
+  einkommen: { min: 0, max: 300_000, start: 0, schritt: 1_000 },
   kinder: { min: 0, max: 6, start: 0, schritt: 1 },
   kindergeldJahre: { min: 0, max: 25, start: 10, schritt: 1 },
   geplanteKinder: { min: 0, max: 4, start: 0, schritt: 1 },

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArtikelKarte, BeratungCta, PageHero } from "@/components/Bausteine";
+import { ArtikelKarte, PageHero } from "@/components/Bausteine";
 import { Calculator } from "@/components/Calculator";
 import { Icon } from "@/components/Icon";
 import { site } from "@/config/site";
@@ -65,7 +65,6 @@ export default async function Themenseite({ params }: Props) {
             <h2 id="themen-rechner">{texte(lang).start.rechnerTitel}</h2>
           </div>
           <Calculator lang={lang} kompakt />
-          <BeratungCta lang={lang} />
         </div>
       </section>
       <section className="section section--sand" aria-labelledby="mehr-titel">

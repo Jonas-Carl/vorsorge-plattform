@@ -39,7 +39,8 @@ jobs:
           PAGES_BASE_PATH: ""
           NEXT_PUBLIC_SITE_URL: https://rentekannmehr.de
           NEXT_PUBLIC_ANFRAGE_PER_EMAIL: "1"
-      - run: cp hosting/.htaccess out/.htaccess
+          NEXT_PUBLIC_ANFRAGE_ZIEL: /anfrage.php
+      - run: cp hosting/.htaccess out/.htaccess && cp hosting/anfrage.php out/anfrage.php
       - name: Hinweis, falls FTP-Zugang fehlt
         if: env.HAT_FTP != 'true'
         run: echo "::notice::FTP-Secrets fehlen – die Seite wurde gebaut, aber nicht zu Hostinger hochgeladen."

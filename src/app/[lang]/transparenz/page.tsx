@@ -17,10 +17,10 @@ const T = {
     stand: (n: string) => `Es gibt noch keine Partner. ${n} bekommt im Moment kein Geld von Anbietern oder Vermittlern.`,
     modellTitel: "Wie die Zusammenarbeit funktioniert",
     modell: (n: string) =>
-      `${n} ist ein kommerzielles Angebot. Wenn du über unser Formular freiwillig eine Anfrage an einen Partner schickst, kann dieser Partner uns für die weitergegebene Anfrage bezahlen. Wir vermitteln keine Verträge und bekommen kein Geld dafür, ob du einen Vertrag abschließt. Für dich ist das kostenlos.`,
-    nennenVor: "Was ein Partner zahlt, steht bei jedem Partner auf der ",
-    nennenLink: "Partnerseite",
-    nennenNach: " und im Anfrageformular.",
+      `${n} ist ein kommerzielles Angebot. Wenn du über unser Formular eine Beratung anfragst und der Weitergabe zustimmst, geben wir deine Anfrage an einen Berater aus unserer Partnerliste weiter. Dieser Berater kann uns für den vermittelten Kontakt bezahlen. Wir vermitteln keine Verträge und bekommen kein Geld dafür, ob du einen Vertrag abschließt. Für dich ist das kostenlos.`,
+    nennenVor: "Alle Berater, an die wir Anfragen weitergeben, stehen in unserer Partnerliste unter ",
+    nennenLink: "Beratung",
+    nennenNach: ". Per E-Mail sagen wir dir, an wen deine Anfrage gegangen ist. Die Höhe der Vergütung ist Teil unserer Verträge und wird nicht veröffentlicht.",
     inhalteTitel: "Was davon unabhängig bleibt",
     inhalte: [
       "Rechner und Texte entstehen ohne Einfluss von Partnern und nennen keine einzelnen Produkte.",
@@ -42,10 +42,10 @@ const T = {
     stand: (n: string) => `There are no partners yet. At the moment ${n} gets no money from providers or brokers.`,
     modellTitel: "How working with partners works",
     modell: (n: string) =>
-      `${n} is a commercial service. If you choose to send a request to a partner through our form, that partner may pay us for the request we pass on. We do not arrange contracts and receive no money depending on whether you sign a contract. It costs you nothing.`,
-    nennenVor: "What a partner pays is shown for each partner on the ",
-    nennenLink: "partner page",
-    nennenNach: " and in the request form.",
+      `${n} is a commercial service. If you request advice through our form and agree to it being passed on, we pass your request on to an adviser from our partner list. That adviser may pay us for the contact. We do not arrange contracts and receive no money depending on whether you sign a contract. It costs you nothing.`,
+    nennenVor: "All advisers we pass requests on to are listed in our partner list under ",
+    nennenLink: "Advice",
+    nennenNach: ". We tell you by email who your request went to. The amount paid is part of our contracts and is not published.",
     inhalteTitel: "What stays independent",
     inhalte: [
       "The calculator and the articles are made without any influence from partners and do not name individual products.",
@@ -67,10 +67,10 @@ const T = {
     stand: (n: string) => `Il n'y a pas encore de partenaires. Pour l'instant, ${n} ne reçoit pas d'argent de prestataires ou d'intermédiaires.`,
     modellTitel: "Comment fonctionne la collaboration",
     modell: (n: string) =>
-      `${n} est une offre commerciale. Si tu envoies de ton plein gré une demande à un partenaire par notre formulaire, ce partenaire peut nous payer pour la demande transmise. Nous ne vendons pas de contrats et ne recevons pas d'argent selon que tu signes un contrat ou non. Pour toi, c'est gratuit.`,
-    nennenVor: "Ce que paie un partenaire est indiqué pour chaque partenaire sur la ",
-    nennenLink: "page des partenaires",
-    nennenNach: " et dans le formulaire de demande.",
+      `${n} est une offre commerciale. Si tu demandes un conseil par notre formulaire et acceptes la transmission à un conseiller, ce conseiller peut nous payer pour le contact. Nous ne vendons pas de contrats et ne recevons pas d'argent selon que tu signes un contrat ou non. Pour toi, c'est gratuit.`,
+    nennenVor: "Avant de transmettre tes données à un conseiller, nous te disons de qui il s'agit – et ne les transmettons qu'avec ton accord. Plus d'infos sous ",
+    nennenLink: "Conseil",
+    nennenNach: ". Le montant de la rémunération fait partie de nos contrats et n'est pas publié.",
     inhalteTitel: "Ce qui reste indépendant",
     inhalte: [
       "Le simulateur et les textes sont réalisés sans influence des partenaires et ne citent aucun produit précis.",

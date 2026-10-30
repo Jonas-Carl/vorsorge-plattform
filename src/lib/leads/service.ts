@@ -113,6 +113,7 @@ export async function verarbeiteAnfrage(roh: LeadAnfrage, dep: Abhaengigkeiten):
     kontakt: {
       vorname: d.vorname,
       nachname: d.nachname,
+      plz: d.plz,
       email: d.email,
       telefon: d.telefon,
       kontaktweg: d.kontaktweg,
@@ -120,6 +121,8 @@ export async function verarbeiteAnfrage(roh: LeadAnfrage, dep: Abhaengigkeiten):
     },
     anliegen: d.anliegen,
     nachricht: d.nachricht,
+    qualifikation: d.qualifikation,
+    rechner: d.rechner,
     status: "validiert",
     uebermittlung: { status: "nicht_vorgesehen", versuche: 0 },
     einwilligungen: [

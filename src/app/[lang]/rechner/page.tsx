@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { ArtikelKarte, BeratungCta, JsonLd, PageHero } from "@/components/Bausteine";
+import { ArtikelKarte, JsonLd, PageHero } from "@/components/Bausteine";
 import { Calculator } from "@/components/Calculator";
 import { site } from "@/config/site";
 import { findeArtikel } from "@/content";
@@ -46,7 +46,6 @@ export default async function RechnerSeite({ params }: LangParams) {
       <section className="section section--rechner" aria-label={t.nav.rechner} style={{ paddingTop: "var(--s-7)" }}>
         <div className="wrap stack-lg">
           <Calculator lang={lang} />
-          <BeratungCta lang={lang} />
         </div>
       </section>
 

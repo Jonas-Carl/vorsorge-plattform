@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { PageHero, PartnerKarte } from "@/components/Bausteine";
-import { partner } from "@/config/partner";
+import { PageHero } from "@/components/Bausteine";
+import { LeadForm } from "@/components/LeadForm";
+import { aktivePartner } from "@/config/partner";
 import { alternativen, istSprache, pfad, type LangParams } from "@/i18n";
 import { texte } from "@/i18n/texte";
 
@@ -13,48 +14,58 @@ export async function generateMetadata({ params }: LangParams): Promise<Metadata
   return { title: n.partnerTitel, description: n.partnerText, alternates: alternativen(lang, "/partner") };
 }
 
+/**
+ * Beratung anfragen: Das Formular steht direkt auf der Seite. Mit der Einwilligung im Formular
+ * geben wir die Anfrage an einen passenden Berater aus der Partnerliste weiter (Liste unten).
+ */
 export default async function PartnerSeite({ params }: LangParams) {
   const { lang } = await params;
   if (!istSprache(lang)) notFound();
   const t = texte(lang).partner;
   const n = texte(lang).neu;
+  const a = texte(lang).anfrage;
+  const liste = aktivePartner();
 
   return (
     <>
       <PageHero lang={lang} eyebrow={t.eyebrow} titel={n.partnerTitel} text={n.partnerText} krumen={[{ label: t.eyebrow }]} />
 
-      <section className="section" aria-labelledby="status-titel">
-        <div className="wrap stack-lg">
-          <div className="note note--gold">
-            <h4 id="status-titel">{t.standKeine}</h4>
-            <p>{t.standText}</p>
-          </div>
-          <div className="grid grid--4">
-            {partner.map((p, i) => <PartnerKarte key={p.id} p={p} nr={i + 1} lang={lang} auswahl />)}
-          </div>
-          <aside className="cta-quiet" aria-labelledby="fallback-titel">
-            <div className="stack">
-              <h2 id="fallback-titel" style={{ fontSize: "var(--text-xl)" }}>{n.fallbackTitel}</h2>
-              <p>{n.fallbackText}</p>
+      <section className="section" aria-label={a.eyebrow} style={{ paddingTop: "var(--s-7)" }}>
+        <div className="wrap article-layout">
+          <LeadForm lang={lang} />
+          <aside className="article-aside">
+            <div className="card">
+              <h2 style={{ fontSize: "var(--text-lg)" }}>{a.ablaufTitel}</h2>
+              <ol className="small" style={{ paddingLeft: "1.2rem", display: "grid", gap: "0.5rem" }}>
+                {a.ablauf.map((x) => <li key={x}>{x}</li>)}
+              </ol>
             </div>
-            <Link href={pfad(lang, "/anfrage")} className="btn btn--primary">{n.fallbackKnopf}</Link>
+            <div className="note">
+              <h4>{a.keineBeratungTitel}</h4>
+              <p>{a.keineBeratung}</p>
+            </div>
           </aside>
         </div>
       </section>
 
-      <section className="section section--sand" aria-labelledby="ablauf-titel">
-        <div className="wrap">
-          <div className="section-head">
-            <p className="eyebrow">{t.ablaufEyebrow}</p>
-            <h2 id="ablauf-titel">{t.ablaufTitel}</h2>
-          </div>
-          <ol className="steps steps--4">
-            {t.ablauf.map((s) => <li key={s.titel}><h3>{s.titel}</h3><p>{s.text}</p></li>)}
-          </ol>
+      {/* Partnerliste – auf sie verweist die Einwilligung im Formular */}
+      <section className="section" id="partnerliste" aria-labelledby="partnerliste-titel" style={{ paddingTop: 0 }}>
+        <div className="wrap stack" style={{ maxWidth: "48rem" }}>
+          <h2 id="partnerliste-titel">{t.listeTitel}</h2>
+          <p>{t.listeText}</p>
+          {liste.length === 0 ? (
+            <p className="note">{t.listeLeer}</p>
+          ) : (
+            <ul className="partnerliste">
+              {liste.map((p) => (
+                <li key={p.id}><strong>{p.name}</strong> – {p.beschreibung}</li>
+              ))}
+            </ul>
+          )}
         </div>
       </section>
 
-      <section className="section" aria-labelledby="regeln-titel">
+      <section className="section section--sand" aria-labelledby="regeln-titel">
         <div className="wrap grid grid--2" style={{ gap: "clamp(2rem, 5vw, 5rem)" }}>
           <div className="stack">
             <h2 id="regeln-titel">{t.regelnTitel}</h2>
@@ -63,10 +74,9 @@ export default async function PartnerSeite({ params }: LangParams) {
           <div className="stack">
             <h2>{t.nichtTitel}</h2>
             <p>{t.nichtText}</p>
-            <div className="btn-row">
-              <Link href={pfad(lang, "/anfrage")} className="btn btn--primary">{t.frage}</Link>
-              <Link href={pfad(lang, "/kontakt")} className="btn btn--ghost">{t.alsPartner}</Link>
-            </div>
+            <p className="small muted">
+              {t.partnerWerden} <Link href={pfad(lang, "/kontakt")}>{t.alsPartner}</Link>
+            </p>
           </div>
         </div>
       </section>

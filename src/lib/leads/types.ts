@@ -2,8 +2,8 @@
  * Datenmodell für Kontaktanfragen (Leads).
  *
  * Grundsatz Datenminimierung: Es werden nur Angaben gespeichert, die für die
- * Bearbeitung der konkreten Anfrage nötig sind. Keine Einkommens-, Gesundheits-
- * oder Rechnerdaten, keine IP-Adresse, kein User-Agent.
+ * Bearbeitung der konkreten Anfrage nötig sind. Einkommen nur freiwillig und als Spanne,
+ * keine Gesundheitsdaten, keine IP-Adresse, kein User-Agent.
  */
 
 export type LeadStatus =
@@ -23,6 +23,8 @@ export type Uebermittlungsstatus =
   | "ausstehend"
   | "erfolgreich"
   | "fehlgeschlagen";
+
+import type { Qualifikation, RechnerUebergabe } from "./qualifikation";
 
 export type Kontaktweg = "email" | "telefon";
 export type Kontaktzeit = "egal" | "vormittags" | "nachmittags" | "abends";
@@ -70,14 +72,21 @@ export type Lead = {
   empfaengerId: string;
   kontakt: {
     vorname: string;
+    /** Freiwillig. */
     nachname: string;
     email: string;
     telefon?: string;
+    /** Freiwillig: Postleitzahl, um einen Berater in der Nähe zu finden. */
+    plz?: string;
     kontaktweg: Kontaktweg;
     kontaktzeit: Kontaktzeit;
   };
   anliegen: Anliegen;
   nachricht?: string;
+  /** Angaben zur Situation aus Schritt 1 des Formulars. */
+  qualifikation?: Qualifikation;
+  /** Werte aus dem Rechner – nur, wenn die Person sie im Formular sichtbar mitgeschickt hat. */
+  rechner?: RechnerUebergabe;
   status: LeadStatus;
   uebermittlung: {
     status: Uebermittlungsstatus;
@@ -103,10 +112,13 @@ export type LeadAnfrage = {
   nachname?: unknown;
   email?: unknown;
   telefon?: unknown;
+  plz?: unknown;
   kontaktweg?: unknown;
   kontaktzeit?: unknown;
   anliegen?: unknown;
   nachricht?: unknown;
+  qualifikation?: unknown;
+  rechner?: unknown;
   empfaengerId?: unknown;
   einwilligung?: unknown;
   idempotenzSchluessel?: unknown;
@@ -120,7 +132,7 @@ export type LeadAnfrage = {
 };
 
 export type Feldfehler = Partial<Record<
-  "vorname" | "nachname" | "email" | "telefon" | "kontaktweg" | "kontaktzeit" | "anliegen" | "nachricht" | "empfaengerId" | "einwilligung",
+  "ziel" | "alter" | "beruf" | "sparbetrag" | "start" | "vorname" | "nachname" | "email" | "telefon" | "plz" | "kontaktweg" | "kontaktzeit" | "anliegen" | "nachricht" | "empfaengerId" | "einwilligung",
   string
 >>;
 
