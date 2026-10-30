@@ -85,6 +85,8 @@ export default async function ArtikelSeite({ params }: Props) {
             </p>
             <p className="eyebrow" style={{ marginBottom: "var(--s-4)" }}>{t.wissen.genauer}</p>
             <ArticleBody bloecke={a.bloecke} lang={lang} />
+            {/* Nur, wenn der Artikel nicht schon selbst zum Berater verlinkt */}
+            {!a.bloecke.some((b) => b.t === "knopf" && b.href === "/partner") && (
             <section className="prose artikel-frage" aria-labelledby="artikel-frage">
               <h2 id="artikel-frage">{t.neu.artikelBeratungTitel}</h2>
               <p>{t.neu.artikelBeratungText}</p>
@@ -94,6 +96,7 @@ export default async function ArtikelSeite({ params }: Props) {
                 </Link>
               </p>
             </section>
+            )}
           </article>
           <aside className="article-aside">
             <div className="card">

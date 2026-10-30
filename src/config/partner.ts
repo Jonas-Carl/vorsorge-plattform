@@ -72,6 +72,11 @@ function platzhalter(nr: string): Partner {
 
 export const partner: Partner[] = ["01", "02", "03", "04"].map(platzhalter);
 
+/** Partner, die öffentlich gezeigt werden: keine Platzhalter. */
+export function sichtbarePartner(): Partner[] {
+  return partner.filter((p) => p.status !== "platzhalter");
+}
+
 export function istAuswaehlbar(p: Partner): boolean {
   return p.status === "aktiv" && p.vereinbarung === "abgeschlossen";
 }

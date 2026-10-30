@@ -19,6 +19,8 @@ echo "→ Prüfe und baue …"
 npm run -s test
 GITHUB_PAGES=true PAGES_BASE_PATH="" NEXT_PUBLIC_SITE_URL=https://rentekannmehr.de NEXT_PUBLIC_ANFRAGE_PER_EMAIL=1 NEXT_PUBLIC_ANFRAGE_ZIEL=/anfrage.php npx next build
 cp hosting/.htaccess out/.htaccess
+# Startadresse leitet auch ohne .htaccess zur deutschen Seite (sonst zeigt Hostinger „403“)
+cp hosting/index.html out/index.html
 # Formular-Versand: schickt Anfragen direkt an info@ (PHP läuft auf dem Hostinger-Webspace)
 cp hosting/anfrage.php out/anfrage.php
 # Sichtbare Kopie, weil der Finder Punkt-Dateien ausblendet (in Hostinger in .htaccess umbenennen)

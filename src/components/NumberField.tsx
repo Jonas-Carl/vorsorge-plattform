@@ -15,6 +15,8 @@ type Props = {
   value: number;
   min: number;
   max: number;
+  /** Optional: Der Schieberegler endet hier (Zahlenfeld erlaubt trotzdem bis `max`). */
+  reglerMax?: number;
   step: number;
   unit: string;
   /** Anzeige-Faktor: 100 für Prozentwerte. */
@@ -35,7 +37,7 @@ type Props = {
  * (begrenzte) Wert angezeigt.
  */
 export function NumberField({
-  id, label, hint, info, infoLabel = "Erklärung", value, min, max, step, unit, scale = 1, decimals = 0, lang = "de", gross = false, regler = true, sliderLabel, onChange,
+  id, label, hint, info, infoLabel = "Erklärung", value, min, max, reglerMax, step, unit, scale = 1, decimals = 0, lang = "de", gross = false, regler = true, sliderLabel, onChange,
 }: Props) {
   const [entwurf, setEntwurf] = useState<string | null>(null);
   const [infoOffen, setInfoOffen] = useState(false);
@@ -45,7 +47,9 @@ export function NumberField({
       minimumFractionDigits: 0, maximumFractionDigits: decimals, useGrouping: false,
     }).format(v * scale);
   const begrenze = (v: number) => Math.min(max, Math.max(min, v));
-  const fuellung = max > min ? ((begrenze(value) - min) / (max - min)) * 100 : 0;
+  const sMax = Math.min(max, reglerMax ?? max);
+  const begrenzeRegler = (v: number) => Math.min(sMax, Math.max(min, v));
+  const fuellung = sMax > min ? ((begrenzeRegler(value) - min) / (sMax - min)) * 100 : 0;
 
   function aufEingabe(text: string) {
     setEntwurf(text);
@@ -88,9 +92,9 @@ export function NumberField({
       {regler && <input
         type="range"
         min={min}
-        max={max}
+        max={sMax}
         step={step}
-        value={begrenze(value)}
+        value={begrenzeRegler(value)}
         aria-label={`${label} (${sliderLabel ?? "Schieberegler"})`}
         aria-valuetext={`${anzeige(value)} ${unit}`}
         style={{ ["--fill" as string]: `${fuellung}%` }}
