@@ -22,13 +22,16 @@ const seiten: [string, number][] = [
 
 export const dynamic = "force-static";
 
+/** Die statische Fassung (Hostinger) nutzt Adressen mit Schrägstrich am Ende – die Sitemap muss genau diese nennen. */
+const ende = process.env.GITHUB_PAGES === "true" ? "/" : "";
+
 export default function sitemap(): MetadataRoute.Sitemap {
   return seiten.flatMap(([p, priority]) =>
     sprachen.map((lang) => ({
-      url: `${site.url}/${lang}${p}`,
+      url: `${site.url}/${lang}${p}${ende}`,
       lastModified: site.inhaltsstand,
       priority,
-      alternates: { languages: Object.fromEntries(sprachen.map((s) => [s, `${site.url}/${s}${p}`])) },
+      alternates: { languages: Object.fromEntries(sprachen.map((s) => [s, `${site.url}/${s}${p}${ende}`])) },
     })),
   );
 }
