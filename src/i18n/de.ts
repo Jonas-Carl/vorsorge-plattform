@@ -638,6 +638,7 @@ export const de = {
     ctaText: (rate: string) =>
       `Ein persönlicher Berater in deiner Nähe zeigt dir, wie du deine ${rate} im Monat am besten anlegst. Die Beratung ist kostenlos und unverbindlich.`,
     ctaPunkte: ["Persönlich und in deiner Nähe", "Für deine Situation, nicht für irgendwen", "Du entscheidest danach in Ruhe selbst"],
+    ctaKnopfHandy: "Kostenfreie Beratung anfragen",
     ctaKnopf: "Berater in deiner Nähe anfragen",
     ctaKlein: "Die Anfrage ist kostenlos und unverbindlich.",
   },

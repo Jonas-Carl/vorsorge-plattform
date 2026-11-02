@@ -390,14 +390,6 @@ export function Calculator({ lang, kompakt = false }: { lang: Lang; kompakt?: bo
             )}
           </div>
 
-          {/* Auf dem Handy: der nächste Schritt direkt unter dem Ergebnis, ohne Scrollen */}
-          <div className="ergebnis-cta">
-            <Link href={pfad(lang, "/partner")} className="btn btn--umsetzen" onClick={zurBeratung}>
-              {b.ctaKnopf} <Icon name="arrow" size={18} />
-            </Link>
-            <p>{t.anfrageKostenlos}</p>
-          </div>
-
           <div className="stufen-zeile">
             <p className="block__frage" id={`stufe-${kompakt ? "k" : "v"}`}>{t.wieStark}</p>
             <div className="stufen stufen--klein" role="group" aria-labelledby={`stufe-${kompakt ? "k" : "v"}`}>
@@ -449,6 +441,14 @@ export function Calculator({ lang, kompakt = false }: { lang: Lang; kompakt?: bo
             {mitZulagen && <li><i style={{ background: FARBEN.zulage }} />{t.vomStaat} <b>{E(ergebnis.zulagen)}</b></li>}
             <li><i style={{ background: FARBEN.zuwachs }} />{t.wachstum} <b>{E(ergebnis.wertzuwachs)}</b></li>
           </ul>
+
+          {/* Auf dem Handy: der nächste Schritt direkt unter der Aufteilung des Ergebnisses */}
+          <div className="ergebnis-cta">
+            <Link href={pfad(lang, "/partner")} className="btn btn--umsetzen" onClick={zurBeratung}>
+              {b.ctaKnopfHandy} <Icon name="arrow" size={18} />
+            </Link>
+            <p>{t.anfrageKostenlos}</p>
+          </div>
 
           {etf && <p className="block__klein etf-vergleich__hinweis">{t.etf.hinweis(P(ETF_VERGLEICH_KOSTEN), P(e.kosten))}</p>}
           <details className="disclosure" onToggle={(ev) => ev.currentTarget.open && track("erklaerung_geoeffnet", { bereich: "tabelle" })}>

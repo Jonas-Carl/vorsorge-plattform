@@ -633,6 +633,7 @@ export const fr: Texte = {
     ctaText: (rate: string) =>
       `Un conseiller près de chez toi te montre comment placer au mieux tes ${rate} par mois. Le conseil est gratuit et sans engagement.`,
     ctaPunkte: ["En personne et près de chez toi", "Pour ta situation, pas pour n'importe qui", "Ensuite, tu décides tranquillement toi-même"],
+    ctaKnopfHandy: "Demander un conseil gratuit",
     ctaKnopf: "Demander un conseiller près de chez toi",
     ctaKlein: "La demande est gratuite et sans engagement.",
   },

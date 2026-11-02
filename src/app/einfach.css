@@ -734,7 +734,7 @@ body:has(.berechnung--laeuft) .beratung { display: none; }
 /* Berater-Knopf direkt unter dem Ergebnis – nur auf dem Handy und Tablet; am Computer steht rechts die große Karte */
 .ergebnis-cta { display: none; }
 @media (max-width: 899px) {
-  .ergebnis-cta { display: grid; gap: 0.35rem; justify-items: stretch; text-align: center; }
+  .ergebnis-cta { display: grid; gap: 0.35rem; justify-items: stretch; text-align: center; margin-top: var(--s-4); }
   .ergebnis-cta p { margin: 0; font-size: var(--text-xs); color: #a9b9cb; }
   .start .ergebnis-cta p { color: var(--text-2); }
   .ergebnis-cta .btn--umsetzen { width: 100%; justify-content: center; background: #45e2c4; color: #05121a; min-height: 3.1rem; padding-inline: 1rem; font-size: var(--text-base); font-weight: 700; white-space: nowrap; box-shadow: 0 10px 24px -12px rgba(23, 112, 95, 0.9); }

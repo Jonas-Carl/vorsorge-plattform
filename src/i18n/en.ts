@@ -633,6 +633,7 @@ export const en: Texte = {
     ctaText: (rate: string) =>
       `A personal adviser near you shows you how best to invest your ${rate} a month. The advice is free and without obligation.`,
     ctaPunkte: ["In person and near you", "For your situation, not for just anyone", "Afterwards you decide calmly for yourself"],
+    ctaKnopfHandy: "Request free advice",
     ctaKnopf: "Request an adviser near you",
     ctaKlein: "Asking is free and without obligation.",
   },
