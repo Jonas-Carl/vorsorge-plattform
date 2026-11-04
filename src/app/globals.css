@@ -195,6 +195,11 @@ strong { font-weight: 650; color: var(--ink-900); }
   .menu-btn, .mobile-nav { display: none; }
 }
 
+/* Handy und Tablet: Die Kopfzeile scrollt mit weg und bleibt nicht oben stehen */
+@media (max-width: 899px) {
+  .header { position: relative; }
+}
+
 /* Dunkle Kopfzeile (nur Startseite) – geht ohne Linie in den Kopfbereich über */
 .header--dunkel { background: #05121a; border-bottom-color: #05121a; backdrop-filter: none; }
 .header--dunkel .wrap { width: min(100% - 2.5rem, 94rem); }
