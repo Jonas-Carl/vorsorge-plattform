@@ -20,11 +20,12 @@ const T = {
     krume: "Über uns",
     sindTitel: "Was wir sind",
     sind:
-      "Eine Informationsplattform zur privaten Altersvorsorge in Deutschland. Wir erklären die Regeln verständlich, rechnen transparente Beispiele und bringen dich auf Wunsch mit ausgewählten Partnern in Kontakt. Wie wir uns finanzieren, legen wir offen unter",
-    sindLink: "Unabhängigkeit & Partner",
+      "Eine Informationsplattform zur privaten Altersvorsorge in Deutschland. Wir erklären die Regeln verständlich, rechnen transparente Beispiele und melden uns auf Wunsch persönlich bei dir. Wer wir sind und wie wir uns finanzieren, steht offen unter",
+    sindLink:
+      "So arbeiten wir",
     nichtTitel: "Was wir nicht sind",
     nicht:
-      "Wir sind kein Amt. Wir sind kein Träger der gesetzlichen Rentenversicherung. Und wir sind kein offizielles Vergleichsportal. Wir beraten dich nicht persönlich. Wir vermitteln selbst auch keine Verträge.",
+      "Wir sind kein Amt. Wir sind kein Träger der gesetzlichen Rentenversicherung. Und wir sind kein offizielles Vergleichsportal. Über diese Seite verkaufen wir keine Verträge.",
     messenTitel: "Daran kannst du uns messen",
     verstaendlich: ["Verständlich:", "kurze Sätze, erklärte Fachwörter, Beispiele zum Anfassen."],
     belegt: ["Belegt:", "Was wir über Gesetze sagen, hat eine amtliche Quelle und ein Datum – siehe "],
@@ -33,7 +34,7 @@ const T = {
     daten: ["Sparsam mit Daten:", "kein Tracking ohne deine Einwilligung. Für Rechenergebnisse brauchst du keine Kontaktdaten."],
     werTitel: "Wer dahintersteht",
     wer: (n: string) =>
-      `${n} ist ein Angebot der RenteKannMehr GbR aus Osnabrück. Gegründet und betrieben wird die Seite von Carl Buermeyer und Jonas Scheinert.`,
+      `${n} ist ein Angebot der RenteKannMehr GbR aus Osnabrück. Gegründet und betrieben wird die Seite von Carl Buermeyer und Jonas Scheinert. Wir arbeiten selbst bei tecis.`,
     rolle: "Gründer",
   },
   en: {
@@ -48,7 +49,8 @@ const T = {
     sindTitel: "What we are",
     sind:
       "An information platform on private pension saving in Germany. We explain the rules clearly, work through transparent examples and, if you wish, put you in touch with selected partners. How we are funded is set out openly under",
-    sindLink: "Independence & partners",
+    sindLink:
+      "How we work",
     nichtTitel: "What we are not",
     nicht:
       "We are not a public authority. We are not a provider of the statutory pension insurance. And we are not an official comparison portal. We do not give you personal advice. We also do not arrange contracts ourselves.",
@@ -60,7 +62,7 @@ const T = {
     daten: ["Careful with data:", "no tracking without your consent. You do not need to give contact details to see calculator results."],
     werTitel: "Who is behind it",
     wer: (n: string) =>
-      `${n} is run by RenteKannMehr GbR from Osnabrück, Germany. The site was founded and is run by Carl Buermeyer and Jonas Scheinert.`,
+      `${n} is a service of RenteKannMehr GbR from Osnabrück. The site was founded and is run by Carl Buermeyer and Jonas Scheinert. We work at tecis ourselves.`,
     rolle: "Founder",
   },
   fr: {

@@ -50,8 +50,8 @@ export function startseitenFaq(lang: Lang): { frage: string; antwort: string }[]
     { frage: "Gelten die neuen Regeln schon?", antwort: `Noch nicht. Das Gesetz ist beschlossen. Die neuen Regeln gelten ab dem 1. Januar ${F.ab}. Mehr unter [Neu ab ${F.ab}](/reform-2027).` },
     { frage: "Kann ich schon unter 18 anfangen?", antwort: "Ja, wenn du berechtigt bist. Im Gesetz steht kein Mindestalter. Es kommt darauf an, ob du in die Rentenversicherung einzahlst – zum Beispiel als Azubi. Deine Eltern müssen dem Vertrag zustimmen. Schüler ohne Job sind meist nicht berechtigt." },
     { frage: "Ist das Ergebnis vom Rechner sicher?", antwort: "Ein Teil ja. Was du einzahlst und was der Staat laut Gesetz dazulegt, steht fest. Wie stark das Geld wächst, weiß niemand. Darum zeigt der Rechner hier nur Beispiele. Angelegtes Geld kann auch weniger werden." },
-    { frage: "Bekomme ich hier eine persönliche Beratung?", antwort: "Nein. Wir erklären allgemein. Wenn du eine persönliche Beratung möchtest, kannst du eine Frage schicken. Vor dem Abschicken siehst du, wer sie bekommt." },
-    { frage: "Wer bekommt meine Daten?", antwort: "Wir und – wenn du im Formular zustimmst – ein passender Berater aus unserer Partnerliste in deiner Nähe. Per E-Mail sagen wir dir, wer es ist. Mehr unter [Beratung](/partner)." },
+    { frage: "Bekomme ich hier eine persönliche Beratung?", antwort: "Rechner und Texte erklären allgemein. Wenn du willst, melden wir uns persönlich bei dir und schlagen dir für eine ausführliche Beratung einen Berater vor – weitergegeben wird nur mit deinem Ja. Mehr unter [So arbeiten wir](/transparenz)." },
+    { frage: "Wer bekommt meine Daten?", antwort: "Erst einmal nur wir. An einen Berater – zum Beispiel von tecis, wo wir selbst arbeiten – geben wir deine Angaben nur weiter, wenn du später ausdrücklich zustimmst. Mehr unter [So arbeiten wir](/transparenz)." },
   ];
 }
 

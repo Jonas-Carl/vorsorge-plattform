@@ -4,7 +4,7 @@ import type { Lang } from "@/lib/format";
 import { pruefeQualifikation, pruefeRechner, type Qualifikation, type RechnerUebergabe } from "./qualifikation";
 import type { Anliegen, Attribution, Feldfehler, Kontaktweg, Kontaktzeit, LeadAnfrage } from "./types";
 
-export const EINWILLIGUNGSTEXT_VERSION = "2026-10-29.1";
+export const EINWILLIGUNGSTEXT_VERSION = "2026-11-23.1";
 
 export const ANLIEGEN: Anliegen[] = ["allgemein", "reform-2027", "foerderung", "familie", "bestehender-vertrag"];
 export const KONTAKTZEITEN: Kontaktzeit[] = ["egal", "vormittags", "nachmittags", "abends"];
@@ -22,9 +22,9 @@ export function empfaengerName(id: string): string | null {
 export function einwilligungstext(empfaengerId: string, lang: Lang = "de"): string {
   if (empfaengerId === EMPFAENGER_PLATTFORM) {
     return {
-      de: `Ich bin einverstanden, dass ${site.name} meine Angaben aus diesem Formular an einen passenden Berater aus seiner Partnerliste in meiner Nähe weitergibt und dieser mich telefonisch oder per E-Mail zu meiner Anfrage kontaktiert. Wer das ist, erfahre ich per E-Mail. Ich kann diese Einwilligung jederzeit widerrufen.`,
-      en: `I agree that ${site.name} passes the details from this form on to a suitable adviser near me from its partner list, and that this adviser contacts me by phone or email about my request. I will be told by email who it is. I can withdraw this consent at any time.`,
-      fr: `J'accepte que ${site.name} transmette les données de ce formulaire à un conseiller adapté près de chez moi figurant sur sa liste de partenaires, et que ce conseiller me contacte par téléphone ou par e-mail au sujet de ma demande. Je serai informé(e) par e-mail de qui il s'agit. Je peux retirer ce consentement à tout moment.`,
+      de: `Ich bin einverstanden, dass ${site.name} (Carl Buermeyer und Jonas Scheinert) meine Angaben aus diesem Formular speichert und sich telefonisch oder per E-Mail bei mir zu meiner Anfrage meldet. Meine Angaben werden nicht an andere weitergegeben. Eine Weitergabe an einen Beratungspartner erfolgt nur, wenn ich später ausdrücklich zustimme. Ich kann diese Einwilligung jederzeit widerrufen.`,
+      en: `I agree that ${site.name} (Carl Buermeyer and Jonas Scheinert) stores the details from this form and contacts me by phone or email about my request. My details will not be passed on to anyone else. They will only be passed on to an advice partner if I expressly agree later. I can withdraw this consent at any time.`,
+      fr: `J'accepte que ${site.name} (Carl Buermeyer et Jonas Scheinert) enregistre les données de ce formulaire et me contacte par téléphone ou par e-mail au sujet de ma demande. Mes données ne sont transmises à personne d'autre. Elles ne seront transmises à un partenaire de conseil que si je donne plus tard mon accord exprès. Je peux retirer ce consentement à tout moment.`,
     }[lang];
   }
   const ohneName = { de: "den gewählten Partner", en: "the chosen partner", fr: "le partenaire choisi" }[lang];

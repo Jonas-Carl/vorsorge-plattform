@@ -104,7 +104,7 @@ describe("Verarbeitung der Kontaktanfrage", () => {
     const lead = repo.leads[0]!;
     expect(lead.status).toBe("in_bearbeitung");
     expect(lead.einwilligungen[0]).toMatchObject({ empfaenger: "plattform", zweck: "kontaktaufnahme_und_weitergabe" });
-    expect(lead.einwilligungen[0]!.wortlaut).toContain("an einen passenden Berater aus seiner Partnerliste");
+    expect(lead.einwilligungen[0]!.wortlaut).toContain("nur, wenn ich später ausdrücklich zustimme");
     expect(lead.sprache).toBe("de");
     expect(new Date(lead.loeschenBis).getTime()).toBeGreaterThan(Date.now());
     // Datenminimierung: keine technischen Fingerabdrücke im Datensatz
@@ -117,7 +117,7 @@ describe("Verarbeitung der Kontaktanfrage", () => {
     expect(!fehler.ok && fehler.fehler.email).toBe("Please enter your email address.");
     await verarbeiteAnfrage({ ...gueltig(), sprache: "en" }, { repo });
     expect(repo.leads[0]!.sprache).toBe("en");
-    expect(repo.leads[0]!.einwilligungen[0]!.wortlaut).toContain("a suitable adviser near me from its partner list");
+    expect(repo.leads[0]!.einwilligungen[0]!.wortlaut).toContain("only be passed on to an advice partner if I expressly agree later");
     const ohne = await verarbeiteAnfrage({ ...gueltig(), sprache: "en" }, { repo: null });
     expect(ohne.antwort).toMatchObject({ ok: false, meldung: expect.stringContaining("not saved") });
   });
@@ -128,7 +128,7 @@ describe("Verarbeitung der Kontaktanfrage", () => {
     expect(!fehler.ok && fehler.fehler.email).toBe("Indique ton adresse e-mail, s'il te plaît.");
     await verarbeiteAnfrage({ ...gueltig(), sprache: "fr" }, { repo });
     expect(repo.leads[0]!.sprache).toBe("fr");
-    expect(repo.leads[0]!.einwilligungen[0]!.wortlaut).toContain("figurant sur sa liste de partenaires");
+    expect(repo.leads[0]!.einwilligungen[0]!.wortlaut).toContain("que si je donne plus tard mon accord exprès");
     const ohne = await verarbeiteAnfrage({ ...gueltig(), sprache: "fr" }, { repo: null });
     expect(ohne.antwort).toMatchObject({ ok: false, meldung: expect.stringContaining("ni enregistrées ni transmises") });
   });

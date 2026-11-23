@@ -119,7 +119,7 @@ $zeilen[] = '— Einwilligung (Nachweis) —';
 $zeilen[] = 'Zeitpunkt: ' . $zeitpunkt . ' · Sprache: ' . $sprache . ' · Textversion: ' . $version;
 $zeilen[] = $einwilligung;
 $zeilen[] = '';
-$zeilen[] = 'Wichtig: Nur an einen Berater aus der veröffentlichten Partnerliste weitergeben und der Person per E-Mail mitteilen, an wen. Nach spätestens 180 Tagen löschen.';
+$zeilen[] = 'Wichtig: NICHT weitergeben. Eine Weitergabe (z. B. an tecis) nur nach einer zweiten, ausdrücklichen und nachweisbaren Zustimmung der Person (am besten per E-Mail bestätigen lassen). Nach spätestens 180 Tagen löschen.';
 
 $betreff = 'Beratungsanfrage: ' . ($thema !== '' ? $thema : 'Allgemein') . ($plz !== '' ? " ($plz)" : '');
 $kopf = [

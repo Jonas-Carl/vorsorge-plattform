@@ -415,7 +415,7 @@ export function LeadForm({ lang }: { lang: Lang }) {
           <span>{einwilligungstext(f.empfaengerId, lang)}</span>
         </label>
         <p className="field__hint">
-          <Link href={`${pfad(lang, "/partner")}#partnerliste`}>{t.partnerliste}</Link> ·{" "}
+          <Link href={pfad(lang, "/transparenz")}>{t.partnerliste}</Link> ·{" "}
           <Link href={pfad(lang, "/datenschutz")}>{texte(lang).footer.links.datenschutz}</Link>
         </p>
         {meldung("einwilligung")}
